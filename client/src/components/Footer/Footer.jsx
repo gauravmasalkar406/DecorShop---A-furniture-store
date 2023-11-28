@@ -1,8 +1,8 @@
 import React from "react";
 import "./footer.css";
-import blog1 from "../../assets/blog1.webp";
-import blog2 from "../../assets/blog2.webp";
-import blog3 from "../../assets/blog3.webp";
+import blog1 from "../../assets/Blog1.webp";
+import blog2 from "../../assets/Blog2.webp";
+import blog3 from "../../assets/Blog3.webp";
 import { FiPhone } from "react-icons/fi";
 import { MdOutlineMessage } from "react-icons/md";
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
