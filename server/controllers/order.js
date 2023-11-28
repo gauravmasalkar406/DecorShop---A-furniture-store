@@ -1,5 +1,5 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import Order from "../Models/order.js";
+import Order from "../models/order.js";
 import Product from "../models/product.js";
 import stripePackage from "stripe";
 import dotenv from "dotenv";
