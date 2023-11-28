@@ -1,0 +1,71 @@
+@import "../../index.css";
+
+.navbar-main {
+  height: 4.2rem;
+  background-color: var(--light-green-bg-nav);
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.navbar-primary-container {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  justify-content: space-between;
+  width: 77%;
+}
+
+.navbar-primary-container h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.navbar-primary-container span {
+  color: var(--primary-green-color);
+}
+
+.nav-links-container {
+  display: flex;
+  gap: 2.2rem;
+}
+
+.nav-links-container a {
+  text-decoration: none;
+  font-size: 14px;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.nav-links-container a:hover {
+  color: var(--primary-green-color);
+}
+
+.nav-user-menu-container {
+  display: flex;
+  gap: 2.2rem;
+}
+
+.nav-user-menu-container svg {
+  cursor: pointer;
+}
+
+.cart-container {
+  position: relative;
+}
+
+.cart-container div {
+  position: absolute;
+  font-size: 11px;
+  background-color: var(--primary-green-color);
+  height: 15px;
+  width: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 50%;
+  top: -5px;
+  right: -10px;
+}

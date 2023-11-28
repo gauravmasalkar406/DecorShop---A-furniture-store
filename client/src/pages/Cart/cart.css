@@ -1,0 +1,19 @@
+@import "../../index.css";
+
+.cart-main {
+  width: 80%;
+  margin: auto;
+  margin-top: 5rem;
+  display: grid;
+  grid-template-columns: calc(70% - 2rem) calc(30% - 2rem);
+  gap: 4rem;
+}
+
+.cart-sub-head {
+  font-size: 1.25rem; /* 20px / 16px = 1.25rem */
+  font-weight: 500;
+  height: 2.7494375rem; /* 43.9915px / 16px = 2.7494375rem */
+  letter-spacing: 0.125rem;
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}

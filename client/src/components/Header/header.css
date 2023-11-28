@@ -1,0 +1,70 @@
+@import "../../index.css";
+
+.header-main {
+  margin-bottom: 7rem;
+}
+
+.header-sub-container {
+  position: relative;
+  background-color: var(--banner-background-color);
+  height: 400px;
+  margin: auto;
+  width: 80%;
+}
+
+.header-content-main-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-left: 3rem;
+}
+
+.header-title-container {
+  width: 80%;
+  padding-bottom: 0.5rem;
+}
+
+.header-content-container p {
+  margin-top: 1rem;
+  color: var(--description-font-color);
+}
+
+.header-title {
+  font-size: 2.6rem;
+  font-weight: 500;
+}
+
+.header-title-description {
+  font-size: 2.6rem;
+  font-weight: 300;
+}
+
+.header-content-container button {
+  margin-top: 6rem;
+  padding-bottom: 0.35rem;
+  border: none;
+  background-color: transparent;
+  border-radius: 0px;
+  border-bottom: 1px solid black;
+  transition: color 0.3s ease;
+}
+
+.header-content-container button:hover {
+  border-radius: 0px;
+  color: var(--primary-green-color);
+  border-bottom: 1px solid var(--primary-green-color);
+  cursor: pointer;
+}
+
+.light-img-1 {
+  position: absolute;
+  top: -110px;
+  right: 17px;
+}
+
+.light-img-2 {
+  position: absolute;
+  top: -132px;
+  right: -90px;
+  width: 22rem;
+}

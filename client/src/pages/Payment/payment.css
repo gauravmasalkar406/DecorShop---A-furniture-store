@@ -1,0 +1,20 @@
+@import "../../index.css";
+
+.payment-main h3 {
+  font-weight: 400;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.8px;
+}
+
+.payment-main div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.payment-main span {
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 0.8px;
+}

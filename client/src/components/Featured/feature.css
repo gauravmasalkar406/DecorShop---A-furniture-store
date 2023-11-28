@@ -1,0 +1,152 @@
+@import "../../index.css";
+
+.featured-main {
+  margin: auto;
+  width: 80%;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.featured-main .cat-heading {
+  margin-bottom: 1rem;
+  font-size: 16px;
+  font-weight: 700;
+  height: 1.4994375rem;
+  letter-spacing: 0.1rem;
+  line-height: 1.5rem;
+  tab-size: 4;
+}
+
+.featured-main .hr-line {
+  border: 1px solid rgb(224, 227, 234);
+  margin-bottom: 1rem;
+}
+
+.p-img {
+  height: 5rem;
+  width: 5rem;
+}
+
+.p-card {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.p-price {
+  margin-top: 0.25rem;
+  font-feature-settings: normal;
+  font-weight: 300;
+  letter-spacing: 0.05rem;
+  font-size: 0.825rem;
+  line-height: 1.5rem;
+  tab-size: 4;
+}
+
+.decoration-products {
+  margin: auto;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.decor-head {
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0.05rem; /* 1.8px / 36px */
+  line-height: 40px;
+  tab-size: 4;
+}
+
+.decor-desc {
+  font-weight: 300;
+  height: 40px;
+  letter-spacing: 0.04375rem; /* 0.7px / 16px */
+  line-height: 20px;
+  margin-block-start: 1rem; /* 16px / 16px */
+  margin-top: 1rem; /* 16px / 16px */
+  tab-size: 4;
+}
+
+.decor-btn {
+  margin-top: 4rem;
+  margin-top: 6rem;
+  padding-bottom: 0.35rem;
+  border: none;
+  background-color: transparent;
+  border-radius: 0px;
+  border-bottom: 1px solid black;
+  transition: color 0.3s ease;
+}
+
+.decor-btn:hover {
+  border-radius: 0px;
+  color: var(--primary-green-color);
+  border-bottom: 1px solid var(--primary-green-color);
+  cursor: pointer;
+}
+
+.p-decoration-card {
+  cursor: pointer;
+  width: 14rem;
+}
+
+.p-decoration-img {
+  width: 100%;
+  height: 16rem;
+}
+
+.hr-length {
+  margin: auto;
+  width: 80%;
+  margin-bottom: 3rem;
+  border: 1px solid rgb(224, 227, 234);
+}
+
+.intagram-banner {
+  width: 80%;
+  margin: auto;
+  margin-top: 7rem;
+  height: 11.5rem;
+  position: relative;
+}
+
+.intagram-banner img {
+  width: 20%;
+  height: 100%;
+  margin-bottom: 8rem;
+}
+
+.insta-head-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insta-head {
+  background-color: rgba(
+    229,
+    231,
+    235,
+    0.8
+  ); /* Adjust the last parameter (0.9) for transparency */
+  border-radius: 10px;
+  color: rgb(107, 114, 128);
+  font-size: 1.875rem; /* 30px / 16px */
+  font-weight: 600;
+  letter-spacing: 0.1875rem; /* 3px / 16px */
+  line-height: 2.25rem; /* 36px / 16px */
+  padding-bottom: 1rem; /* 16px / 16px */
+  padding-left: 3rem; /* 48px / 16px */
+  padding-right: 3rem; /* 48px / 16px */
+  padding-top: 1rem; /* 16px / 16px */
+}

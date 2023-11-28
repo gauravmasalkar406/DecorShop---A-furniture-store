@@ -1,0 +1,63 @@
+@import "../../index.css";
+
+.footer-main {
+  width: 80%;
+  margin-top: 6rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(72, 196, 160);
+  color: white;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 2.5rem 1.5rem 2.5rem 1.5rem;
+}
+
+.column-head {
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+.brand-name {
+  font-size: 2.25rem; /* 36px / 16px */
+  font-weight: 900;
+  letter-spacing: 0.1125rem; /* 1.8px / 16px */
+  line-height: 2.5rem; /* 40px / 16px */
+  margin-bottom: 2rem;
+}
+
+.brand-desc {
+  font-size: 1rem; /* 14px / 14px */
+  font-weight: 300;
+  letter-spacing: 0.057143rem; /* 0.8px / 14px */
+  line-height: 1.428571rem; /* 20px / 14px */
+  padding-right: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.heading {
+  font-size: 1rem; /* 14px / 14px */
+  font-weight: 300;
+  letter-spacing: 0.057143rem; /* 0.8px / 14px */
+  line-height: 1.428571rem; /* 20px / 14px */
+  padding-right: 0.8rem;
+}
+
+.date {
+  font-size: 0.8rem; /* 14px / 14px */
+  font-weight: 300;
+  letter-spacing: 0.057143rem; /* 0.8px / 14px */
+  line-height: 1.428571rem; /* 20px / 14px */
+  padding-right: 0.8rem;
+}
+
+.news-card {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.news-card img {
+  height: 2.99rem;
+  width: 4.59rem;
+}

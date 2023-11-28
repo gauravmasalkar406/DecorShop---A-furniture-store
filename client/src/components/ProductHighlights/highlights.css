@@ -1,0 +1,165 @@
+@import "../../index.css";
+
+.highlights-main {
+  margin-bottom: 7rem;
+}
+
+.highlights-main-container {
+  width: 80%;
+  margin: auto;
+}
+
+.category-btns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.category-btns button {
+  border: none;
+  background-color: transparent;
+  border-radius: 0px;
+  transition: color 0.3s ease;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--secondary-font-color);
+  padding-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.category-btns .selected {
+  border-radius: 0px;
+  color: var(--primary-green-color);
+  border-bottom: 1px solid var(--primary-green-color);
+  cursor: pointer;
+}
+
+.products-container {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  row-gap: 2.5rem;
+}
+
+.product-card {
+  width: 11rem;
+}
+
+.product-card:hover {
+  cursor: pointer;
+}
+
+.product-image-container {
+  width: 100%;
+  height: 14rem;
+  background-color: var(--light-green-bg-nav);
+  margin-bottom: 0.7rem;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image {
+  height: 90%;
+  width: 90%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-name {
+  margin-bottom: 0.4rem;
+}
+
+.product-price {
+  font-weight: 300;
+  font-size: 0.85rem;
+}
+
+.go-to-shop-container {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rem;
+}
+
+.go-to-shop-container div {
+  width: 30%;
+  height: 1px;
+  border: 1px solid rgb(224, 227, 234);
+}
+
+.go-to-shop-container button {
+  height: 2.8rem;
+  width: 15.4rem;
+  border-radius: 0;
+  border: 1px solid var(--primary-green-color);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.stylish-banner-container {
+  position: relative;
+}
+
+.stylish-banner {
+  width: 100%;
+  height: 10.74rem;
+  background-color: var(--light-green-bg-color);
+  display: flex;
+  align-items: center;
+}
+
+.banner-title-container {
+  margin-bottom: 1.8rem;
+}
+
+.banner-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  height: auto;
+  letter-spacing: 0.15rem;
+  line-height: 2rem;
+  tab-size: 4;
+}
+
+.stylish-banner-desc-container {
+  margin-left: 2rem;
+}
+
+.banner-title-description {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+  tab-size: 4;
+}
+
+.stylish-banner-desc-container button {
+  font-size: 0.7rem;
+  padding-bottom: 0.29rem;
+  border: none;
+  background-color: transparent;
+  border-radius: 0px;
+  border-bottom: 1px solid black;
+  transition: color 0.3s ease;
+}
+
+.stylish-banner-desc-container button:hover {
+  border-radius: 0px;
+  color: var(--primary-green-color);
+  border-bottom: 1px solid var(--primary-green-color);
+  cursor: pointer;
+}
+
+.stylish-banner-container img {
+  height: 20rem;
+  position: absolute;
+  top: -10rem;
+  right: 3.75rem;
+}

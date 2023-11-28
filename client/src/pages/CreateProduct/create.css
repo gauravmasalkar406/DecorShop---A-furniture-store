@@ -1,0 +1,11 @@
+@import "../../index.css";
+
+.create-main {
+  width: 60%;
+  margin: 3rem auto;
+}
+.check-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}

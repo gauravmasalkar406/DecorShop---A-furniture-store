@@ -1,0 +1,23 @@
+@import "../../index.css";
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  height: 2rem;
+}
+
+td {
+  height: 2rem;
+  cursor: pointer;
+}
