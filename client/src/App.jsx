@@ -8,7 +8,7 @@ import Register from "./pages/Register/Register.jsx";
 import Cart from "./pages/Cart/Cart.jsx";
 import Shop from "./pages/Shop/Shop.jsx";
 import Shipping from "./pages/Shipping/Shipping.jsx";
-import Payment from "./pages/Payment/payment.jsx";
+import Payment from "./pages/Payment/Payment.jsx";
 import PlaceOrder from "./pages/PlaceOrder/PlaceOrder.jsx";
 import OrderDetails from "./pages/Order details/OrderDetails.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
