@@ -93,12 +93,11 @@ const Create = () => {
       );
 
       if (response.status == 200) {
+        isLoading(false);
         toast.success(response.data.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
       }
-
-      isLoading(false);
     } catch (error) {
       toast.error(error.response.data.message, {
         position: toast.POSITION.TOP_RIGHT,
