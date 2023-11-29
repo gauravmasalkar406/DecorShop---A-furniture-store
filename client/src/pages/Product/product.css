@@ -233,4 +233,8 @@
     margin-bottom: 0rem;
     margin-top: 3rem;
   }
+
+  .product-p-image-container img {
+    width: 90%;
+  }
 }

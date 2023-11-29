@@ -19,6 +19,7 @@ const Product = () => {
   const [product, setProduct] = useState();
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [imageSrc, setImageSrc] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -70,6 +71,7 @@ const Product = () => {
 
   // add to cart btn
   const handleAddToCartBtn = async () => {
+    setIsLoading(true);
     if (userInfo && product) {
       try {
         const addToCartResponse = await axios.post(
@@ -87,6 +89,8 @@ const Product = () => {
         if (addToCartResponse) {
           dispatch(addCartItems(addToCartResponse?.data?.cartItems));
         }
+
+        setIsLoading(false);
 
         toast.success(addToCartResponse?.data?.message, {
           position: toast.POSITION.TOP_RIGHT,
@@ -161,8 +165,14 @@ const Product = () => {
 
               {/* add to cart btn */}
               <button className="add-to-cart-btn" onClick={handleAddToCartBtn}>
-                <AiOutlineShoppingCart size={20} />
-                <span className="add-to-cart-btn-desc">ADD TO CART</span>
+                {isLoading ? (
+                  <span class="loader"></span>
+                ) : (
+                  <>
+                    <AiOutlineShoppingCart size={20} />
+                    <span className="add-to-cart-btn-desc">ADD TO CART</span>
+                  </>
+                )}
               </button>
             </>
           )}

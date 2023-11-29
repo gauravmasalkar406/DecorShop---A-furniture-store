@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
   const [cartItems, setCartItems] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -49,6 +50,7 @@ const PlaceOrder = () => {
 
   // place order
   const handlePlaceOrder = async () => {
+    setIsLoading(true);
     if (cartItems && userInfo && shippingAddress && paymentMethod) {
       try {
         const response = await axios.post(
@@ -76,6 +78,8 @@ const PlaceOrder = () => {
 
         // database cart
         deleteAllProductFromCart();
+
+        setIsLoading(false);
 
         // save in store
         if (response?.data?.msg == "Order placed") {
@@ -149,7 +153,7 @@ const PlaceOrder = () => {
             </div>
 
             <button className="summary-buy-btn" onClick={handlePlaceOrder}>
-              Place order
+              {isLoading ? <span class="loader"></span> : "PLACE ORDER"}
             </button>
           </>
         </section>

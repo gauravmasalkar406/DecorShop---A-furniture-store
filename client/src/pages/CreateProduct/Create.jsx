@@ -15,6 +15,7 @@ const Create = () => {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState();
   const [isShipping, setIsShipping] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const userInfo = useSelector((state) => state.user.userInfo);
 
@@ -74,6 +75,7 @@ const Create = () => {
     }
 
     try {
+      setIsLoading(true);
       const response = await axios.post(
         createProductRoute,
         {
@@ -95,6 +97,8 @@ const Create = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
       }
+
+      isLoading(false);
     } catch (error) {
       toast.error(error.response.data.message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -169,7 +173,9 @@ const Create = () => {
           placeholder="Choose image 4"
           onChange={uploadHandler}
         />
-        <button type="submit">CREATE PRODUCT</button>
+        <button type="submit">
+          {isLoading ? <span class="loader"></span> : "CREATE PRODUCT"}
+        </button>
       </form>
     </div>
   );

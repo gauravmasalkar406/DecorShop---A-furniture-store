@@ -29,7 +29,8 @@
     display: block;
   }
 
-  cart-product-main {
-    gap: 0rem;
+  .cart-product-main {
+    grid-template-columns: 40% 18% 18% 18% !important;
+    gap: 0.8rem !important;
   }
 }

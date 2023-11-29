@@ -106,23 +106,26 @@ const Featured = ({ products }) => {
           </div>
           {products
             ?.filter((product) => {
-              return product.category === "decoration";
+              return product.category === "sofas";
             })
-            .map((product, index) => (
-              <div
-                className="p-decoration-card"
-                key={index}
-                onClick={() => navigate(`/product/${product._id}`)}
-              >
-                <img
-                  src={`${host}/${product.image[0]}`}
-                  alt=""
-                  className="p-decoration-img"
-                />
-                <p className="p-name">{product.name}</p>
-                <p className="p-price">₹{product.price}</p>
-              </div>
-            ))}
+            .map(
+              (product, index) =>
+                index < 3 && (
+                  <div
+                    className="p-decoration-card"
+                    key={index}
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  >
+                    <img
+                      src={`${host}/${product.image[0]}`}
+                      alt=""
+                      className="p-decoration-img"
+                    />
+                    <p className="p-name">{product.name}</p>
+                    <p className="p-price">₹{product.price}</p>
+                  </div>
+                )
+            )}
         </section>
 
         <section className="decoration-products">
@@ -137,21 +140,24 @@ const Featured = ({ products }) => {
             ?.filter((product) => {
               return product.category === "architect";
             })
-            .map((product, index) => (
-              <div
-                className="p-decoration-card"
-                key={index}
-                onClick={() => navigate(`/product/${product._id}`)}
-              >
-                <img
-                  src={`${host}/${product.image[0]}`}
-                  alt=""
-                  className="p-decoration-img"
-                />
-                <p className="p-name">{product.name}</p>
-                <p className="p-price">₹{product.price}</p>
-              </div>
-            ))}
+            .map(
+              (product, index) =>
+                index < 3 && (
+                  <div
+                    className="p-decoration-card"
+                    key={index}
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  >
+                    <img
+                      src={`${host}/${product.image[0]}`}
+                      alt=""
+                      className="p-decoration-img"
+                    />
+                    <p className="p-name">{product.name}</p>
+                    <p className="p-price">₹{product.price}</p>
+                  </div>
+                )
+            )}
         </section>
 
         <hr className="hr-line hr-length" />

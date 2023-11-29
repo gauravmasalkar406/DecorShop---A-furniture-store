@@ -67,3 +67,15 @@
   color: var(--primary-green-color);
   cursor: pointer;
 }
+
+@media only screen and (max-width: 820px) {
+  .register-container {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .register-container {
+    width: 80%;
+  }
+}
