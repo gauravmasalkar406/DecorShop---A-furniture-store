@@ -92,8 +92,9 @@ const Create = () => {
         { withCredentials: true }
       );
 
+      isLoading(false);
+      
       if (response.status == 200) {
-        isLoading(false);
         toast.success(response.data.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
