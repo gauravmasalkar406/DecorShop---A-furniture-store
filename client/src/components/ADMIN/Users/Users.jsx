@@ -10,9 +10,12 @@ import { toast } from "react-toastify";
 const Users = () => {
   const [users, setUsers] = useState();
   const [usersUpdated, setUsersUpdated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // fetch all users
   useEffect(() => {
+    setIsLoading(true);
+
     const fetchAllUsers = async () => {
       const response = await axios.get(getAllUsersRoute, {
         withCredentials: true,
@@ -21,6 +24,8 @@ const Users = () => {
       if (response.status === 200) {
         setUsers(response.data);
       }
+
+      setIsLoading(false);
     };
 
     fetchAllUsers();
@@ -50,46 +55,52 @@ const Users = () => {
 
   return (
     <div>
-      {users && (
-        <table>
-          <thead>
-            <tr>
-              <th className="make-display-inactive">ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>ADMIN</th>
-              <th>ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={index}>
-                <td className="make-display-inactive">{user._id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  {user.isAdmin ? (
-                    <IoMdCheckmark style={{ color: "green" }} />
-                  ) : (
-                    <RxCross2 style={{ color: "red" }} />
-                  )}
-                </td>
-                <td>
-                  <button
-                    style={{
-                      border: "0px",
-                      background: "none",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handleUserDelete(user._id)}
-                  >
-                    <AiOutlineDelete style={{ color: "red" }} />
-                  </button>
-                </td>
+      {isLoading ? (
+        <div className="loader-container">
+          <span class="loader-green"></span>
+        </div>
+      ) : (
+        users && (
+          <table>
+            <thead>
+              <tr>
+                <th className="make-display-inactive">ID</th>
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>ADMIN</th>
+                <th>ACTION</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user, index) => (
+                <tr key={index}>
+                  <td className="make-display-inactive">{user._id}</td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    {user.isAdmin ? (
+                      <IoMdCheckmark style={{ color: "green" }} />
+                    ) : (
+                      <RxCross2 style={{ color: "red" }} />
+                    )}
+                  </td>
+                  <td>
+                    <button
+                      style={{
+                        border: "0px",
+                        background: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handleUserDelete(user._id)}
+                    >
+                      <AiOutlineDelete style={{ color: "red" }} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )
       )}
     </div>
   );

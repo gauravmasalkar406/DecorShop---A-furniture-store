@@ -18,6 +18,7 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [myOrders, setMyOrders] = useState();
+  const [isLoading, setIsLoding] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -26,6 +27,8 @@ const Profile = () => {
   // fethcing my orders
   useEffect(() => {
     const getMyOrders = async () => {
+      setIsLoding(true);
+
       try {
         const response = await axios.post(
           getMyOrdersRoute,
@@ -38,6 +41,8 @@ const Profile = () => {
         if (response.status == 200) {
           setMyOrders(response.data);
         }
+
+        setIsLoding(false);
       } catch (error) {
         toast.error(error?.data?.message || error?.error);
       }
@@ -78,7 +83,11 @@ const Profile = () => {
         <h4 className="cart-sub-head">My Orders</h4>
         <hr style={{ marginBottom: "2rem" }} />
 
-        {myOrders && myOrders.length > 0 ? (
+        {isLoading ? (
+          <div className="loader-container">
+            <span class="loader-green"></span>
+          </div>
+        ) : myOrders && myOrders.length > 0 ? (
           <table>
             <thead>
               <tr>

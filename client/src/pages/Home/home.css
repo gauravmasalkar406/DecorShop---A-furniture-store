@@ -1,0 +1,6 @@
+.loader-container {
+  width: 80%;
+  margin: 3rem auto;
+  display: flex;
+  justify-content: center;
+}

@@ -176,7 +176,7 @@ const Shop = () => {
   let lastIndex = currPage * itemsPerPage;
   let firstIndex = lastIndex - itemsPerPage;
 
-  return (
+  return products ? (
     <div className="shop-main">
       <section
         className={
@@ -354,6 +354,10 @@ const Shop = () => {
           </button>
         </div>
       </section>
+    </div>
+  ) : (
+    <div className="loader-container">
+      <span class="loader-green"></span>
     </div>
   );
 };

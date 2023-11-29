@@ -8,10 +8,12 @@ import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const [orders, setOrders] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchOrders = async () => {
       const response = await axios.get(getAllOrdersRoute, {
         withCredentials: true,
@@ -20,6 +22,8 @@ const Orders = () => {
       if (response.status === 200) {
         setOrders(response.data.orders);
       }
+
+      setIsLoading(false);
     };
 
     try {
@@ -32,7 +36,11 @@ const Orders = () => {
 
   return (
     <div>
-      {orders && orders.length > 0 ? (
+      {isLoading ? (
+        <div className="loader-container">
+          <span class="loader-green"></span>
+        </div>
+      ) : orders && orders.length > 0 ? (
         <table>
           <thead>
             <tr>

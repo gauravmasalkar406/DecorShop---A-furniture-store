@@ -12,14 +12,18 @@ import "./product.css";
 const Products = () => {
   const [products, setProducts] = useState();
   const [currPage, setCurrPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   // fetching products
   useEffect(() => {
+    setIsLoading(true);
     try {
       const fecthProducts = async () => {
         const response = await axios.get(getAllProducts);
+
+        setIsLoading(false);
 
         setProducts(response?.data?.products);
       };
@@ -40,7 +44,11 @@ const Products = () => {
   // product delete
   const handleProductDelete = () => {};
 
-  return (
+  return isLoading ? (
+    <div className="loader-container">
+      <span class="loader-green"></span>
+    </div>
+  ) : (
     <div>
       {products && (
         <table>

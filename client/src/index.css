@@ -33,6 +33,17 @@ body {
   animation: rotation 1s linear infinite;
 }
 
+.loader-green {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid rgb(72, 196, 160);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);

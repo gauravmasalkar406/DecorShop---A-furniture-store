@@ -120,16 +120,22 @@ const PlaceOrder = () => {
             <hr style={{ marginBottom: "1.5rem", marginTop: "1.5rem" }} />
 
             <div>
-              {cartItems?.map((ele, index) => {
-                return (
-                  <CartProduct
-                    cartItem={ele}
-                    key={index}
-                    index={index}
-                    isOrderPage={true}
-                  />
-                );
-              })}
+              {cartItems ? (
+                cartItems.map((ele, index) => {
+                  return (
+                    <CartProduct
+                      cartItem={ele}
+                      key={index}
+                      index={index}
+                      isOrderPage={true}
+                    />
+                  );
+                })
+              ) : (
+                <div className="loader-container">
+                  <span class="loader-green"></span>
+                </div>
+              )}
             </div>
           </div>
         </section>

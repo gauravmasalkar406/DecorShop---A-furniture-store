@@ -38,13 +38,17 @@ const Product = () => {
 
   // fetching product
   useEffect(() => {
-    const fetchProduct = async () => {
-      const response = await axios.get(`${getProductInfo}/${id}`);
+    try {
+      const fetchProduct = async () => {
+        const response = await axios.get(`${getProductInfo}/${id}`);
 
-      setProduct(response?.data);
-    };
+        setProduct(response?.data);
+      };
 
-    fetchProduct();
+      fetchProduct();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   // increment quantiy
@@ -103,82 +107,84 @@ const Product = () => {
     }
   };
 
-  return (
-    product && (
-      <div className="prodduct-main">
-        <section className="product-images-column">
-          <div className="product-p-image-container">
-            <img src={`${host}/${imageSrc}`} alt="" />
-          </div>
-          <div className="images-select">
-            {product?.image?.map((ele, index) => (
-              <div
-                className={`products-p-p-image-container ${
-                  imageSrc === ele && "active-p"
-                }`}
-                key={index}
-                onClick={() => setImageSrc(ele)}
-              >
-                <img src={`${host}/${ele}`} />
-              </div>
-            ))}
-          </div>
-        </section>
-        <section>
-          {product.countInStock > 0 ? (
-            <button className="stock-btn stock-btn-green">In Stock</button>
-          ) : (
-            <button className="stock-btn stock-btn-red">Out of Stock</button>
-          )}
+  return product ? (
+    <div className="prodduct-main">
+      <section className="product-images-column">
+        <div className="product-p-image-container">
+          <img src={`${host}/${imageSrc}`} alt="" />
+        </div>
+        <div className="images-select">
+          {product?.image?.map((ele, index) => (
+            <div
+              className={`products-p-p-image-container ${
+                imageSrc === ele && "active-p"
+              }`}
+              key={index}
+              onClick={() => setImageSrc(ele)}
+            >
+              <img src={`${host}/${ele}`} />
+            </div>
+          ))}
+        </div>
+      </section>
+      <section>
+        {product.countInStock > 0 ? (
+          <button className="stock-btn stock-btn-green">In Stock</button>
+        ) : (
+          <button className="stock-btn stock-btn-red">Out of Stock</button>
+        )}
 
-          <h4 className="product-p-name">{product.name}</h4>
+        <h4 className="product-p-name">{product.name}</h4>
 
-          <div className="rating-and-review">
-            <span>
-              <StarRating rating={product?.rating} />
-            </span>
-            <span className="product-rating">{product.rating}</span>
-            <span className="divider">|</span>
-            <span className="numreviews">{product.numReviews} Reviews</span>
-          </div>
+        <div className="rating-and-review">
+          <span>
+            <StarRating rating={product?.rating} />
+          </span>
+          <span className="product-rating">{product.rating}</span>
+          <span className="divider">|</span>
+          <span className="numreviews">{product.numReviews} Reviews</span>
+        </div>
 
-          <p className="product-p-description">{product.description}</p>
+        <p className="product-p-description">{product.description}</p>
 
-          <h1 className="product-p-price">₹ {product.price}</h1>
+        <h1 className="product-p-price">₹ {product.price}</h1>
 
-          {product.countInStock > 0 && (
-            <>
-              <div className="quantity-select">
-                <p>QUANTITY :</p>
-                <div className="quantity-select-value-btn">
-                  <span>{selectedQuantity}</span>
-                  <div>
-                    <button onClick={incrementQuant}>
-                      <IoIosArrowUp />
-                    </button>
-                    <button onClick={decrementQuant}>
-                      <IoIosArrowDown />
-                    </button>
-                  </div>
+        {product.countInStock > 0 && (
+          <>
+            <div className="quantity-select">
+              <p>QUANTITY :</p>
+              <div className="quantity-select-value-btn">
+                <span>{selectedQuantity}</span>
+                <div>
+                  <button onClick={incrementQuant}>
+                    <IoIosArrowUp />
+                  </button>
+                  <button onClick={decrementQuant}>
+                    <IoIosArrowDown />
+                  </button>
                 </div>
               </div>
+            </div>
 
-              {/* add to cart btn */}
-              <button className="add-to-cart-btn" onClick={handleAddToCartBtn}>
-                {isLoading ? (
-                  <span class="loader"></span>
-                ) : (
-                  <>
-                    <AiOutlineShoppingCart size={20} />
-                    <span className="add-to-cart-btn-desc">ADD TO CART</span>
-                  </>
-                )}
-              </button>
-            </>
-          )}
-        </section>
-      </div>
-    )
+            {/* add to cart btn */}
+            <button className="add-to-cart-btn" onClick={handleAddToCartBtn}>
+              {isLoading ? (
+                <span class="loader"></span>
+              ) : (
+                <>
+                  <AiOutlineShoppingCart size={20} />
+                  <span className="add-to-cart-btn-desc">ADD TO CART</span>
+                </>
+              )}
+            </button>
+          </>
+        )}
+      </section>
+    </div>
+  ) : (
+    <div className="loader-container">
+      <span class="loader-green"></span>
+    </div>
   );
 };
 

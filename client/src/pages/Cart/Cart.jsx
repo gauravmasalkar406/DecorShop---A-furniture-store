@@ -10,6 +10,7 @@ import { updateCartTotal } from "../../store/slices/cart.js";
 
 const Cart = () => {
   const [isItemDeleted, setIsItemDeleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
 
@@ -25,6 +26,8 @@ const Cart = () => {
     if (userInfo) {
       try {
         const fetchCartItems = async () => {
+          setIsLoading(true);
+
           const response = await axios.post(
             getCartItemsRoute,
             {
@@ -32,6 +35,8 @@ const Cart = () => {
             },
             { withCredentials: true }
           );
+
+          setIsLoading(false);
 
           dispatch(addCartItems(response?.data?.cartItems));
 
@@ -70,16 +75,22 @@ const Cart = () => {
           <h4 className="cart-sub-head">Shopping Cart</h4>
           <hr style={{ marginBottom: "2rem" }} />
 
-          {cartItems?.map((ele, index) => {
-            return (
-              <CartProduct
-                cartItem={ele}
-                key={index}
-                onItemDelete={changeDeletedState}
-                index={index}
-              />
-            );
-          })}
+          {isLoading ? (
+            <div className="loader-container">
+              <span class="loader-green"></span>
+            </div>
+          ) : (
+            cartItems?.map((ele, index) => {
+              return (
+                <CartProduct
+                  cartItem={ele}
+                  key={index}
+                  onItemDelete={changeDeletedState}
+                  index={index}
+                />
+              );
+            })
+          )}
         </section>
         <section className="cart-order-summary">
           <>

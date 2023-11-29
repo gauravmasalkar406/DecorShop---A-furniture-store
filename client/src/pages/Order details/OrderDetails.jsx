@@ -118,124 +118,118 @@ const OrderDetails = () => {
     }
   };
 
-  return (
-    order &&
-    userInfo && (
-      <div className="cart-main">
-        <section>
-          <h4 className="cart-sub-head">Order Details</h4>
+  return order && userInfo ? (
+    <div className="cart-main">
+      <section>
+        <h4 className="cart-sub-head">Order Details</h4>
+        <hr style={{ marginBottom: "2rem" }} />
+
+        <div className="order-main">
+          <p>
+            Shipping Address: {order.shippingAddress?.address},{" "}
+            {order.shippingAddress?.city}, {order.shippingAddress?.country} -{" "}
+            {order.shippingAddress?.postalCode}
+          </p>
+          <p>Payment Method: {order.paymentMethod}</p>
+          <p>
+            Delivery status:{" "}
+            {order.isDelivered
+              ? `Delivered at ${deliveredDate}`
+              : "Not delivered"}
+          </p>
+          <p>Payment: {order.isPaid ? `Paid at ${paidDate}` : "Not paid"}</p>
+
+          <hr style={{ marginBottom: "1.5rem", marginTop: "1.5rem" }} />
+
+          <div>
+            {order?.orderItems?.map((ele, index) => {
+              return (
+                <div className="cart-product-main" key={index}>
+                  <section>
+                    {index == 0 && (
+                      <h4 className="cart-product-head">PRODUCT DETAILS</h4>
+                    )}
+                    <div className="cart-prdouct-img-head-container">
+                      <div
+                        className="cart-product-img"
+                        onClick={() => navigate(`/product/${ele.productId}`)}
+                      >
+                        <img src={`${host}/${ele?.product?.image[0]}`} alt="" />
+                      </div>
+                      <div className="head-delete-btn">
+                        <h5>{ele.product?.name}</h5>
+                      </div>
+                    </div>
+                  </section>
+                  <section>
+                    {index == 0 && (
+                      <h4 className="cart-product-head">QUANTITY</h4>
+                    )}
+                    <div className="cart-product-quanity-change">
+                      <div>{ele?.quantity}</div>
+                    </div>
+                  </section>
+                  <section>
+                    {index == 0 && <h4 className="cart-product-head">PRICE</h4>}
+                    <h5>₹{ele.product?.price}</h5>
+                  </section>
+                  <section>
+                    {index == 0 && <h4 className="cart-product-head">TOTAL</h4>}
+                    <h5>{ele.product?.price * ele?.quantity}</h5>
+                  </section>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+      <section>
+        <>
+          <h4 className="cart-sub-head">Summary</h4>
           <hr style={{ marginBottom: "2rem" }} />
-
-          <div className="order-main">
-            <p>
-              Shipping Address: {order.shippingAddress?.address},{" "}
-              {order.shippingAddress?.city}, {order.shippingAddress?.country} -{" "}
-              {order.shippingAddress?.postalCode}
-            </p>
-            <p>Payment Method: {order.paymentMethod}</p>
-            <p>
-              Delivery status:{" "}
-              {order.isDelivered
-                ? `Delivered at ${deliveredDate}`
-                : "Not delivered"}
-            </p>
-            <p>Payment: {order.isPaid ? `Paid at ${paidDate}` : "Not paid"}</p>
-
-            <hr style={{ marginBottom: "1.5rem", marginTop: "1.5rem" }} />
-
-            <div>
-              {order?.orderItems?.map((ele, index) => {
-                return (
-                  <div className="cart-product-main" key={index}>
-                    <section>
-                      {index == 0 && (
-                        <h4 className="cart-product-head">PRODUCT DETAILS</h4>
-                      )}
-                      <div className="cart-prdouct-img-head-container">
-                        <div
-                          className="cart-product-img"
-                          onClick={() => navigate(`/product/${ele.productId}`)}
-                        >
-                          <img
-                            src={`${host}/${ele?.product?.image[0]}`}
-                            alt=""
-                          />
-                        </div>
-                        <div className="head-delete-btn">
-                          <h5>{ele.product?.name}</h5>
-                        </div>
-                      </div>
-                    </section>
-                    <section>
-                      {index == 0 && (
-                        <h4 className="cart-product-head">QUANTITY</h4>
-                      )}
-                      <div className="cart-product-quanity-change">
-                        <div>{ele?.quantity}</div>
-                      </div>
-                    </section>
-                    <section>
-                      {index == 0 && (
-                        <h4 className="cart-product-head">PRICE</h4>
-                      )}
-                      <h5>₹{ele.product?.price}</h5>
-                    </section>
-                    <section>
-                      {index == 0 && (
-                        <h4 className="cart-product-head">TOTAL</h4>
-                      )}
-                      <h5>{ele.product?.price * ele?.quantity}</h5>
-                    </section>
-                  </div>
-                );
-              })}
+          <div className="summary-main">
+            <div className="summary-total">
+              <p>Bag total</p>
+              <h4>₹{order.totalPrice - 99}</h4>
+            </div>
+            <div className="summary-total">
+              <p>Convenience Fee</p>
+              <h4>₹99</h4>
             </div>
           </div>
-        </section>
-        <section>
-          <>
-            <h4 className="cart-sub-head">Summary</h4>
-            <hr style={{ marginBottom: "2rem" }} />
-            <div className="summary-main">
-              <div className="summary-total">
-                <p>Bag total</p>
-                <h4>₹{order.totalPrice - 99}</h4>
-              </div>
-              <div className="summary-total">
-                <p>Convenience Fee</p>
-                <h4>₹99</h4>
-              </div>
-            </div>
-            <div className="summary-subtotal-conatainer">
-              <p>Total</p>
-              <h3>₹{order.totalPrice}</h3>
-            </div>
+          <div className="summary-subtotal-conatainer">
+            <p>Total</p>
+            <h3>₹{order.totalPrice}</h3>
+          </div>
 
-            {!order.isPaid && !userInfo.isAdmin && (
-              <>
-                <button
-                  className="summary-buy-btn"
-                  onClick={handlePaymentWithStripe}
-                >
-                  PAY HERE
-                </button>
-              </>
-            )}
+          {!order.isPaid && !userInfo.isAdmin && (
+            <>
+              <button
+                className="summary-buy-btn"
+                onClick={handlePaymentWithStripe}
+              >
+                PAY HERE
+              </button>
+            </>
+          )}
 
-            {order.isPaid && userInfo.isAdmin && (
-              <>
-                <button
-                  className="summary-buy-btn"
-                  onClick={handleUpdateDelivered}
-                >
-                  MARK DELIVERED
-                </button>
-              </>
-            )}
-          </>
-        </section>
-      </div>
-    )
+          {order.isPaid && userInfo.isAdmin && (
+            <>
+              <button
+                className="summary-buy-btn"
+                onClick={handleUpdateDelivered}
+              >
+                MARK DELIVERED
+              </button>
+            </>
+          )}
+        </>
+      </section>
+    </div>
+  ) : (
+    <div className="loader-container">
+      <span class="loader-green"></span>
+    </div>
   );
 };
 
