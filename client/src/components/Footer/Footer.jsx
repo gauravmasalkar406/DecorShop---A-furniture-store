@@ -50,21 +50,18 @@ const Footer = () => {
         <p className="column-head">LATEST NEWS</p>
         <div className="news-col-container">
           <div className="news-card">
-            <img src={blog1} alt="" />
             <div className="head-date-container">
               <p className="heading">Furniture Decoration Idea</p>
               <p className="date">October 20, 2022</p>
             </div>
           </div>
           <div className="news-card">
-            <img src={blog2} alt="" style={{ width: "8rem" }} />
             <div className="head-date-container">
               <p className="heading">Decorate Your Idea In House</p>
               <p className="date">October 20, 2022</p>
             </div>
           </div>
           <div className="news-card">
-            <img src={blog3} alt="" />
             <div className="head-date-container">
               <p className="heading">Dining Table Decorate</p>
               <p className="date">October 20, 2022</p>

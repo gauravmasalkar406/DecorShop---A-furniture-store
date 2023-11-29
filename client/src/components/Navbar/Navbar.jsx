@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -21,8 +21,12 @@ import {
   removeLatestOrder,
   removeShippingAddress,
 } from "../../store/slices/order.js";
+import { IoMdMenu } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
 
 const Navbar = () => {
+  const [isMenuSelected, setIsMenuSelected] = useState(true);
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -92,7 +96,15 @@ const Navbar = () => {
           DecorShop
           <span>.</span>
         </h1>
-        <div className="nav-links-container">
+
+        <div
+          onClick={() => setIsMenuSelected(!isMenuSelected)}
+          className={
+            isMenuSelected
+              ? "nav-menu-active nav-links-container"
+              : "nav-links-container"
+          }
+        >
           <Link to="/">HOME</Link>
           <Link to="/shop">SHOP</Link>
           <Link to={userInfo ? "/profile" : "/register"}>PROFILE</Link>
@@ -100,6 +112,7 @@ const Navbar = () => {
           <Link to="/services">SERVICES</Link>
           <Link to="/news">NEWS</Link>
         </div>
+
         <div className="nav-user-menu-container">
           <div className="cart-container">
             <AiOutlineShoppingCart
@@ -110,11 +123,19 @@ const Navbar = () => {
             />
             <div>{cartItems ? cartItems.length : 0}</div>
           </div>
+
           {userInfo ? (
             <IoPersonRemoveOutline size={25} onClick={handleLogout} />
           ) : (
             <BsPersonPlus size={25} onClick={() => navigate("/register")} />
           )}
+
+          <div
+            className="nav-manu-container"
+            onClick={() => setIsMenuSelected(!isMenuSelected)}
+          >
+            {isMenuSelected ? <IoMdMenu size={25} /> : <RxCross2 size={25} />}
+          </div>
         </div>
       </div>
       <ToastContainer />

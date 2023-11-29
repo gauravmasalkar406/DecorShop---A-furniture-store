@@ -36,7 +36,7 @@ const Orders = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th className="make-display-inactive">ID</th>
               <th>USER</th>
               <th>DATE</th>
               <th>TOTAL</th>
@@ -50,7 +50,7 @@ const Orders = () => {
                 key={index}
                 onClick={() => navigate(`/orderdetails/${order._id}`)}
               >
-                <td>{order._id}</td>
+                <td className="make-display-inactive">{order._id}</td>
                 <td>{order?.user?.name}</td>
                 <td>{order.createdAt}</td>
                 <td>{order.totalPrice}</td>

@@ -21,3 +21,16 @@ td {
   height: 2rem;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 820px) {
+}
+
+@media only screen and (max-width: 480px) {
+  .make-display-inactive {
+    display: none;
+  }
+
+  .resgiter-form {
+    width: 100%;
+  }
+}

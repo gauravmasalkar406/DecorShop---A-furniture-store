@@ -82,7 +82,7 @@ const Profile = () => {
           <table>
             <thead>
               <tr>
-                <th>ID</th>
+                <th className="make-display-inactive">ID</th>
                 <th>DATE</th>
                 <th>TOTAL</th>
                 <th>PAID</th>
@@ -95,7 +95,7 @@ const Profile = () => {
                   key={index}
                   onClick={() => navigate(`/orderdetails/${order._id}`)}
                 >
-                  <td>{order._id}</td>
+                  <td className="make-display-inactive">{order._id}</td>
                   <td>{order.createdAt}</td>
                   <td>{order.totalPrice}</td>
                   <td>

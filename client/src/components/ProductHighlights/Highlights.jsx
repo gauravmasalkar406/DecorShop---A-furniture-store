@@ -65,7 +65,7 @@ const Highlights = ({ products }) => {
                     >
                       <div className="product-image-container">
                         <img
-                          src={product.image[0]}
+                          src={`${host}/${product.image[0]}`}
                           key={index}
                           className="product-image"
                         />

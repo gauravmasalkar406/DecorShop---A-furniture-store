@@ -46,7 +46,7 @@ const Products = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th className="make-display-inactive">ID</th>
               <th>NAME</th>
               <th>PRICE</th>
               <th>CATEGORY</th>
@@ -60,7 +60,7 @@ const Products = () => {
                 index >= firstIndex &&
                 index < lastIndex && (
                   <tr key={index}>
-                    <td>{product._id}</td>
+                    <td className="make-display-inactive">{product._id}</td>
                     <td>{product.name}</td>
                     <td>₹{product.price}</td>
                     <td>{product.category}</td>

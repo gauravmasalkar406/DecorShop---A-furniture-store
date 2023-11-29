@@ -54,7 +54,7 @@ const Users = () => {
         <table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th className="make-display-inactive">ID</th>
               <th>NAME</th>
               <th>EMAIL</th>
               <th>ADMIN</th>
@@ -64,7 +64,7 @@ const Users = () => {
           <tbody>
             {users.map((user, index) => (
               <tr key={index}>
-                <td>{user._id}</td>
+                <td className="make-display-inactive">{user._id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>

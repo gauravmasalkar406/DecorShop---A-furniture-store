@@ -23,6 +23,7 @@ const Shop = () => {
   const [isShipping, setIsShipping] = useState(false);
   const [sortByValue, setSortByValue] = useState("Price (Lowest)");
   const [currPage, setCurrPage] = useState(1);
+  const [showFilters, setShowfilters] = useState(false);
 
   const navigate = useNavigate();
 
@@ -177,7 +178,13 @@ const Shop = () => {
 
   return (
     <div className="shop-main">
-      <section className="shop-filters-container">
+      <section
+        className={
+          showFilters
+            ? "shop-filters-container"
+            : "shop-filters-container-inactive"
+        }
+      >
         <div className="shop-filters-head">
           <h2>FILTER BY</h2>
           <button onClick={handleAllClear}>Clear All</button>
@@ -245,6 +252,9 @@ const Shop = () => {
       </section>
 
       <section className="shop-product-conatainer">
+        <div className="shop-show-filter-container">
+          <button onClick={() => setShowfilters(!showFilters)}>Filters</button>
+        </div>
         <div className="sort-filter-container">
           <div className="shop-p-length-head">
             <p>{filteredProducts?.length} products found</p>

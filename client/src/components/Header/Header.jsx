@@ -16,7 +16,9 @@ const Header = () => {
                 Number #1 Trusted Furniture Website
               </span>
             </div>
-            <p>Coming soon in your door with a huge discount</p>
+            <div className="header-desc-container">
+              <p>Coming soon in your door with a huge discount</p>
+            </div>
             <button>View Now</button>
           </div>
         </div>
