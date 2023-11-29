@@ -58,6 +58,8 @@ const Create = () => {
   const handleCreateProduct = async (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
+
     if (
       name.length <= 0 ||
       price == undefined ||
@@ -70,12 +72,11 @@ const Create = () => {
       toast.error("Fill all details", {
         position: toast.POSITION.TOP_RIGHT,
       });
-
+      setIsLoadingLoading(false);
       return;
     }
 
     try {
-      setIsLoading(true);
       const response = await axios.post(
         createProductRoute,
         {
@@ -92,8 +93,8 @@ const Create = () => {
         { withCredentials: true }
       );
 
-      isLoading(false);
-      
+      setIsLoading(false);
+
       if (response.status == 200) {
         toast.success(response.data.message, {
           position: toast.POSITION.TOP_RIGHT,
