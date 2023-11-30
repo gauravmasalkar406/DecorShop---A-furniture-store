@@ -202,7 +202,10 @@
   }
 
   .stylish-banner-container img {
-    display: none;
+    height: 10rem;
+    position: absolute;
+    top: -7rem;
+    right: 0.75rem;
   }
 
   .go-to-shop-container {
