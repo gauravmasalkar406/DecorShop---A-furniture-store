@@ -10,7 +10,7 @@ const Highlights = ({ products }) => {
 
   const navigate = useNavigate();
 
-  // find out the categories
+  // find out the unique categories
   useEffect(() => {
     if (products) {
       const uniqueCategories = Array.from(

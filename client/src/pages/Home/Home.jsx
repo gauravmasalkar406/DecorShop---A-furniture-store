@@ -4,14 +4,11 @@ import Highlights from "../../components/ProductHighlights/Highlights";
 import axios from "axios";
 import { getAllProducts } from "../../api/product";
 import Featured from "../../components/Featured/Featured";
-import { useDispatch } from "react-redux";
 import "./home.css";
 
 const Home = () => {
   const [products, setProducts] = useState();
   const [isLoading, setIsLoading] = useState(false);
-
-  const dispatch = useDispatch();
 
   // fetching products
   useEffect(() => {
