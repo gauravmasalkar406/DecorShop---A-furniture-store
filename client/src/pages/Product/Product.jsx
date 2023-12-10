@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import axios from "axios";
 import "./product.css";
 import { getProductInfo } from "../../api/product.js";
@@ -28,7 +29,7 @@ const Product = () => {
   // userinfo
   const userInfo = useSelector((state) => state.user.userInfo);
 
-  // id from params
+  // product id from params
   const { id } = useParams();
 
   // set image src on first render imagesrc will be chnages once user click on different img
@@ -36,20 +37,21 @@ const Product = () => {
     setImageSrc(product?.image[0]);
   }, [product]);
 
-  // fetching product
+  // fetch product details
   useEffect(() => {
-    try {
-      const fetchProduct = async () => {
+    const fetchProduct = async () => {
+      try {
         const response = await axios.get(`${getProductInfo}/${id}`);
-
         setProduct(response?.data);
-      };
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
 
+    if (id) {
       fetchProduct();
-    } catch (error) {
-      console.log(error);
     }
-  }, []);
+  }, [id]);
 
   // increment quantiy
   const incrementQuant = () => {
@@ -73,7 +75,7 @@ const Product = () => {
     });
   };
 
-  // add to cart btn
+  // add to cart btn handler
   const handleAddToCartBtn = async () => {
     setIsLoading(true);
     if (userInfo && product) {
@@ -94,13 +96,16 @@ const Product = () => {
           dispatch(addCartItems(addToCartResponse?.data?.cartItems));
         }
 
-        setIsLoading(false);
-
         toast.success(addToCartResponse?.data?.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
       } catch (error) {
-        console.log(error);
+        console.error("Error adding to cart:", error);
+        toast.error("Failed to add item to cart", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } finally {
+        setIsLoading(false);
       }
     } else {
       navigate("/register");
@@ -108,82 +113,93 @@ const Product = () => {
   };
 
   return product ? (
-    <div className="prodduct-main">
-      <section className="product-images-column">
-        <div className="product-p-image-container">
-          <img src={`${host}/${imageSrc}`} alt="" />
-        </div>
-        <div className="images-select">
-          {product?.image?.map((ele, index) => (
-            <div
-              className={`products-p-p-image-container ${
-                imageSrc === ele && "active-p"
-              }`}
-              key={index}
-              onClick={() => setImageSrc(ele)}
-            >
-              <img src={`${host}/${ele}`} />
-            </div>
-          ))}
-        </div>
-      </section>
-      <section>
-        {product.countInStock > 0 ? (
-          <button className="stock-btn stock-btn-green">In Stock</button>
-        ) : (
-          <button className="stock-btn stock-btn-red">Out of Stock</button>
-        )}
+    <>
+      {/* SEO CONFIGURATIONS */}
+      <Helmet>
+        <title>{`${product.name} - DecorShop.com`}</title>
+        <meta name="description" content={product.description} />
+        <meta property="og:title" content={`${product.name} - DecorShop.com`} />
+        <meta property="og:description" content={product.description} />
+        <meta property="og:image" content={product.image[0]} />
+      </Helmet>
 
-        <h4 className="product-p-name">{product.name}</h4>
+      <div className="prodduct-main">
+        <section className="product-images-column">
+          <div className="product-p-image-container">
+            <img src={`${host}/${imageSrc}`} alt="" />
+          </div>
+          <div className="images-select">
+            {product?.image?.map((ele, index) => (
+              <div
+                className={`products-p-p-image-container ${
+                  imageSrc === ele && "active-p"
+                }`}
+                key={index}
+                onClick={() => setImageSrc(ele)}
+              >
+                <img src={`${host}/${ele}`} />
+              </div>
+            ))}
+          </div>
+        </section>
+        <section>
+          {product.countInStock > 0 ? (
+            <button className="stock-btn stock-btn-green">In Stock</button>
+          ) : (
+            <button className="stock-btn stock-btn-red">Out of Stock</button>
+          )}
 
-        <div className="rating-and-review">
-          <span>
-            <StarRating rating={product?.rating} />
-          </span>
-          <span className="product-rating">{product.rating}</span>
-          <span className="divider">|</span>
-          <span className="numreviews">{product.numReviews} Reviews</span>
-        </div>
+          <h4 className="product-p-name">{product.name}</h4>
 
-        <p className="product-p-description">{product.description}</p>
+          <div className="rating-and-review">
+            <span>
+              <StarRating rating={product?.rating} />
+            </span>
+            <span className="product-rating">{product.rating}</span>
+            <span className="divider">|</span>
+            <span className="numreviews">{product.numReviews} Reviews</span>
+          </div>
 
-        <h1 className="product-p-price">₹ {product.price}</h1>
+          <p className="product-p-description">{product.description}</p>
 
-        {product.countInStock > 0 && (
-          <>
-            <div className="quantity-select">
-              <p>QUANTITY :</p>
-              <div className="quantity-select-value-btn">
-                <span>{selectedQuantity}</span>
-                <div>
-                  <button onClick={incrementQuant}>
-                    <IoIosArrowUp />
-                  </button>
-                  <button onClick={decrementQuant}>
-                    <IoIosArrowDown />
-                  </button>
+          <h1 className="product-p-price">₹ {product.price}</h1>
+
+          {product.countInStock > 0 && (
+            <>
+              <div className="quantity-select">
+                <p>QUANTITY :</p>
+                <div className="quantity-select-value-btn">
+                  <span>{selectedQuantity}</span>
+                  <div>
+                    <button onClick={incrementQuant}>
+                      <IoIosArrowUp />
+                    </button>
+                    <button onClick={decrementQuant}>
+                      <IoIosArrowDown />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* add to cart btn */}
-            <button className="add-to-cart-btn" onClick={handleAddToCartBtn}>
-              {isLoading ? (
-                <span class="loader"></span>
-              ) : (
-                <>
-                  <AiOutlineShoppingCart size={20} />
-                  <span className="add-to-cart-btn-desc">ADD TO CART</span>
-                </>
-              )}
-            </button>
-          </>
-        )}
-      </section>
-    </div>
+              {/* add to cart btn */}
+              <button className="add-to-cart-btn" onClick={handleAddToCartBtn}>
+                {isLoading ? (
+                  <span className="loader"></span>
+                ) : (
+                  <>
+                    <AiOutlineShoppingCart size={20} />
+                    <span className="add-to-cart-btn-desc">ADD TO CART</span>
+                  </>
+                )}
+              </button>
+            </>
+          )}
+        </section>
+      </div>
+    </>
   ) : (
     <div className="loader-container">
-      <span class="loader-green"></span>
+      <span className="loader-green"></span>
     </div>
   );
 };

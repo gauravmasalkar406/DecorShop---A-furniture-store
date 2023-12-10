@@ -10,7 +10,7 @@ const Home = () => {
   const [products, setProducts] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  // fetching products
+  // fetching products database
   useEffect(() => {
     setIsLoading(true);
 
@@ -34,7 +34,7 @@ const Home = () => {
 
       {isLoading ? (
         <div className="loader-container">
-          <span class="loader-green"></span>
+          <span className="loader-green"></span>
         </div>
       ) : (
         <>
