@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./shop.css";
 import { getAllProducts } from "../../api/product";
 import axios from "axios";
@@ -9,6 +9,11 @@ import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { host } from "../../api/host";
+import { toast } from "react-toastify";
+import {
+  getUniqueCategoriesRoute,
+  getUniqueBrandsRoute,
+} from "../../api/product";
 
 const Shop = () => {
   const [products, setProducts] = useState();
@@ -18,15 +23,18 @@ const Shop = () => {
   const [brands, setBrands] = useState(["all"]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedBrand, setSelectedBrand] = useState("all");
-  const [higestPrice, setHighestPrice] = useState(0);
   const [selectedPrice, setSelectedPrice] = useState(0);
   const [isShipping, setIsShipping] = useState(false);
   const [sortByValue, setSortByValue] = useState("Price (Lowest)");
   const [currPage, setCurrPage] = useState(1);
   const [showFilters, setShowfilters] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalProducts, setTotalProducts] = useState(0);
 
   const navigate = useNavigate();
 
+  // sorting filters
   const sortByFilters = [
     "Price (Lowest)",
     "Price (Highest)",
@@ -34,90 +42,83 @@ const Shop = () => {
     "Name (Z-A)",
   ];
 
-  // get price of max pricy product
+  // fetching products
   useEffect(() => {
-    let price = 0;
-    products?.forEach((product) => {
-      if (product.price >= price) {
-        price = product.price;
-      }
-    });
-
-    setHighestPrice(price);
-  }, [products]);
+    fecthProducts();
+  }, [selectedCategory, selectedBrand, isShipping, currPage]);
 
   // fetching products
   useEffect(() => {
+    const debounce = setTimeout(() => fecthProducts(), 1000);
+
+    return () => clearTimeout(debounce);
+  }, [searchQuery, selectedPrice]);
+
+  // fetch products function
+  const fecthProducts = async () => {
+    setIsLoading(true);
+
+    // seacrh keyword
+    let keyword = searchQuery;
+    if (searchQuery.length <= 0) {
+      keyword = "default";
+    }
+
     try {
-      const fecthProducts = async () => {
-        const response = await axios.get(getAllProducts);
+      const response = await axios.get(
+        `${getAllProducts}/${keyword}/${selectedCategory}/${selectedBrand}/${selectedPrice}/${isShipping}/${currPage}`
+      );
 
-        setProducts(response?.data?.products);
-      };
-
-      fecthProducts();
+      setProducts(response?.data?.products);
+      setTotalPages(response.data.pages);
+      setTotalProducts(response.data.totalProducts);
     } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  // find unique categories
-  useEffect(() => {
-    if (products) {
-      const uniqueCategories = Array.from(
-        new Set([...categories, ...products.map((product) => product.category)])
-      );
-
-      setCategories([...uniqueCategories]);
-    }
-  }, [products]);
-
-  // find unique categories
-  useEffect(() => {
-    if (products) {
-      const uniqueBrands = Array.from(
-        new Set([...brands, ...products.map((product) => product.brand)])
-      );
-
-      setBrands([...uniqueBrands]);
-    }
-  }, [products]);
-
-  // filter products
-  useEffect(() => {
-    if (products) {
-      // search query
-      let tempProducts = products.filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-
-      // filter by category
-      if (selectedCategory !== "all") {
-        tempProducts = tempProducts.filter(
-          (product) =>
-            product.category.toLowerCase() === selectedCategory.toLowerCase()
-        );
-      }
-
-      // filter by brand
-      if (selectedBrand !== "all") {
-        tempProducts = tempProducts.filter(
-          (product) =>
-            product.brand.toLowerCase() === selectedBrand.toLowerCase()
-        );
-      }
-
-      // filter by price
-      tempProducts = tempProducts?.filter((product) => {
-        return product.price >= selectedPrice;
+      toast.error(error.response.data.message || error.message, {
+        position: toast.POSITION.TOP_RIGHT,
       });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      // shipping filter
-      if (isShipping) {
-        tempProducts = tempProducts?.filter((product) => {
-          return product.shipping;
+  // fetching unique categories
+  useEffect(() => {
+    const fetchUniqueCategories = async () => {
+      try {
+        const response = await axios.get(getUniqueCategoriesRoute);
+
+        setCategories(["all", ...response.data.unique]);
+      } catch (error) {
+        toast.error(error.response.data.message || error.message, {
+          position: toast.POSITION.TOP_RIGHT,
         });
       }
+    };
+
+    fetchUniqueCategories();
+  }, []);
+
+  // fetching unique brands
+  useEffect(() => {
+    const fetchUniqueBrands = async () => {
+      try {
+        const response = await axios.get(getUniqueBrandsRoute);
+
+        setBrands(["all", ...response.data.unique]);
+      } catch (error) {
+        toast.error(error.response.data.message || error.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    };
+
+    fetchUniqueBrands();
+  }, []);
+
+  // sorting filters
+  useEffect(() => {
+    if (products) {
+      let tempProducts = [...products];
 
       // sort by filter
       if (sortByValue == "Price (Lowest)") {
@@ -152,15 +153,7 @@ const Shop = () => {
 
       setFilteredProduct([...tempProducts]);
     }
-  }, [
-    searchQuery,
-    products,
-    selectedCategory,
-    selectedBrand,
-    selectedPrice,
-    isShipping,
-    sortByValue,
-  ]);
+  }, [products, sortByValue]);
 
   const handleAllClear = () => {
     setSearchQuery("");
@@ -171,12 +164,7 @@ const Shop = () => {
     setSortByValue("Price (Lowest)");
   };
 
-  let itemsPerPage = 6;
-  let totalPages = Math.ceil(filteredProducts?.length / itemsPerPage);
-  let lastIndex = currPage * itemsPerPage;
-  let firstIndex = lastIndex - itemsPerPage;
-
-  return products ? (
+  return (
     <div className="shop-main">
       <section
         className={
@@ -195,7 +183,10 @@ const Shop = () => {
             type="text"
             placeholder="...Search product"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrPage(1);
+            }}
           />
           <IoSearchOutline size={22} />
         </div>
@@ -209,7 +200,10 @@ const Shop = () => {
                 ? "active-category shop-category-option"
                 : "shop-category-option"
             }
-            onClick={() => setSelectedCategory(cat)}
+            onClick={() => {
+              setSelectedCategory(cat);
+              setCurrPage(1);
+            }}
           >
             {cat}
           </p>
@@ -219,7 +213,10 @@ const Shop = () => {
           <h4 className="shop-brand-head">Brand</h4>
           <select
             value={selectedBrand}
-            onChange={(e) => setSelectedBrand(e.target.value)}
+            onChange={(e) => {
+              setSelectedBrand(e.target.value);
+              setCurrPage(1);
+            }}
           >
             {brands?.map((brand, index) => (
               <option key={index} value={brand}>
@@ -234,8 +231,11 @@ const Shop = () => {
           <input
             type="range"
             min={0}
-            max={higestPrice}
-            onChange={(e) => setSelectedPrice(e.target.value)}
+            max={100000}
+            onChange={(e) => {
+              setSelectedPrice(e.target.value);
+              setCurrPage(1);
+            }}
             value={selectedPrice}
           />
           <p>₹{selectedPrice}</p>
@@ -244,7 +244,10 @@ const Shop = () => {
         <div className="shop-checkbox-container">
           <input
             type="checkbox"
-            onChange={() => setIsShipping(!isShipping)}
+            onChange={() => {
+              setIsShipping(!isShipping);
+              setCurrPage(1);
+            }}
             checked={isShipping == true}
           />{" "}
           <span>Shipping</span>
@@ -257,7 +260,7 @@ const Shop = () => {
         </div>
         <div className="sort-filter-container">
           <div className="shop-p-length-head">
-            <p>{filteredProducts?.length} products found</p>
+            <p>{totalProducts} products found</p>
           </div>
 
           <div className="shop-horizontal">
@@ -278,86 +281,88 @@ const Shop = () => {
             </select>
           </div>
         </div>
-        <div className="shop-products-container">
-          {filteredProducts?.map((product, index) => {
-            return (
-              index >= firstIndex &&
-              index < lastIndex && (
-                <div
-                  className="product-card"
-                  onClick={() => navigate(`/product/${product._id}`)}
-                  key={index}
-                >
-                  <div className="product-image-container">
-                    <img
-                      src={`${host}/${product?.image[0]}`}
-                      key={index}
-                      className="product-image"
-                    />
-                  </div>
-                  <p className="product-name">{product.name}</p>
-                  <p className="product-price">₹{product.price}</p>
-                </div>
-              )
-            );
-          })}
-        </div>
 
-        <div className="shop-pagination-container">
-          <button onClick={() => setCurrPage(1)}>
-            <MdOutlineKeyboardDoubleArrowLeft />
-          </button>
-          <button
-            onClick={() => {
-              if (currPage <= 1) {
-                setCurrPage(1);
-              } else {
-                setCurrPage(currPage - 1);
-              }
-            }}
-          >
-            <MdOutlineKeyboardArrowLeft />
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (pageNum) => {
-              return (
-                pageNum >= currPage - 1 &&
-                pageNum <= currPage + 1 && (
-                  <button
-                    key={pageNum}
-                    className={
-                      pageNum === currPage
-                        ? "active-page-btn"
-                        : "inactive-page-btn"
-                    }
-                    onClick={() => setCurrPage(pageNum)}
+        {!isLoading && products ? (
+          <>
+            <div className="shop-products-container">
+              {filteredProducts?.map((product, index) => {
+                return (
+                  <div
+                    className="product-card"
+                    onClick={() => navigate(`/product/${product._id}`)}
+                    key={index}
                   >
-                    {pageNum}
-                  </button>
-                )
-              );
-            }
-          )}
-          <button
-            onClick={() => {
-              if (currPage >= totalPages) {
-                setCurrPage(totalPages);
-              } else {
-                setCurrPage(currPage + 1);
-              }
-            }}
-          >
-            <MdOutlineKeyboardArrowRight />
-          </button>
-          <button onClick={() => setCurrPage(totalPages)}>
-            <MdOutlineKeyboardDoubleArrowRight />
-          </button>
-        </div>
+                    <div className="product-image-container">
+                      <img
+                        src={`${host}/${product?.image[0]}`}
+                        key={index}
+                        className="product-image"
+                        alt={product?.name}
+                      />
+                    </div>
+                    <p className="product-name">{product.name}</p>
+                    <p className="product-price">₹{product.price}</p>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="shop-pagination-container">
+              <button onClick={() => setCurrPage(1)}>
+                <MdOutlineKeyboardDoubleArrowLeft />
+              </button>
+              <button
+                onClick={() => {
+                  if (currPage <= 1) {
+                    setCurrPage(1);
+                  } else {
+                    setCurrPage(currPage - 1);
+                  }
+                }}
+              >
+                <MdOutlineKeyboardArrowLeft />
+              </button>
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                (pageNum) => {
+                  return (
+                    pageNum >= currPage - 1 &&
+                    pageNum <= currPage + 1 && (
+                      <button
+                        key={pageNum}
+                        className={
+                          pageNum === currPage
+                            ? "active-page-btn"
+                            : "inactive-page-btn"
+                        }
+                        onClick={() => setCurrPage(pageNum)}
+                      >
+                        {pageNum}
+                      </button>
+                    )
+                  );
+                }
+              )}
+              <button
+                onClick={() => {
+                  if (currPage >= totalPages) {
+                    setCurrPage(totalPages);
+                  } else {
+                    setCurrPage(currPage + 1);
+                  }
+                }}
+              >
+                <MdOutlineKeyboardArrowRight />
+              </button>
+              <button onClick={() => setCurrPage(totalPages)}>
+                <MdOutlineKeyboardDoubleArrowRight />
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="loader-container">
+            <span className="loader-green"></span>
+          </div>
+        )}
       </section>
-    </div>
-  ) : (
-    <div className="loader-container">
-      <span class="loader-green"></span>
     </div>
   );
 };

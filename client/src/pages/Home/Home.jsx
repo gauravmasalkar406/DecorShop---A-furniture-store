@@ -1,47 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Header from "../../components/Header/Header";
 import Highlights from "../../components/ProductHighlights/Highlights";
-import axios from "axios";
-import { getAllProducts } from "../../api/product";
 import Featured from "../../components/Featured/Featured";
 import "./home.css";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
-  const [products, setProducts] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-
-  // fetching products database
-  useEffect(() => {
-    setIsLoading(true);
-
-    try {
-      const fecthProducts = async () => {
-        const response = await axios.get(getAllProducts);
-
-        setIsLoading(false);
-        setProducts(response?.data?.products);
-      };
-
-      fecthProducts();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
   return (
     <div>
+      {/* SEO CONFIGURATIONS */}
+      <Helmet>
+        <title>DecorShop - Quality Home Decor Products</title>
+        <meta
+          name="description"
+          content="Explore a wide range of high-quality home decor products at DecorShop. Find unique items to enhance your living space."
+        />
+        <meta
+          property="og:title"
+          content="DecorShop - Quality Home Decor Products"
+        />
+        <meta
+          property="og:description"
+          content="Explore a wide range of high-quality home decor products at DecorShop. Find unique items to enhance your living space."
+        />
+      </Helmet>
       <Header />
-
-      {isLoading ? (
-        <div className="loader-container">
-          <span className="loader-green"></span>
-        </div>
-      ) : (
-        <>
-          <Highlights products={products} />
-          <Featured products={products} />
-        </>
-      )}
+      <Highlights />
+      <Featured />
     </div>
   );
 };

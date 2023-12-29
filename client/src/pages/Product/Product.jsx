@@ -126,7 +126,7 @@ const Product = () => {
       <div className="prodduct-main">
         <section className="product-images-column">
           <div className="product-p-image-container">
-            <img src={`${host}/${imageSrc}`} alt="" />
+            <img src={`${host}/${imageSrc}`} alt={product?.name} />
           </div>
           <div className="images-select">
             {product?.image?.map((ele, index) => (
@@ -137,7 +137,7 @@ const Product = () => {
                 key={index}
                 onClick={() => setImageSrc(ele)}
               >
-                <img src={`${host}/${ele}`} />
+                <img src={`${host}/${ele}`} alt={product?.name} />
               </div>
             ))}
           </div>
