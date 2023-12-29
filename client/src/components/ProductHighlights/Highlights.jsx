@@ -56,60 +56,68 @@ const Highlights = () => {
     fetchUniqueCategories();
   }, []);
 
-  return products && !isLoading ? (
+  return (
     <div className="highlights-main">
       <div className="highlights-main-container">
-        <section className="category-btns">
-          {categories.map((category, index) => (
-            <button
-              key={index}
-              className={selectedCategory === category ? "selected" : ""}
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </section>
+        {categories && (
+          <section className="category-btns">
+            {categories.map((category, index) => (
+              <button
+                key={index}
+                className={selectedCategory === category ? "selected" : ""}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </section>
+        )}
 
-        <section className="products-container">
-          {products.map((product, index) =>
-            selectedCategory === "all"
-              ? index < 8 && (
-                  <div
-                    className="product-card"
-                    onClick={() => navigate(`/product/${product._id}`)}
-                    key={index}
-                  >
-                    <div className="product-image-container">
-                      <img
-                        src={`${host}/${product.image[0]}`}
-                        key={index}
-                        className="product-image"
-                      />
+        {products && !isLoading ? (
+          <section className="products-container">
+            {products.map((product, index) =>
+              selectedCategory === "all"
+                ? index < 8 && (
+                    <div
+                      className="product-card"
+                      onClick={() => navigate(`/product/${product._id}`)}
+                      key={index}
+                    >
+                      <div className="product-image-container">
+                        <img
+                          src={`${host}/${product.image[0]}`}
+                          key={index}
+                          className="product-image"
+                        />
+                      </div>
+                      <p className="product-name">{product.name}</p>
+                      <p className="product-price">₹{product.price}</p>
                     </div>
-                    <p className="product-name">{product.name}</p>
-                    <p className="product-price">₹{product.price}</p>
-                  </div>
-                )
-              : product.category === selectedCategory && (
-                  <div
-                    className="product-card"
-                    onClick={() => navigate(`/product/${product._id}`)}
-                    key={index}
-                  >
-                    <div className="product-image-container">
-                      <img
-                        src={`${host}/${product.image[0]}`}
-                        key={index}
-                        className="product-image"
-                      />
+                  )
+                : product.category === selectedCategory && (
+                    <div
+                      className="product-card"
+                      onClick={() => navigate(`/product/${product._id}`)}
+                      key={index}
+                    >
+                      <div className="product-image-container">
+                        <img
+                          src={`${host}/${product.image[0]}`}
+                          key={index}
+                          className="product-image"
+                        />
+                      </div>
+                      <p className="product-name">{product.name}</p>
+                      <p className="product-price">₹{product.price}</p>
                     </div>
-                    <p className="product-name">{product.name}</p>
-                    <p className="product-price">₹{product.price}</p>
-                  </div>
-                )
-          )}
-        </section>
+                  )
+            )}
+          </section>
+        ) : (
+          <div className="loader-container">
+            <span className="loader-green"></span>
+          </div>
+        )}
 
         <section className="go-to-shop-container">
           <div></div>
@@ -130,10 +138,6 @@ const Highlights = () => {
           <img src={basketChair} alt="" />
         </section>
       </div>
-    </div>
-  ) : (
-    <div className="loader-container">
-      <span className="loader-green"></span>
     </div>
   );
 };
