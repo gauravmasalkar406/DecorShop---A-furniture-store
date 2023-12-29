@@ -10,18 +10,26 @@ const Home = () => {
     <div>
       {/* SEO CONFIGURATIONS */}
       <Helmet>
-        <title>DecorShop - Quality Home Decor Products</title>
+        <title>Quality Home Decor Products | DecorShop</title>
         <meta
           name="description"
-          content="Explore a wide range of high-quality home decor products at DecorShop. Find unique items to enhance your living space."
+          content="Discover a diverse selection of high-quality home decor items at DecorShop. Elevate your living space with unique products and accessories."
         />
         <meta
           property="og:title"
-          content="DecorShop - Quality Home Decor Products"
+          content="Quality Home Decor Products | DecorShop"
         />
         <meta
           property="og:description"
-          content="Explore a wide range of high-quality home decor products at DecorShop. Find unique items to enhance your living space."
+          content="Explore a diverse selection of high-quality home decor items at DecorShop. Elevate your living space with unique products and accessories."
+        />
+        <meta
+          property="og:image"
+          content="https://decorshop-jrzm.onrender.com/uploads/BlackSofaSet-WoodCraf01.webp"
+        />
+        <meta
+          property="og:url"
+          content="https://starlit-boba-8d5fb7.netlify.app"
         />
       </Helmet>
       <Header />

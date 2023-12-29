@@ -88,6 +88,7 @@ const Highlights = () => {
                           src={`${host}/${product.image[0]}`}
                           key={index}
                           className="product-image"
+                          alt={product.name}
                         />
                       </div>
                       <p className="product-name">{product.name}</p>
@@ -105,6 +106,7 @@ const Highlights = () => {
                           src={`${host}/${product.image[0]}`}
                           key={index}
                           className="product-image"
+                          alt={product.name}
                         />
                       </div>
                       <p className="product-name">{product.name}</p>
@@ -135,7 +137,7 @@ const Highlights = () => {
               <button>View Now</button>
             </div>
           </div>
-          <img src={basketChair} alt="" />
+          <img src={basketChair} alt="basketchair" />
         </section>
       </div>
     </div>
