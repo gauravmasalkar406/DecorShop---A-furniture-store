@@ -13,36 +13,32 @@ const Products = () => {
   const [products, setProducts] = useState();
   const [currPage, setCurrPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
 
   const navigate = useNavigate();
 
   // fetching products
   useEffect(() => {
-    setIsLoading(true);
+    fetchProducts();
+  }, [currPage]);
+
+  const fetchProducts = async () => {
     try {
-      const fecthProducts = async () => {
-        const response = await axios.get(getAllProducts);
+      setIsLoading(true);
+      const response = await axios.get(
+        `${getAllProducts}/default/all/all/0/false/${currPage}`
+      );
 
-        setIsLoading(false);
-
-        setProducts(response?.data?.products);
-      };
-
-      fecthProducts();
+      setProducts(response?.data?.products);
+      setTotalPages(response.data.pages);
     } catch (error) {
       toast.error(error.response.data.message || error.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
+    } finally {
+      setIsLoading(false);
     }
-  }, []);
-
-  let itemsPerPage = 6;
-  let totalPages = Math.ceil(products?.length / itemsPerPage);
-  let lastIndex = currPage * itemsPerPage;
-  let firstIndex = lastIndex - itemsPerPage;
-
-  // product delete
-  const handleProductDelete = () => {};
+  };
 
   return isLoading ? (
     <div className="loader-container">
@@ -63,31 +59,31 @@ const Products = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map(
-              (product, index) =>
-                index >= firstIndex &&
-                index < lastIndex && (
-                  <tr key={index}>
-                    <td className="make-display-inactive">{product._id}</td>
-                    <td>{product.name}</td>
-                    <td>₹{product.price}</td>
-                    <td>{product.category}</td>
-                    <td>{product.brand}</td>
-                    <td>
-                      <button
-                        style={{
-                          border: "0px",
-                          background: "none",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => handleProductDelete(product._id)}
-                      >
-                        <AiOutlineDelete style={{ color: "red" }} />
-                      </button>
-                    </td>
-                  </tr>
-                )
-            )}
+            {products.map((product, index) => (
+              <tr key={index}>
+                <td
+                  className="make-display-inactive"
+                  onClick={() => navigate(`/product/${product._id}`)}
+                >
+                  {product._id}
+                </td>
+                <td>{product.name}</td>
+                <td>₹{product.price}</td>
+                <td>{product.category}</td>
+                <td>{product.brand}</td>
+                <td>
+                  <button
+                    style={{
+                      border: "0px",
+                      background: "none",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <AiOutlineDelete style={{ color: "red" }} />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       )}
