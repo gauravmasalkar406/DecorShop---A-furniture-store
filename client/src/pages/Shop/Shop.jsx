@@ -131,23 +131,15 @@ const Shop = () => {
         });
       } else if (sortByValue == "Name (A-Z)") {
         tempProducts.sort((a, b) => {
-          if (b.name > a.name) {
-            return -1;
-          } else if (a.name > b.name) {
-            return 1;
-          } else {
-            return 0;
-          }
+          let nameX = a.name.toLowerCase();
+          let nameY = b.name.toLowerCase();
+          return nameX.localeCompare(nameY);
         });
       } else if (sortByValue == "Name (Z-A)") {
         tempProducts.sort((a, b) => {
-          if (a.name > b.name) {
-            return -1;
-          } else if (b.name > a.name) {
-            return 1;
-          } else {
-            return 0;
-          }
+          let nameX = a.name.toLowerCase();
+          let nameY = b.name.toLowerCase();
+          return nameY.localeCompare(nameX);
         });
       }
 
