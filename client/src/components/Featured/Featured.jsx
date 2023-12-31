@@ -59,11 +59,11 @@ const Featured = () => {
         <hr className="hr-line hr-length" />
 
         <section className="intagram-banner">
-          <img src={instagram2} alt="" />
-          <img src={instagram1} alt="" />
-          <img src={instagram3} alt="" />
-          <img src={instagram4} alt="" />
-          <img src={instagram5} alt="" />
+          <img src={instagram2} alt="instagram2" loading="lazy" />
+          <img src={instagram1} alt="instagram1" loading="lazy" />
+          <img src={instagram3} alt="instagram3" loading="lazy" />
+          <img src={instagram4} alt="instagram4" loading="lazy" />
+          <img src={instagram5} alt="instagram5" loading="lazy" />
 
           <div className="insta-head-container">
             <div className="insta-head">

@@ -54,7 +54,11 @@ const CartProduct = ({ cartItem, onItemDelete, index, isOrderPage }) => {
             className="cart-product-img"
             onClick={() => navigate(`/product/${product._id}`)}
           >
-            <img src={`${host}/${product?.image[0]}`} alt="" />
+            <img
+              src={`${host}/${product?.image[0]}`}
+              alt={product?.name}
+              loading="lazy"
+            />
           </div>
           <div className="head-delete-btn">
             <h5>{product?.name}</h5>

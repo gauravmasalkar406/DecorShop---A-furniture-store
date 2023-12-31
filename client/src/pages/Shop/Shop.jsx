@@ -298,6 +298,7 @@ const Shop = () => {
                         key={index}
                         className="product-image"
                         alt={product?.name}
+                        loading="lazy"
                       />
                     </div>
                     <p className="product-name">{product.name}</p>

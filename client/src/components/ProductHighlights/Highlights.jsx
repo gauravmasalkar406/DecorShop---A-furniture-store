@@ -89,6 +89,7 @@ const Highlights = () => {
                           key={index}
                           className="product-image"
                           alt={product.name}
+                          loading="lazy"
                         />
                       </div>
                       <p className="product-name">{product.name}</p>
@@ -107,6 +108,7 @@ const Highlights = () => {
                           key={index}
                           className="product-image"
                           alt={product.name}
+                          loading="lazy"
                         />
                       </div>
                       <p className="product-name">{product.name}</p>
@@ -137,7 +139,7 @@ const Highlights = () => {
               <button>View Now</button>
             </div>
           </div>
-          <img src={basketChair} alt="basketchair" />
+          <img src={basketChair} alt="basketchair" loading="lazy" />
         </section>
       </div>
     </div>

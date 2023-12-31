@@ -45,6 +45,7 @@ const F1 = ({ category, heading }) => {
                   src={`${host}/${product.image[0]}`}
                   alt={product.name}
                   className="p-img"
+                  loading="lazy"
                 />
                 <div>
                   <p className="p-name">{product.name}</p>

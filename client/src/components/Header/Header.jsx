@@ -22,8 +22,8 @@ const Header = () => {
             <button>View Now</button>
           </div>
         </div>
-        <img src={light1} className="light-img-1" alt="" />
-        <img src={light2} className="light-img-2" alt="" />
+        <img src={light1} className="light-img-1" alt="light1" loading="lazy" />
+        <img src={light2} className="light-img-2" alt="light2" loading="lazy" />
       </div>
     </div>
   );
