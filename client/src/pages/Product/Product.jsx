@@ -44,7 +44,7 @@ const Product = () => {
         const response = await axios.get(`${getProductInfo}/${id}`);
         setProduct(response?.data);
       } catch (error) {
-        console.error("Error fetching product:", error);
+        toast(error?.message || error?.response?.data?.message);
       }
     };
 
@@ -96,14 +96,9 @@ const Product = () => {
           dispatch(addCartItems(addToCartResponse?.data?.cartItems));
         }
 
-        toast.success(addToCartResponse?.data?.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.success(addToCartResponse?.data?.message);
       } catch (error) {
-        console.error("Error adding to cart:", error);
-        toast.error("Failed to add item to cart", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.error("Failed to add item to cart");
       } finally {
         setIsLoading(false);
       }

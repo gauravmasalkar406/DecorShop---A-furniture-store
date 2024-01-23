@@ -37,15 +37,11 @@ const Create = () => {
         // image name
         setImage(response.data.image);
 
-        toast.success(response.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.success(response.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(error.response.data.message);
     }
   };
 
@@ -69,9 +65,7 @@ const Create = () => {
       quantity == undefined ||
       imageArr.length < 4
     ) {
-      toast.error("Fill all details", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error("Fill all details");
       setIsLoadingLoading(false);
       return;
     }
@@ -96,14 +90,10 @@ const Create = () => {
       setIsLoading(false);
 
       if (response.status == 200) {
-        toast.success(response.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.success(response.data.message);
       }
     } catch (error) {
-      toast.error(error.response.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(error.response.data.message);
     }
   };
 

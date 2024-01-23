@@ -34,9 +34,7 @@ const Register = () => {
     setIsLoading(true);
 
     if (name.length < 3) {
-      toast.error("Name should have atleast 3 charcters!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error("Name should have atleast 3 charcters!");
 
       setIsLoading(false);
       return;
@@ -85,7 +83,7 @@ const Register = () => {
           navigate(-1);
         }
       } catch (error) {
-        toast.error(error.message);
+        toast(error?.message || error?.response?.data?.message);
       }
     }
 

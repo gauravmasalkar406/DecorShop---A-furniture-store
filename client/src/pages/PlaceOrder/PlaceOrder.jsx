@@ -43,7 +43,7 @@ const PlaceOrder = () => {
 
         fetchCartItems();
       } catch (error) {
-        console.log(error);
+        toast(error?.message || error?.response?.data?.message);
       }
     }
   }, [userInfo]);
@@ -66,9 +66,7 @@ const PlaceOrder = () => {
         );
 
         // success message
-        toast.success(response?.data?.msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.success(response?.data?.msg);
 
         // emptyingt the cart
         dispatch(removeCartItems());
@@ -86,7 +84,7 @@ const PlaceOrder = () => {
           navigate(`/orderdetails/${response.data.createdOrder._id}`);
         }
       } catch (error) {
-        console.log(error);
+        toast(error?.message || error?.response?.data?.message);
       }
     }
   };

@@ -38,7 +38,7 @@ const OrderDetails = () => {
           setOrder(response.data);
         }
       } catch (error) {
-        console.log(error);
+        toast(error?.message || error?.response?.data?.message);
       }
     };
 

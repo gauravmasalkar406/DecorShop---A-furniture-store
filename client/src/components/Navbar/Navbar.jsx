@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsPersonPlus } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -103,12 +103,47 @@ const Navbar = () => {
               : s.nav_links_container
           }
         >
-          <Link to="/">HOME</Link>
-          <Link to="/shop">SHOP</Link>
-          <Link to={userInfo ? "/profile" : "/register"}>PROFILE</Link>
-          {userInfo?.isAdmin && <Link to="/adminpanel">ADMIN PANEL</Link>}
-          <Link to="/services">SERVICES</Link>
-          <Link to="/news">NEWS</Link>
+          <NavLink
+            to="/"
+            className={({ isActive, isPending }) =>
+              isPending ? s.pending : isActive ? s.active_link : ""
+            }
+          >
+            HOME
+          </NavLink>
+          <NavLink
+            to="/shop"
+            className={({ isActive, isPending }) =>
+              isPending ? s.pending : isActive ? s.active_link : ""
+            }
+          >
+            SHOP
+          </NavLink>
+          <NavLink
+            to={userInfo ? "/profile" : "/register"}
+            className={({ isActive, isPending }) =>
+              isPending ? s.pending : isActive ? s.active_link : ""
+            }
+          >
+            PROFILE
+          </NavLink>
+          {userInfo?.isAdmin && <NavLink to="/adminpanel">ADMIN PANEL</NavLink>}
+          <NavLink
+            to="/services"
+            className={({ isActive, isPending }) =>
+              isPending ? s.pending : isActive ? s.active_link : ""
+            }
+          >
+            SERVICES
+          </NavLink>
+          <NavLink
+            to="/news"
+            className={({ isActive, isPending }) =>
+              isPending ? s.pending : isActive ? s.active_link : ""
+            }
+          >
+            NEWS
+          </NavLink>
         </div>
 
         <div className={s.nav_user_menu_container}>

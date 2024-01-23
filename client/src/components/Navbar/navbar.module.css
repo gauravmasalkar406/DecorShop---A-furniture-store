@@ -9,6 +9,10 @@
   z-index: 10;
 }
 
+.nav_links_container a.active_link {
+  color: var(--primary-green-color);
+}
+
 .navbar_primary_container {
   display: flex;
   margin: auto;

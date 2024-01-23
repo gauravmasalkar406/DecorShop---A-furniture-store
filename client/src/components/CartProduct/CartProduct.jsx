@@ -37,11 +37,9 @@ const CartProduct = ({ cartItem, onItemDelete, index, isOrderPage }) => {
       onItemDelete();
 
       // success message
-      toast.success(response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.success(response?.data?.message);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message || error.response.message);
     }
   };
 

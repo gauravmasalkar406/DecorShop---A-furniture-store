@@ -7,6 +7,7 @@ import { addCartItems } from "../../store/slices/cart.js";
 import { useNavigate } from "react-router-dom";
 import { updateCartTotal } from "../../store/slices/cart.js";
 import s from "./cart.module.css";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const [isItemDeleted, setIsItemDeleted] = useState(false);
@@ -45,7 +46,7 @@ const Cart = () => {
 
         fetchCartItems();
       } catch (error) {
-        console.log(error);
+        toast(error?.message || error?.response?.data?.message);
       }
     }
   }, [isItemDeleted]);

@@ -40,16 +40,12 @@ const Users = () => {
       });
 
       if (response.status === 200) {
-        toast.success(response.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.success(response.data.message);
 
         setUsersUpdated(!usersUpdated);
       }
     } catch (error) {
-      toast.error(error.response.data.message || error.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(error.response.data.message || error.message);
     }
   };
 
