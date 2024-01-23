@@ -33,9 +33,7 @@ const Featured = () => {
 
       setProducts(response.data.products);
     } catch (error) {
-      toast.error(error.response.data.message || error.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(error.response.data.message || error.message);
     } finally {
       setIsLoading(false);
     }
