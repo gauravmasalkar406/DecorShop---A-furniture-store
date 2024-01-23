@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import "./product.css";
 import { getProductInfo } from "../../api/product.js";
 import { useParams } from "react-router-dom";
 import { IoIosArrowUp } from "react-icons/io";
@@ -15,6 +14,7 @@ import { toast } from "react-toastify";
 import { addCartItems } from "../../store/slices/cart.js";
 import { host } from "../../api/host.js";
 import "react-toastify/dist/ReactToastify.css";
+import s from "./product.module.css";
 
 const Product = () => {
   const [product, setProduct] = useState();
@@ -123,16 +123,16 @@ const Product = () => {
         <meta property="og:image" content={product.image[0]} />
       </Helmet>
 
-      <div className="prodduct-main">
-        <section className="product-images-column">
-          <div className="product-p-image-container">
+      <div className={s.prodduct_main}>
+        <section className={s.product_images_column}>
+          <div className={s.product_p_image_container}>
             <img src={`${host}/${imageSrc}`} alt={product?.name} />
           </div>
-          <div className="images-select">
+          <div className={s.images_select}>
             {product?.image?.map((ele, index) => (
               <div
-                className={`products-p-p-image-container ${
-                  imageSrc === ele && "active-p"
+                className={`${s.products_p_p_image_container} ${
+                  imageSrc === ele && s.active_p
                 }`}
                 key={index}
                 onClick={() => setImageSrc(ele)}
@@ -144,31 +144,35 @@ const Product = () => {
         </section>
         <section>
           {product.countInStock > 0 ? (
-            <button className="stock-btn stock-btn-green">In Stock</button>
+            <button className={`${s.stock_btn} ${s.stock_btn_green}`}>
+              In Stock
+            </button>
           ) : (
-            <button className="stock-btn stock-btn-red">Out of Stock</button>
+            <button className={`${s.stock_btn} ${s.stock_btn_red}`}>
+              Out of Stock
+            </button>
           )}
 
-          <h4 className="product-p-name">{product.name}</h4>
+          <h4 className={s.product_p_name}>{product.name}</h4>
 
-          <div className="rating-and-review">
+          <div className={s.rating_and_review}>
             <span>
               <StarRating rating={product?.rating} />
             </span>
-            <span className="product-rating">{product.rating}</span>
-            <span className="divider">|</span>
-            <span className="numreviews">{product.numReviews} Reviews</span>
+            <span className={s.product_rating}>{product.rating}</span>
+            <span className={s.divider}>|</span>
+            <span className={s.numreviews}>{product.numReviews} Reviews</span>
           </div>
 
-          <p className="product-p-description">{product.description}</p>
+          <p className={s.product_p_description}>{product.description}</p>
 
-          <h1 className="product-p-price">₹ {product.price}</h1>
+          <h1 className={s.product_p_price}>₹ {product.price}</h1>
 
           {product.countInStock > 0 && (
             <>
-              <div className="quantity-select">
+              <div className={s.quantity_select}>
                 <p>QUANTITY :</p>
-                <div className="quantity-select-value-btn">
+                <div className={s.quantity_select_value_btn}>
                   <span>{selectedQuantity}</span>
                   <div>
                     <button onClick={incrementQuant}>
@@ -182,13 +186,16 @@ const Product = () => {
               </div>
 
               {/* add to cart btn */}
-              <button className="add-to-cart-btn" onClick={handleAddToCartBtn}>
+              <button
+                className={s.add_to_cart_btn}
+                onClick={handleAddToCartBtn}
+              >
                 {isLoading ? (
-                  <span className="loader"></span>
+                  <span className={s.loader}></span>
                 ) : (
                   <>
                     <AiOutlineShoppingCart size={20} />
-                    <span className="add-to-cart-btn-desc">ADD TO CART</span>
+                    <span className={s.add_to_cart_btn_desc}>ADD TO CART</span>
                   </>
                 )}
               </button>

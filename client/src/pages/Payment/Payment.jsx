@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./payment.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import s from "./payment.module.css";
 
 const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState("paypal");
@@ -19,12 +19,12 @@ const Payment = () => {
   return (
     userInfo && (
       <div>
-        <div className="cart-main">
-          <section className="cart-p-details">
-            <h4 className="cart-sub-head">Shipping</h4>
+        <div className={s.cart_main}>
+          <section className={s.cart_p_details}>
+            <h4 className={s.cart_sub_head}>Shipping</h4>
             <hr style={{ marginBottom: "2rem" }} />
-            <div className="payment-main">
-              <h3>Select Payement Method</h3>
+            <div className={s.payment_main}>
+              <h3>Select Payment Method</h3>
               <div>
                 <input
                   type="checkbox"
@@ -38,24 +38,24 @@ const Payment = () => {
 
           <section>
             <>
-              <h4 className="cart-sub-head">Summary</h4>
+              <h4 className={s.cart_sub_head}>Summary</h4>
               <hr style={{ marginBottom: "2rem" }} />
-              <div className="summary-main">
-                <div className="summary-total">
+              <div className={s.summary_main}>
+                <div className={s.summary_total}>
                   <p>Bag total</p>
                   <h4>₹{cartTotal}</h4>
                 </div>
-                <div className="summary-total">
+                <div className={s.summary_total}>
                   <p>Convenience Fee</p>
                   <h4>₹99</h4>
                 </div>
               </div>
-              <div className="summary-subtotal-conatainer">
+              <div className={s.summary_subtotal_conatainer}>
                 <p>Total</p>
                 <h3>₹{cartTotal + 99}</h3>
               </div>
 
-              <button className="summary-buy-btn" onClick={handlePayment}>
+              <button className={s.summary_buy_btn} onClick={handlePayment}>
                 PAYMENT
               </button>
             </>

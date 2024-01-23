@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./navbar.css";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsPersonPlus } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +9,7 @@ import { logoutUser } from "../../api/user.js";
 import { removeUser } from "../../store/slices/user.js";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { getCartItemsRoute } from "../../api/cart.js";
 import {
   addCartItems,
@@ -23,6 +22,7 @@ import {
 } from "../../store/slices/order.js";
 import { IoMdMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
+import s from "./navbar.module.css";
 
 const Navbar = () => {
   const [isMenuSelected, setIsMenuSelected] = useState(true);
@@ -59,11 +59,9 @@ const Navbar = () => {
       navigate("/");
 
       // success message
-      toast.success(logOutResponse?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.success("Logged out");
     } catch (error) {
-      console.log(error);
+      toast.error(error.message || error.data.message);
     }
   };
 
@@ -90,8 +88,8 @@ const Navbar = () => {
   }, [userInfo]);
 
   return (
-    <div className="navbar-main">
-      <div className="navbar-primary-container">
+    <div className={s.navbar_main}>
+      <div className={s.navbar_primary_container}>
         <h1>
           DecorShop
           <span>.</span>
@@ -101,8 +99,8 @@ const Navbar = () => {
           onClick={() => setIsMenuSelected(!isMenuSelected)}
           className={
             isMenuSelected
-              ? "nav-menu-active nav-links-container"
-              : "nav-links-container"
+              ? `${s.nav_menu_active} ${s.nav_links_container}`
+              : s.nav_links_container
           }
         >
           <Link to="/">HOME</Link>
@@ -113,8 +111,8 @@ const Navbar = () => {
           <Link to="/news">NEWS</Link>
         </div>
 
-        <div className="nav-user-menu-container">
-          <div className="cart-container">
+        <div className={s.nav_user_menu_container}>
+          <div className={s.cart_container}>
             <AiOutlineShoppingCart
               size={25}
               onClick={() =>
@@ -131,14 +129,13 @@ const Navbar = () => {
           )}
 
           <div
-            className="nav-manu-container"
+            className={s.nav_manu_container}
             onClick={() => setIsMenuSelected(!isMenuSelected)}
           >
             {isMenuSelected ? <IoMdMenu size={25} /> : <RxCross2 size={25} />}
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

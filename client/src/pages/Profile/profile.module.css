@@ -22,20 +22,17 @@ td {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 820px) {
-}
-
 @media only screen and (max-width: 480px) {
-  .make-display-inactive {
+  .make_display_inactive {
     display: none;
   }
 
-  .resgiter-form {
+  .resgiter_form {
     width: 100%;
   }
 }
 
-.cart-main {
+.cart_main {
   width: 80%;
   margin: auto;
   margin-top: 5rem;
@@ -44,7 +41,7 @@ td {
   gap: 4rem;
 }
 
-.cart-sub-head {
+.cart_sub_head {
   font-size: 1.25rem; /* 20px / 16px = 1.25rem */
   font-weight: 500;
   letter-spacing: 0.125rem;
@@ -53,24 +50,24 @@ td {
 }
 
 @media only screen and (max-width: 820px) {
-  .cart-main {
+  .cart_main {
     width: 90%;
   }
 }
 
 @media only screen and (max-width: 480px) {
-  .cart-main {
+  .cart_main {
     width: 98%;
     display: block;
   }
 
-  .cart-product-main {
+  .cart_product_main {
     grid-template-columns: 40% 18% 18% 18% !important;
     gap: 0.8rem !important;
   }
 }
 
-.register-main {
+.register_main {
   height: 100vh;
   background-color: var(--light-green-bg-color);
   display: flex;
@@ -78,7 +75,7 @@ td {
   justify-content: center;
 }
 
-.register-container {
+.register_container {
   width: 30%;
   background-color: white;
   display: flex;
@@ -89,7 +86,7 @@ td {
   padding: 2rem;
 }
 
-.brand-symbol {
+.brand_symbol {
   background-color: var(--primary-green-color);
   color: white;
   font-weight: 700;
@@ -98,33 +95,33 @@ td {
   padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
 
-.register-head {
+.register_head {
   font-size: 1.8rem;
 }
 
-.register-desc {
+.register_desc {
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
 
-.resgiter-form {
+.resgiter_form {
   display: flex;
   flex-direction: column;
   width: 90%;
   gap: 0.7rem;
 }
 
-.resgiter-form input {
+.resgiter_form input {
   height: 2.5rem;
   padding-left: 1rem;
   border: 1px solid var(--light-green-bg-color);
 }
 
-.resgiter-form input:focus {
+.resgiter_form input:focus {
   outline: 1px solid var(--primary-green-color);
 }
 
-.resgiter-form button {
+.resgiter_form button {
   color: white;
   height: 2.5rem;
   border: none;
@@ -133,19 +130,19 @@ td {
   cursor: pointer;
 }
 
-.login-link {
+.login_link {
   color: var(--primary-green-color);
   cursor: pointer;
 }
 
 @media only screen and (max-width: 820px) {
-  .register-container {
+  .register_container {
     width: 60%;
   }
 }
 
 @media only screen and (max-width: 480px) {
-  .register-container {
+  .register_container {
     width: 80%;
   }
 }

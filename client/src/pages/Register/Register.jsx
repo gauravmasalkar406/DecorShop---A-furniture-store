@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import "./register.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { registerUser, loginUser } from "../../api/user.js";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../store/slices/user.js";
+import s from "./register.module.css";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -44,27 +43,21 @@ const Register = () => {
     }
 
     if (email.length < 3) {
-      toast.error("Email should have atleast 3 charcters!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error("Invalid email !");
 
       setIsLoading(false);
       return;
     }
 
     if (password.length < 3) {
-      toast.error("Password should have atleast 3 charcters!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error("Invalid password");
 
       setIsLoading(false);
       return;
     }
 
     if (name === "" || email === "" || password === "") {
-      toast.error("Fill all the detials !", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error("Fill all details");
 
       setIsLoading(false);
       return;
@@ -92,10 +85,7 @@ const Register = () => {
           navigate(-1);
         }
       } catch (error) {
-        console.log(error);
-        toast.error(error.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.error(error.message);
       }
     }
 
@@ -109,9 +99,7 @@ const Register = () => {
     setIsLoading(true);
 
     if (email === "" || password === "") {
-      toast.error("Fill all the detials !", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error("Fill all detials!");
       return;
     } else {
       try {
@@ -136,9 +124,7 @@ const Register = () => {
           navigate(-1);
         }
       } catch (error) {
-        toast.error(error.response.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.error(error.response.data.message);
       }
     }
 
@@ -161,15 +147,15 @@ const Register = () => {
   return (
     // register
     isRegisterPage ? (
-      <div className="register-main">
-        <div className="register-container">
-          <div className="brand-symbol">D</div>
-          <p className="register-head">Welcome</p>
-          <p className="register-desc">
+      <div className={s.register_main}>
+        <div className={s.register_container}>
+          <div className={s.brand_symbol}>D</div>
+          <p className={s.register_head}>Welcome</p>
+          <p className={s.register_desc}>
             Register to DecorShop E-commerce store
           </p>
 
-          <form className="resgiter-form" onSubmit={handleRegisterSubmit}>
+          <form className={s.resgiter_form} onSubmit={handleRegisterSubmit}>
             <input
               type="text"
               placeholder="Name"
@@ -189,28 +175,27 @@ const Register = () => {
               value={password}
             />
             <button type="submit">
-              {isLoading ? <span class="loader"></span> : "REGISTER"}
+              {isLoading ? <span className="loader"></span> : "REGISTER"}
             </button>
           </form>
 
           <p>
             Already a user?{" "}
-            <span onClick={changePage} className="login-link">
+            <span onClick={changePage} className={s.login_link}>
               login
             </span>
           </p>
         </div>
-        <ToastContainer />
       </div>
     ) : (
       // login
-      <div className="register-main">
-        <div className="register-container">
-          <div className="brand-symbol">D</div>
-          <p className="register-head">Welcome</p>
-          <p className="register-desc">Login to DecorShop E-commerce store</p>
+      <div className={s.register_main}>
+        <div className={s.register_container}>
+          <div className={s.brand_symbol}>D</div>
+          <p className={s.register_head}>Welcome</p>
+          <p className={s.register_desc}>Login to DecorShop E-commerce store</p>
 
-          <form className="resgiter-form" onSubmit={handleLoginSubmit}>
+          <form className={s.resgiter_form} onSubmit={handleLoginSubmit}>
             <input
               type="text"
               placeholder="Email"
@@ -224,7 +209,7 @@ const Register = () => {
               value={password}
             />
             <button type="submit">
-              {isLoading ? <span class="loader"></span> : "LOGIN"}
+              {isLoading ? <span className="loader"></span> : "LOGIN"}
             </button>
 
             <button onClick={handleGuestLogin}>GUEST LOGIN</button>
@@ -233,12 +218,11 @@ const Register = () => {
 
           <p>
             New user?{" "}
-            <span onClick={changePage} className="login-link">
+            <span onClick={changePage} className={s.login_link}>
               register
             </span>
           </p>
         </div>
-        <ToastContainer />
       </div>
     )
   );

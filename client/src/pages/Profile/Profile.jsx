@@ -8,7 +8,7 @@ import axios from "axios";
 import { addUser } from "../../store/slices/user.js";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdCheckmark } from "react-icons/io";
-import "./profile.css";
+import s from "./profile.module.css";
 
 const Profile = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -78,20 +78,20 @@ const Profile = () => {
   };
 
   return (
-    <div className="cart-main">
-      <section className="cart-p-details">
-        <h4 className="cart-sub-head">My Orders</h4>
+    <div className={s.cart_main}>
+      <section className={s.cart_p_details}>
+        <h4 className={s.cart_sub_head}>My Orders</h4>
         <hr style={{ marginBottom: "2rem" }} />
 
         {isLoading ? (
           <div className="loader-container">
-            <span class="loader-green"></span>
+            <span className="loader-green"></span>
           </div>
         ) : myOrders && myOrders.length > 0 ? (
           <table>
             <thead>
               <tr>
-                <th className="make-display-inactive">ID</th>
+                <th className={s.make_display_inactive}>ID</th>
                 <th>DATE</th>
                 <th>TOTAL</th>
                 <th>PAID</th>
@@ -104,7 +104,7 @@ const Profile = () => {
                   key={index}
                   onClick={() => navigate(`/orderdetails/${order._id}`)}
                 >
-                  <td className="make-display-inactive">{order._id}</td>
+                  <td className={s.make_display_inactive}>{order._id}</td>
                   <td>{order.createdAt}</td>
                   <td>{order.totalPrice}</td>
                   <td>
@@ -129,11 +129,11 @@ const Profile = () => {
           <p>No orders available</p>
         )}
       </section>
-      <section className="cart-order-summary">
-        <h4 className="cart-sub-head">Update user details</h4>
+      <section className={s.cart_order_summary}>
+        <h4 className={s.cart_sub_head}>Update user details</h4>
         <hr style={{ marginBottom: "2rem" }} />
 
-        <form className="resgiter-form" onSubmit={handleUpdate}>
+        <form className={s.resgiter_form} onSubmit={handleUpdate}>
           <input
             type="text"
             placeholder="Name"

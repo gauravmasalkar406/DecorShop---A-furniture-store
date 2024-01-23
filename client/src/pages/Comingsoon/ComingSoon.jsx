@@ -1,9 +1,9 @@
 import React from "react";
-import "./comingsoon.css";
+import s from "./comingsoon.module.css";
 
 const ComingSoon = () => {
   return (
-    <div className="comingsoon-main">
+    <div className={s.comingsoon_main}>
       <h4>Coming soon...</h4>
     </div>
   );

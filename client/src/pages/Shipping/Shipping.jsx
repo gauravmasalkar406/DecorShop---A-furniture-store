@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./shipping.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../../store/slices/order";
+import s from "./shipping.module.css";
 
 const Shipping = () => {
   const [address, setAddress] = useState("MG Road");
@@ -26,11 +26,11 @@ const Shipping = () => {
 
   return (
     userInfo && (
-      <div className="cart-main">
-        <section className="cart-p-details">
-          <h4 className="cart-sub-head">Shipping</h4>
+      <div className={s.cart_main}>
+        <section className={s.cart_p_details}>
+          <h4 className={s.cart_sub_head}>Shipping</h4>
           <hr style={{ marginBottom: "2rem" }} />
-          <div className="shipping-main">
+          <div className={s.shipping_main}>
             <input
               type="text"
               placeholder="Address"
@@ -60,24 +60,24 @@ const Shipping = () => {
 
         <section>
           <>
-            <h4 className="cart-sub-head">Summary</h4>
+            <h4 className={s.cart_sub_head}>Summary</h4>
             <hr style={{ marginBottom: "2rem" }} />
-            <div className="summary-main">
-              <div className="summary-total">
+            <div className={s.summary_main}>
+              <div className={s.summary_total}>
                 <p>Bag total</p>
                 <h4>₹{cartTotal}</h4>
               </div>
-              <div className="summary-total">
+              <div className={s.summary_total}>
                 <p>Convenience Fee</p>
                 <h4>₹99</h4>
               </div>
             </div>
-            <div className="summary-subtotal-conatainer">
+            <div className={s.summary_subtotal_conatainer}>
               <p>Total</p>
               <h3>₹{cartTotal + 99}</h3>
             </div>
 
-            <button className="summary-buy-btn" onClick={handleShipping}>
+            <button className={s.summary_buy_btn} onClick={handleShipping}>
               SHIPPING
             </button>
           </>

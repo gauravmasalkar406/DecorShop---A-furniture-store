@@ -3,6 +3,7 @@ import axios from "axios";
 import { getAllProducts } from "../../api/product";
 import { host } from "../../api/host";
 import { useNavigate } from "react-router-dom";
+import s from "./feature.module.css";
 
 const F2 = ({ category, heading }) => {
   const [products, setProducts] = useState(null);
@@ -30,30 +31,30 @@ const F2 = ({ category, heading }) => {
 
   return (
     products && (
-      <section className="decoration-products">
-        <div className="p-decoration-card">
-          <p className="decor-head">{heading}</p>
-          <p className="decor-desc">
+      <section className={s.decoration_products}>
+        <div className={s.p_decoration_card}>
+          <p className={s.decor_head}>{heading}</p>
+          <p className={s.decor_desc}>
             Small be and the rain would phase distance, succeed align.
           </p>
-          <button className="decor-btn">SHOP NOW</button>
+          <button className={s.decor_btn}>SHOP NOW</button>
         </div>
         {products.map(
           (product, index) =>
             index < 3 && (
               <div
-                className="p-decoration-card"
+                className={s.p_decoration_card}
                 key={index}
                 onClick={() => navigate(`/product/${product._id}`)}
               >
                 <img
                   src={`${host}/${product.image[0]}`}
                   alt={product.name}
-                  className="p-decoration-img"
+                  className={s.p_decoration_img}
                   loading="lazy"
                 />
-                <p className="p-name">{product.name}</p>
-                <p className="p-price">₹{product.price}</p>
+                <p className={s.p_name}>{product.name}</p>
+                <p className={s.p_price}>₹{product.price}</p>
               </div>
             )
         )}

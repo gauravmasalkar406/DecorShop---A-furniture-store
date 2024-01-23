@@ -4,10 +4,10 @@ import CartProduct from "../../components/CartProduct/CartProduct.jsx";
 import { getCartItemsRoute, removeCartItemsRoute } from "../../api/cart.js";
 import { addOrderItems } from "../../api/order.js";
 import axios from "axios";
-import "./placeorder.css";
 import { toast } from "react-toastify";
 import { removeCartItems, updateCartTotal } from "../../store/slices/cart.js";
 import { useNavigate } from "react-router-dom";
+import s from "./placeorder.module.css";
 
 const PlaceOrder = () => {
   const [cartItems, setCartItems] = useState();
@@ -105,12 +105,12 @@ const PlaceOrder = () => {
 
   return (
     userInfo && (
-      <div className="cart-main">
+      <div className={s.cart_main}>
         <section>
-          <h4 className="cart-sub-head">Place order</h4>
+          <h4 className={s.cart_sub_head}>Place order</h4>
           <hr style={{ marginBottom: "2rem" }} />
 
-          <div className="order-main">
+          <div className={s.order_main}>
             <p>
               Shipping Address: {shippingAddress?.address},{" "}
               {shippingAddress?.city}, {shippingAddress?.country} -{" "}
@@ -132,8 +132,8 @@ const PlaceOrder = () => {
                   );
                 })
               ) : (
-                <div className="loader-container">
-                  <span class="loader-green"></span>
+                <div className={s.loader_container}>
+                  <span class={s.loader_green}></span>
                 </div>
               )}
             </div>
@@ -141,25 +141,25 @@ const PlaceOrder = () => {
         </section>
         <section>
           <>
-            <h4 className="cart-sub-head">Summary</h4>
+            <h4 className={s.cart_sub_head}>Summary</h4>
             <hr style={{ marginBottom: "2rem" }} />
-            <div className="summary-main">
-              <div className="summary-total">
+            <div className={s.summary_main}>
+              <div className={s.summary_total}>
                 <p>Bag total</p>
                 <h4>₹{cartTotal}</h4>
               </div>
-              <div className="summary-total">
+              <div className={s.summary_total}>
                 <p>Convenience Fee</p>
                 <h4>₹99</h4>
               </div>
             </div>
-            <div className="summary-subtotal-conatainer">
+            <div className={s.summary_subtotal_conatainer}>
               <p>Total</p>
               <h3>₹{cartTotal + 99}</h3>
             </div>
 
-            <button className="summary-buy-btn" onClick={handlePlaceOrder}>
-              {isLoading ? <span class="loader"></span> : "PLACE ORDER"}
+            <button className={s.summary_buy_btn} onClick={handlePlaceOrder}>
+              {isLoading ? <span class={s.loader}></span> : "PLACE ORDER"}
             </button>
           </>
         </section>

@@ -1,10 +1,10 @@
 @import "../../index.css";
 
-.header-main {
+.header_main {
   margin-bottom: 7rem;
 }
 
-.header-sub-container {
+.header_sub_container {
   position: relative;
   background-color: var(--banner-background-color);
   height: 400px;
@@ -12,34 +12,34 @@
   width: 80%;
 }
 
-.header-content-main-container {
+.header_content_main_container {
   display: flex;
   align-items: center;
   height: 100%;
   padding-left: 3rem;
 }
 
-.header-title-container {
+.header_title_container {
   width: 80%;
   padding-bottom: 0.5rem;
 }
 
-.header-content-container p {
+.header_content_container p {
   margin-top: 1rem;
   color: var(--description-font-color);
 }
 
-.header-title {
+.header_title {
   font-size: 2.6rem;
   font-weight: 500;
 }
 
-.header-title-description {
+.header_title_description {
   font-size: 2.6rem;
   font-weight: 300;
 }
 
-.header-content-container button {
+.header_content_container button {
   margin-top: 6rem;
   padding-bottom: 0.35rem;
   border: none;
@@ -49,20 +49,20 @@
   transition: color 0.3s ease;
 }
 
-.header-content-container button:hover {
+.header_content_container button:hover {
   border-radius: 0px;
   color: var(--primary-green-color);
   border-bottom: 1px solid var(--primary-green-color);
   cursor: pointer;
 }
 
-.light-img-1 {
+.light_img_1 {
   position: absolute;
   top: -110px;
   right: 17px;
 }
 
-.light-img-2 {
+.light_img_2 {
   position: absolute;
   top: -132px;
   right: -90px;
@@ -70,39 +70,39 @@
 }
 
 @media only screen and (max-width: 820px) {
-  .header-sub-container {
+  .header_sub_container {
     width: 90%;
   }
 
-  .header-title-container {
+  .header_title_container {
     width: 60%;
   }
 
-  .light-img-1 {
+  .light_img_1 {
     top: -110px;
     right: 0;
   }
 }
 
 @media only screen and (max-width: 480px) {
-  .header-sub-container {
+  .header_sub_container {
     width: 98%;
     height: 600px;
   }
 
-  .header-title-container {
+  .header_title_container {
     width: 60%;
   }
 
-  .header-content-main-container {
+  .header_content_main_container {
     width: 80%;
   }
 
-  .light-img-1 {
+  .light_img_1 {
     display: none;
   }
 
-  .light-img-2 {
+  .light_img_2 {
     display: none;
   }
 }

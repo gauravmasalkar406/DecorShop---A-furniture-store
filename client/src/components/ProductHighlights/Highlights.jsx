@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import basketChair from "../../assets/basketchair.webp";
-import "./highlights.css";
 import { getAllProducts } from "../../api/product";
 import { toast } from "react-toastify";
 import { host } from "../../api/host";
 import { getUniqueCategoriesRoute } from "../../api/product";
 import axios from "axios";
+import s from "./highlights.module.css";
 
 const Highlights = () => {
   const [categories, setCategories] = useState(["all"]);
@@ -57,14 +57,14 @@ const Highlights = () => {
   }, []);
 
   return (
-    <div className="highlights-main">
-      <div className="highlights-main-container">
+    <div className={s.highlights_main}>
+      <div className={s.highlights_main_container}>
         {categories && (
-          <section className="category-btns">
+          <section className={s.category_btns}>
             {categories.map((category, index) => (
               <button
                 key={index}
-                className={selectedCategory === category ? "selected" : ""}
+                className={selectedCategory === category ? s.selected : ""}
                 onClick={() => setSelectedCategory(category)}
               >
                 {category}
@@ -74,45 +74,45 @@ const Highlights = () => {
         )}
 
         {products && !isLoading ? (
-          <section className="products-container">
+          <section className={s.products_container}>
             {products.map((product, index) =>
               selectedCategory === "all"
                 ? index < 8 && (
                     <div
-                      className="product-card"
+                      className={s.product_card}
                       onClick={() => navigate(`/product/${product._id}`)}
                       key={index}
                     >
-                      <div className="product-image-container">
+                      <div className={s.product_image_container}>
                         <img
                           src={`${host}/${product.image[0]}`}
                           key={index}
-                          className="product-image"
+                          className={s.product_image}
                           alt={product.name}
                           loading="lazy"
                         />
                       </div>
-                      <p className="product-name">{product.name}</p>
-                      <p className="product-price">₹{product.price}</p>
+                      <p className={s.product_name}>{product.name}</p>
+                      <p className={s.product_price}>₹{product.price}</p>
                     </div>
                   )
                 : product.category === selectedCategory && (
                     <div
-                      className="product-card"
+                      className={s.product_card}
                       onClick={() => navigate(`/product/${product._id}`)}
                       key={index}
                     >
-                      <div className="product-image-container">
+                      <div className={s.product_image_container}>
                         <img
                           src={`${host}/${product.image[0]}`}
                           key={index}
-                          className="product-image"
+                          className={s.product_image}
                           alt={product.name}
                           loading="lazy"
                         />
                       </div>
-                      <p className="product-name">{product.name}</p>
-                      <p className="product-price">₹{product.price}</p>
+                      <p className={s.product_name}>{product.name}</p>
+                      <p className={s.product_price}>₹{product.price}</p>
                     </div>
                   )
             )}
@@ -123,18 +123,21 @@ const Highlights = () => {
           </div>
         )}
 
-        <section className="go-to-shop-container">
+        <section className={s.go_to_shop_container}>
           <div></div>
           <button onClick={() => navigate("/shop")}>GO TO SHOP</button>
           <div></div>
         </section>
 
-        <section className="stylish-banner-container">
-          <div className="stylish-banner">
-            <div className="stylish-banner-desc-container">
-              <div className="banner-title-container">
-                <span className="banner-title">STYLISH</span>
-                <span className="banner-title-description"> MINIMAL CHAIR</span>
+        <section className={s.stylish_banner_container}>
+          <div className={s.stylish_banner}>
+            <div className={s.stylish_banner_desc_container}>
+              <div className={s.banner_title_container}>
+                <span className={s.banner_title}>STYLISH</span>
+                <span className={s.banner_title_description}>
+                  {" "}
+                  MINIMAL CHAIR
+                </span>
               </div>
               <button>View Now</button>
             </div>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "./order.css";
 import { getAllOrdersRoute } from "../../../api/order.js";
 import axios from "axios";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdCheckmark } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import s from "./order.module.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState();
@@ -12,6 +12,7 @@ const Orders = () => {
 
   const navigate = useNavigate();
 
+  // fetch orders
   useEffect(() => {
     setIsLoading(true);
     const fetchOrders = async () => {
@@ -44,7 +45,7 @@ const Orders = () => {
         <table>
           <thead>
             <tr>
-              <th className="make-display-inactive">ID</th>
+              <th className={s.make_display_inactive}>ID</th>
               <th>USER</th>
               <th>DATE</th>
               <th>TOTAL</th>
@@ -58,7 +59,7 @@ const Orders = () => {
                 key={index}
                 onClick={() => navigate(`/orderdetails/${order._id}`)}
               >
-                <td className="make-display-inactive">{order._id}</td>
+                <td className={s.make_display_inactive}>{order._id}</td>
                 <td>{order?.user?.name}</td>
                 <td>{order.createdAt}</td>
                 <td>{order.totalPrice}</td>

@@ -1,18 +1,16 @@
-@import "../../index.css";
-
-.star-rating {
+.star_rating {
   display: inline-flex;
   font-size: 1rem;
 }
 
-.star-rating .filled {
+.star_rating .filled {
   color: var(--primary-green-color);
   stroke: var(--primary-green-color);
   stroke-width: 35px;
   margin-right: 0.2em;
 }
 
-.star-rating .empty {
+.star_rating .empty {
   color: var(--primary-green-color);
   fill: transparent;
   stroke: var(--primary-green-color);

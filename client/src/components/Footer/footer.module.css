@@ -1,6 +1,6 @@
 @import "../../index.css";
 
-.footer-main {
+.footer_main {
   width: 80%;
   margin-top: 6rem;
   margin-left: auto;
@@ -13,12 +13,12 @@
   padding: 2.5rem 1.5rem 2.5rem 1.5rem;
 }
 
-.column-head {
+.column_head {
   font-weight: 400;
   margin-bottom: 1.5rem;
 }
 
-.brand-name {
+.brand_name {
   font-size: 2.25rem; /* 36px / 16px */
   font-weight: 900;
   letter-spacing: 0.1125rem; /* 1.8px / 16px */
@@ -26,7 +26,7 @@
   margin-bottom: 2rem;
 }
 
-.brand-desc {
+.brand_desc {
   font-size: 1rem; /* 14px / 14px */
   font-weight: 300;
   letter-spacing: 0.057143rem; /* 0.8px / 14px */
@@ -51,23 +51,23 @@
   padding-right: 0.8rem;
 }
 
-.news-card {
+.news_card {
   margin-bottom: 1rem;
 }
 
-.news-card img {
+.news_card img {
   height: 2.99rem;
   width: 4.59rem;
 }
 
 @media only screen and (max-width: 820px) {
-  .footer-main {
+  .footer_main {
     width: 90%;
   }
 }
 
 @media only screen and (max-width: 480px) {
-  .footer-main {
+  .footer_main {
     width: 98%;
     display: block;
   }

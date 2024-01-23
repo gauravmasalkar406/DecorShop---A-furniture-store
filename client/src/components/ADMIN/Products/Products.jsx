@@ -7,7 +7,7 @@ import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import "./product.css";
+import s from "./product.module.css";
 
 const Products = () => {
   const [products, setProducts] = useState();
@@ -50,7 +50,7 @@ const Products = () => {
         <table>
           <thead>
             <tr>
-              <th className="make-display-inactive">ID</th>
+              <th className={s.make_display_inactive}>ID</th>
               <th>NAME</th>
               <th>PRICE</th>
               <th>CATEGORY</th>
@@ -62,7 +62,7 @@ const Products = () => {
             {products.map((product, index) => (
               <tr key={index}>
                 <td
-                  className="make-display-inactive"
+                  className={s.make_display_inactive}
                   onClick={() => navigate(`/product/${product._id}`)}
                 >
                   {product._id}
@@ -88,7 +88,7 @@ const Products = () => {
         </table>
       )}
 
-      <div className="shop-pagination-container">
+      <div className={s.shop_pagination_container}>
         <button onClick={() => setCurrPage(1)}>
           <MdOutlineKeyboardDoubleArrowLeft />
         </button>
@@ -112,8 +112,8 @@ const Products = () => {
                   key={pageNum}
                   className={
                     pageNum === currPage
-                      ? "active-page-btn"
-                      : "inactive-page-btn"
+                      ? `${s.active_page_btn}`
+                      : `${s.inactive_page_btn}`
                   }
                   onClick={() => setCurrPage(pageNum)}
                 >
@@ -139,7 +139,7 @@ const Products = () => {
         </button>
       </div>
 
-      <button className="summary-buy-btn" onClick={() => navigate("/create")}>
+      <button className={s.summary_buy_btn} onClick={() => navigate("/create")}>
         CREATE PRODUCT
       </button>
     </div>

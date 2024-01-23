@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./orderdetails.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
@@ -11,6 +10,7 @@ import {
 import { host } from "../../api/host.js";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import s from "./orderdetails.module.css";
 
 const OrderDetails = () => {
   const [paidDate, setPaidDate] = useState();
@@ -119,12 +119,12 @@ const OrderDetails = () => {
   };
 
   return order && userInfo ? (
-    <div className="cart-main">
+    <div className={s.cart_main}>
       <section>
-        <h4 className="cart-sub-head">Order Details</h4>
+        <h4 className={s.cart_sub_head}>Order Details</h4>
         <hr style={{ marginBottom: "2rem" }} />
 
-        <div className="order-main">
+        <div className={s.order_main}>
           <p>
             Shipping Address: {order.shippingAddress?.address},{" "}
             {order.shippingAddress?.city}, {order.shippingAddress?.country} -{" "}
@@ -144,37 +144,41 @@ const OrderDetails = () => {
           <div>
             {order?.orderItems?.map((ele, index) => {
               return (
-                <div className="cart-product-main" key={index}>
+                <div className={s.cart_product_main} key={index}>
                   <section>
                     {index == 0 && (
-                      <h4 className="cart-product-head">PRODUCT DETAILS</h4>
+                      <h4 className={s.cart_product_head}>PRODUCT DETAILS</h4>
                     )}
-                    <div className="cart-prdouct-img-head-container">
+                    <div className={s.cart_prdouct_img_head_container}>
                       <div
-                        className="cart-product-img"
+                        className={s.cart_product_img}
                         onClick={() => navigate(`/product/${ele.productId}`)}
                       >
                         <img src={`${host}/${ele?.product?.image[0]}`} alt="" />
                       </div>
-                      <div className="head-delete-btn">
+                      <div className={s.head_delete_btn}>
                         <h5>{ele.product?.name}</h5>
                       </div>
                     </div>
                   </section>
                   <section>
                     {index == 0 && (
-                      <h4 className="cart-product-head">QUANTITY</h4>
+                      <h4 className={s.cart_product_head}>QUANTITY</h4>
                     )}
-                    <div className="cart-product-quanity-change">
+                    <div className={s.cart_product_quanity_change}>
                       <div>{ele?.quantity}</div>
                     </div>
                   </section>
                   <section>
-                    {index == 0 && <h4 className="cart-product-head">PRICE</h4>}
+                    {index == 0 && (
+                      <h4 className={s.cart_product_head}>PRICE</h4>
+                    )}
                     <h5>₹{ele.product?.price}</h5>
                   </section>
                   <section>
-                    {index == 0 && <h4 className="cart-product-head">TOTAL</h4>}
+                    {index == 0 && (
+                      <h4 className={s.cart_product_head}>TOTAL</h4>
+                    )}
                     <h5>{ele.product?.price * ele?.quantity}</h5>
                   </section>
                 </div>
@@ -185,19 +189,19 @@ const OrderDetails = () => {
       </section>
       <section>
         <>
-          <h4 className="cart-sub-head">Summary</h4>
+          <h4 className={s.cart_sub_head}>Summary</h4>
           <hr style={{ marginBottom: "2rem" }} />
-          <div className="summary-main">
-            <div className="summary-total">
+          <div className={s.summary_main}>
+            <div className={s.summary_total}>
               <p>Bag total</p>
               <h4>₹{order.totalPrice - 99}</h4>
             </div>
-            <div className="summary-total">
+            <div className={s.summary_total}>
               <p>Convenience Fee</p>
               <h4>₹99</h4>
             </div>
           </div>
-          <div className="summary-subtotal-conatainer">
+          <div className={s.summary_subtotal_conatainer}>
             <p>Total</p>
             <h3>₹{order.totalPrice}</h3>
           </div>
@@ -205,7 +209,7 @@ const OrderDetails = () => {
           {!order.isPaid && !userInfo.isAdmin && (
             <>
               <button
-                className="summary-buy-btn"
+                className={s.summary_buy_btn}
                 onClick={handlePaymentWithStripe}
               >
                 PAY HERE
@@ -216,7 +220,7 @@ const OrderDetails = () => {
           {order.isPaid && userInfo.isAdmin && (
             <>
               <button
-                className="summary-buy-btn"
+                className={s.summary_buy_btn}
                 onClick={handleUpdateDelivered}
               >
                 MARK DELIVERED

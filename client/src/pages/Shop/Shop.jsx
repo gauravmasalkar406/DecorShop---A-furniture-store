@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import "./shop.css";
+import React, { useState, useEffect } from "react";
 import { getAllProducts } from "../../api/product";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +13,7 @@ import {
   getUniqueCategoriesRoute,
   getUniqueBrandsRoute,
 } from "../../api/product";
+import s from "./shop.module.css";
 
 const Shop = () => {
   const [products, setProducts] = useState();
@@ -157,20 +157,20 @@ const Shop = () => {
   };
 
   return (
-    <div className="shop-main">
+    <div className={s.shop_main}>
       <section
         className={
           showFilters
-            ? "shop-filters-container"
-            : "shop-filters-container-inactive"
+            ? s.shop_filters_container
+            : s.shop_filters_container_inactive
         }
       >
-        <div className="shop-filters-head">
+        <div className={s.shop_filters_head}>
           <h2>FILTER BY</h2>
           <button onClick={handleAllClear}>Clear All</button>
         </div>
 
-        <div className="shop-filters-searchbar">
+        <div className={s.shop_filters_searchbar}>
           <input
             type="text"
             placeholder="...Search product"
@@ -183,14 +183,14 @@ const Shop = () => {
           <IoSearchOutline size={22} />
         </div>
 
-        <h4 className="shop-category-head">Categories</h4>
+        <h4 className={s.shop_category_head}>Categories</h4>
         {categories?.map((cat, index) => (
           <p
             key={index}
             className={
               selectedCategory === cat
-                ? "active-category shop-category-option"
-                : "shop-category-option"
+                ? `${s.active_category} ${s.shop_category_option}`
+                : s.shop_category_option
             }
             onClick={() => {
               setSelectedCategory(cat);
@@ -201,8 +201,8 @@ const Shop = () => {
           </p>
         ))}
 
-        <div className="shop-select-container">
-          <h4 className="shop-brand-head">Brand</h4>
+        <div className={s.shop_select_container}>
+          <h4 className={s.shop_brand_head}>Brand</h4>
           <select
             value={selectedBrand}
             onChange={(e) => {
@@ -218,8 +218,8 @@ const Shop = () => {
           </select>
         </div>
 
-        <div className="shop-price-container">
-          <h4 className="shop-brand-head">Price</h4>
+        <div className={s.shop_price_container}>
+          <h4 className={s.shop_brand_head}>Price</h4>
           <input
             type="range"
             min={0}
@@ -233,7 +233,7 @@ const Shop = () => {
           <p>₹{selectedPrice}</p>
         </div>
 
-        <div className="shop-checkbox-container">
+        <div className={s.shop_checkbox_container}>
           <input
             type="checkbox"
             onChange={() => {
@@ -246,20 +246,20 @@ const Shop = () => {
         </div>
       </section>
 
-      <section className="shop-product-conatainer">
-        <div className="shop-show-filter-container">
+      <section className={s.shop_product_conatainer}>
+        <div className={s.shop_show_filter_container}>
           <button onClick={() => setShowfilters(!showFilters)}>Filters</button>
         </div>
-        <div className="sort-filter-container">
-          <div className="shop-p-length-head">
+        <div className={s.sort_filter_container}>
+          <div className={s.shop_p_length_head}>
             <p>{totalProducts} products found</p>
           </div>
 
-          <div className="shop-horizontal">
+          <div className={s.shop_horizontal}>
             <hr />
           </div>
 
-          <div className="shop-sort-filter">
+          <div className={s.shop_sort_filter}>
             <p>sort by</p>
             <select
               value={sortByValue}
@@ -276,30 +276,30 @@ const Shop = () => {
 
         {!isLoading && products ? (
           <>
-            <div className="shop-products-container">
+            <div className={s.shop_products_container}>
               {filteredProducts?.map((product, index) => {
                 return (
                   <div
-                    className="product-card"
+                    className={s.product_card}
                     onClick={() => navigate(`/product/${product._id}`)}
                     key={index}
                   >
-                    <div className="product-image-container">
+                    <div className={s.product_image_container}>
                       <img
                         src={`${host}/${product?.image[0]}`}
                         key={index}
-                        className="product-image"
+                        className={s.product_image}
                         alt={product?.name}
                         loading="lazy"
                       />
                     </div>
-                    <p className="product-name">{product.name}</p>
-                    <p className="product-price">₹{product.price}</p>
+                    <p className={s.product_name}>{product.name}</p>
+                    <p className={s.product_price}>₹{product.price}</p>
                   </div>
                 );
               })}
             </div>
-            <div className="shop-pagination-container">
+            <div className={s.shop_pagination_container}>
               <button onClick={() => setCurrPage(1)}>
                 <MdOutlineKeyboardDoubleArrowLeft />
               </button>
@@ -323,7 +323,7 @@ const Shop = () => {
                         key={pageNum}
                         className={
                           pageNum === currPage
-                            ? "active-page-btn"
+                            ? s.active_page_btn
                             : "inactive-page-btn"
                         }
                         onClick={() => setCurrPage(pageNum)}

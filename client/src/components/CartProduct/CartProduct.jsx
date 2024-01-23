@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "./cartitem.css";
 import { getProductInfo } from "../../api/product.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { deleteItemFromCartRoute } from "../../api/cart.js";
 import { host } from "../../api/host.js";
 import { toast } from "react-toastify";
+import s from "./cartitem.module.css";
 
 const CartProduct = ({ cartItem, onItemDelete, index, isOrderPage }) => {
   const [product, setProduct] = useState();
@@ -46,12 +46,14 @@ const CartProduct = ({ cartItem, onItemDelete, index, isOrderPage }) => {
   };
 
   return (
-    <div className="cart-product-main">
+    <div className={s.cart_product_main}>
       <section>
-        {index == 0 && <h4 className="cart-product-head">PRODUCT DETAILS</h4>}
-        <div className="cart-prdouct-img-head-container">
+        {index === 0 && (
+          <h4 className={s.cart_product_head}>PRODUCT DETAILS</h4>
+        )}
+        <div className={s.cart_prdouct_img_head_container}>
           <div
-            className="cart-product-img"
+            className={s.cart_product_img}
             onClick={() => navigate(`/product/${product._id}`)}
           >
             <img
@@ -60,24 +62,24 @@ const CartProduct = ({ cartItem, onItemDelete, index, isOrderPage }) => {
               loading="lazy"
             />
           </div>
-          <div className="head-delete-btn">
+          <div className={s.head_delete_btn}>
             <h5>{product?.name}</h5>
             {!isOrderPage && <button onClick={deleteItem}>Delete</button>}
           </div>
         </div>
       </section>
       <section>
-        {index == 0 && <h4 className="cart-product-head">QUANTITY</h4>}
-        <div className="cart-product-quanity-change">
+        {index === 0 && <h4 className={s.cart_product_head}>QUANTITY</h4>}
+        <div className={s.cart_product_quanity_change}>
           <div>{cartItem?.quantity}</div>
         </div>
       </section>
       <section>
-        {index == 0 && <h4 className="cart-product-head">PRICE</h4>}
+        {index === 0 && <h4 className={s.cart_product_head}>PRICE</h4>}
         <h5>₹{product?.price}</h5>
       </section>
       <section>
-        {index == 0 && <h4 className="cart-product-head">TOTAL</h4>}
+        {index === 0 && <h4 className={s.cart_product_head}>TOTAL</h4>}
         <h5>{product?.price * cartItem?.quantity}</h5>
       </section>
     </div>

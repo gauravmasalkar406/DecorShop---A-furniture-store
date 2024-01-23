@@ -1,6 +1,6 @@
 @import "../../index.css";
 
-.navbar-main {
+.navbar_main {
   height: 4.2rem;
   background-color: var(--light-green-bg-nav);
   display: flex;
@@ -9,7 +9,7 @@
   z-index: 10;
 }
 
-.navbar-primary-container {
+.navbar_primary_container {
   display: flex;
   margin: auto;
   align-items: center;
@@ -17,49 +17,49 @@
   width: 77%;
 }
 
-.navbar-primary-container h1 {
+.navbar_primary_container h1 {
   font-size: 1.8rem;
   font-weight: 800;
 }
 
-.navbar-primary-container span {
+.navbar_primary_container span {
   color: var(--primary-green-color);
 }
 
-.nav-links-container {
+.nav_links_container {
   display: flex;
   gap: 2.2rem;
 }
 
-.nav-links-container a {
+.nav_links_container a {
   text-decoration: none;
   font-size: 14px;
   color: black;
   transition: color 0.3s ease;
 }
 
-.nav-links-container a:hover {
+.nav_links_container a:hover {
   color: var(--primary-green-color);
 }
 
-.nav-user-menu-container {
+.nav_user_menu_container {
   display: flex;
   gap: 1.8rem;
 }
 
-.nav-manu-container {
+.nav_manu_container {
   display: none;
 }
 
-.nav-user-menu-container svg {
+.nav_user_menu_container svg {
   cursor: pointer;
 }
 
-.cart-container {
+.cart_container {
   position: relative;
 }
 
-.cart-container div {
+.cart_container div {
   position: absolute;
   font-size: 11px;
   background-color: var(--primary-green-color);
@@ -75,11 +75,11 @@
 }
 
 @media only screen and (max-width: 820px) {
-  .navbar-primary-container {
+  .navbar_primary_container {
     width: 90%;
   }
 
-  .nav-links-container {
+  .nav_links_container {
     flex-direction: column;
     position: absolute;
     top: 5rem;
@@ -92,21 +92,21 @@
     width: 10rem;
   }
 
-  .nav-manu-container {
+  .nav_manu_container {
     display: block;
   }
 
-  .nav-menu-active {
+  .nav_menu_active {
     display: none;
   }
 }
 
 @media only screen and (max-width: 480px) {
-  .navbar-primary-container {
+  .navbar_primary_container {
     width: 98%;
   }
 
-  .nav-links-container {
+  .nav_links_container {
     flex-direction: column;
     position: absolute;
     top: 5rem;
@@ -119,11 +119,11 @@
     width: 10rem;
   }
 
-  .nav-manu-container {
+  .nav_manu_container {
     display: block;
   }
 
-  .nav-menu-active {
+  .nav_menu_active {
     display: none;
   }
 }

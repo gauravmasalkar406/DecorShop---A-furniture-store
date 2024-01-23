@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "./user.css";
 import axios from "axios";
 import { getAllUsersRoute, deleteUseroute } from "../../../api/user";
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
+import s from "./user.module.css";
 
 const Users = () => {
   const [users, setUsers] = useState();
@@ -64,7 +64,7 @@ const Users = () => {
           <table>
             <thead>
               <tr>
-                <th className="make-display-inactive">ID</th>
+                <th className={s.make_display_inactive}>ID</th>
                 <th>NAME</th>
                 <th>EMAIL</th>
                 <th>ADMIN</th>
@@ -74,7 +74,7 @@ const Users = () => {
             <tbody>
               {users.map((user, index) => (
                 <tr key={index}>
-                  <td className="make-display-inactive">{user._id}</td>
+                  <td className={s.make_display_inactive}>{user._id}</td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>

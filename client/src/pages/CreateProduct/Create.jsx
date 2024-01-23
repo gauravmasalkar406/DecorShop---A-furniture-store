@@ -3,7 +3,7 @@ import { uploadImageRoute, createProductRoute } from "../../api/product.js";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
-import "./create.css";
+import s from "./create.module.css";
 
 const Create = () => {
   const [image, setImage] = useState();
@@ -108,8 +108,8 @@ const Create = () => {
   };
 
   return (
-    <div className="create-main">
-      <form onSubmit={handleCreateProduct} className="resgiter-form">
+    <div className={s.create_main}>
+      <form onSubmit={handleCreateProduct} className={s.resgiter_form}>
         <input
           type="text"
           placeholder="Name"
@@ -146,7 +146,7 @@ const Create = () => {
           value={quantity}
           onChange={(e) => setQuantity(parseFloat(e.target.value))}
         />
-        <section className="check-container">
+        <section className={s.check_container}>
           <input
             type="checkbox"
             checked={isShipping}
@@ -175,7 +175,7 @@ const Create = () => {
           onChange={uploadHandler}
         />
         <button type="submit">
-          {isLoading ? <span class="loader"></span> : "CREATE PRODUCT"}
+          {isLoading ? <span className={s.loader}></span> : "CREATE PRODUCT"}
         </button>
       </form>
     </div>

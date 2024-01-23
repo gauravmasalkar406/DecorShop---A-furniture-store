@@ -2,7 +2,6 @@ import React from "react";
 import Header from "../../components/Header/Header";
 import Highlights from "../../components/ProductHighlights/Highlights";
 import Featured from "../../components/Featured/Featured";
-import "./home.css";
 import { Helmet } from "react-helmet";
 
 const Home = () => {

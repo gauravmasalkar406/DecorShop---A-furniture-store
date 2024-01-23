@@ -2,7 +2,7 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .make-display-inactive {
+  .make_display_inactive {
     display: none;
   }
 }
