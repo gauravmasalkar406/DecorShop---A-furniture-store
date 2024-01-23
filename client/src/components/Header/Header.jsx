@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import light1 from "../../assets/light1.webp";
 import light2 from "../../assets/light2.webp";
 import s from "./header.module.css";
 
 const Header = () => {
+  // preloading images
+  useEffect(() => {
+    const preloadImages = [light1, light2];
+    preloadImages.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+  }, []);
+
   return (
     <div className={s.header_main}>
       <div className={s.header_sub_container}>
