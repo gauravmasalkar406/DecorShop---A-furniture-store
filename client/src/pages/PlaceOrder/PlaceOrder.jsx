@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import CartProduct from "../../components/CartProduct/CartProduct.jsx";
+import { CartProduct } from "../../components/index.js";
 import { getCartItemsRoute, removeCartItemsRoute } from "../../api/cart.js";
 import { addOrderItems } from "../../api/order.js";
 import axios from "axios";
@@ -131,7 +131,7 @@ const PlaceOrder = () => {
                 })
               ) : (
                 <div className={s.loader_container}>
-                  <span class={s.loader_green}></span>
+                  <span className={s.loader_green}></span>
                 </div>
               )}
             </div>

@@ -1,7 +1,4 @@
-import React from "react";
-import Header from "../../components/Header/Header";
-import Highlights from "../../components/ProductHighlights/Highlights";
-import Featured from "../../components/Featured/Featured";
+import { Header, Highlights, Featured } from "../../components/index.js";
 import { Helmet } from "react-helmet";
 
 const Home = () => {

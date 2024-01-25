@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CartProduct from "../../components/CartProduct/CartProduct";
+import { CartProduct } from "../../components/index.js";
 import axios from "axios";
 import { getCartItemsRoute } from "../../api/cart.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,32 +24,30 @@ const Cart = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userInfo) {
+    const fetchCartItems = async () => {
       try {
-        const fetchCartItems = async () => {
-          setIsLoading(true);
+        setIsLoading(true);
 
-          const response = await axios.post(
-            getCartItemsRoute,
-            {
-              userId: userInfo._id,
-            },
-            { withCredentials: true }
-          );
+        const response = await axios.post(
+          getCartItemsRoute,
+          {
+            userId: userInfo?._id,
+          },
+          { withCredentials: true }
+        );
 
-          setIsLoading(false);
-
-          dispatch(addCartItems(response?.data?.cartItems));
-
-          // setCartItems(response?.data?.cartItems);
-        };
-
-        fetchCartItems();
+        dispatch(addCartItems(response?.data?.cartItems));
       } catch (error) {
-        toast(error?.message || error?.response?.data?.message);
+        toast.error(error?.message || error?.response?.data?.message);
+      } finally {
+        setIsLoading(false);
       }
+    };
+
+    if (userInfo) {
+      fetchCartItems();
     }
-  }, [isItemDeleted]);
+  }, [userInfo, isItemDeleted]);
 
   // calculate cart total
   useEffect(() => {
@@ -88,6 +86,7 @@ const Cart = () => {
                   key={index}
                   onItemDelete={changeDeletedState}
                   index={index}
+                  isOrderPage={false}
                 />
               );
             })

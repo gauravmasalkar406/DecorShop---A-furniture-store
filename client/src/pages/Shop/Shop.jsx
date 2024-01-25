@@ -141,6 +141,7 @@ const Shop = () => {
     }
   }, [products, sortByValue]);
 
+  // all clear handler
   const handleAllClear = () => {
     setSearchQuery("");
     setSelectedCategory("all");

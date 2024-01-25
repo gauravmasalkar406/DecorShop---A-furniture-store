@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import s from "./cartitem.module.css";
 
 const CartProduct = ({ cartItem, onItemDelete, index, isOrderPage }) => {
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState(null);
 
   const navigate = useNavigate();
 
@@ -37,50 +37,52 @@ const CartProduct = ({ cartItem, onItemDelete, index, isOrderPage }) => {
       onItemDelete();
 
       // success message
-      toast.success(response?.data?.message);
+      toast.success("item deleted");
     } catch (error) {
       toast.error(error.message || error.response.message);
     }
   };
 
   return (
-    <div className={s.cart_product_main}>
-      <section>
-        {index === 0 && (
-          <h4 className={s.cart_product_head}>PRODUCT DETAILS</h4>
-        )}
-        <div className={s.cart_prdouct_img_head_container}>
-          <div
-            className={s.cart_product_img}
-            onClick={() => navigate(`/product/${product._id}`)}
-          >
-            <img
-              src={`${host}/${product?.image[0]}`}
-              alt={product?.name}
-              loading="lazy"
-            />
+    product && (
+      <div className={s.cart_product_main}>
+        <section>
+          {index === 0 && (
+            <h4 className={s.cart_product_head}>PRODUCT DETAILS</h4>
+          )}
+          <div className={s.cart_prdouct_img_head_container}>
+            <div
+              className={s.cart_product_img}
+              onClick={() => navigate(`/product/${product?._id}`)}
+            >
+              <img
+                src={`${host}/${product?.image[0]}`}
+                alt={product?.name}
+                loading="lazy"
+              />
+            </div>
+            <div className={s.head_delete_btn}>
+              <h5>{product?.name}</h5>
+              {!isOrderPage && <button onClick={deleteItem}>Delete</button>}
+            </div>
           </div>
-          <div className={s.head_delete_btn}>
-            <h5>{product?.name}</h5>
-            {!isOrderPage && <button onClick={deleteItem}>Delete</button>}
+        </section>
+        <section>
+          {index === 0 && <h4 className={s.cart_product_head}>QUANTITY</h4>}
+          <div className={s.cart_product_quanity_change}>
+            <div>{cartItem?.quantity}</div>
           </div>
-        </div>
-      </section>
-      <section>
-        {index === 0 && <h4 className={s.cart_product_head}>QUANTITY</h4>}
-        <div className={s.cart_product_quanity_change}>
-          <div>{cartItem?.quantity}</div>
-        </div>
-      </section>
-      <section>
-        {index === 0 && <h4 className={s.cart_product_head}>PRICE</h4>}
-        <h5>₹{product?.price}</h5>
-      </section>
-      <section>
-        {index === 0 && <h4 className={s.cart_product_head}>TOTAL</h4>}
-        <h5>{product?.price * cartItem?.quantity}</h5>
-      </section>
-    </div>
+        </section>
+        <section>
+          {index === 0 && <h4 className={s.cart_product_head}>PRICE</h4>}
+          <h5>₹{product?.price}</h5>
+        </section>
+        <section>
+          {index === 0 && <h4 className={s.cart_product_head}>TOTAL</h4>}
+          <h5>{product?.price * cartItem?.quantity}</h5>
+        </section>
+      </div>
+    )
   );
 };
 

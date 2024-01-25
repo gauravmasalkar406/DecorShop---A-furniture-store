@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import StarRating from "../../components/rating/Stars.jsx";
+import { StarRating } from "../../components/index.js";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToCartRoute } from "../../api/cart.js";

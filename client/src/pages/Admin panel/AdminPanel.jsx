@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import Orders from "../../components/ADMIN/Orders/Orders.jsx";
-import Products from "../../components/ADMIN/Products/Products.jsx";
-import Users from "../../components/ADMIN/Users/Users.jsx";
+import { useState } from "react";
+import { Orders, Products, Users } from "../../components/index.js";
 import s from "./adminpanel.module.css";
 
 const AdminPanel = () => {

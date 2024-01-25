@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [isRegisterPage, setIsRegisterPage] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGuestLogin, setIsGuestLogin] = useState(false);
+  const [isAdminLogin, setIsAdminLogin] = useState(false);
 
   const navigate = useNavigate();
 
@@ -26,81 +28,59 @@ const Register = () => {
     setIsRegisterPage(!isRegisterPage);
   };
 
-  // register form
+  // register handler
   const handleRegisterSubmit = async (e) => {
-    e.preventDefault();
+    e?.preventDefault();
 
-    // loader
-    setIsLoading(true);
-
-    if (name.length < 3) {
-      toast.error("Name should have atleast 3 charcters!");
-
-      setIsLoading(false);
-      return;
+    if (name.length < 3 || email.length < 3 || password.length < 3) {
+      return toast.error(
+        "Name, email, and password should have at least 3 characters!"
+      );
     }
 
-    if (email.length < 3) {
-      toast.error("Invalid email !");
-
-      setIsLoading(false);
-      return;
+    if (!name || !email || !password) {
+      return toast.error("Fill all details");
     }
 
-    if (password.length < 3) {
-      toast.error("Invalid password");
+    try {
+      // loader
+      setIsLoading(true);
 
-      setIsLoading(false);
-      return;
-    }
+      const registerResponse = await axios.post(
+        registerUser,
+        {
+          name,
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
 
-    if (name === "" || email === "" || password === "") {
-      toast.error("Fill all details");
+      if (registerResponse.status === 200) {
+        const userData = registerResponse.data;
 
-      setIsLoading(false);
-      return;
-    } else {
-      try {
-        const registerResponse = await axios.post(
-          registerUser,
-          {
-            name,
-            email,
-            password,
-          },
-          { withCredentials: true }
-        );
+        // Dispatch the addUser action with user information
+        dispatch(addUser(userData));
 
-        if (registerResponse.status === 200) {
-          const userData = registerResponse.data;
-
-          // Dispatch the addUser action with user information
-          dispatch(addUser(userData));
-
-          setIsLoading(false);
-
-          // navigate to previous page
-          navigate(-1);
-        }
-      } catch (error) {
-        toast(error?.message || error?.response?.data?.message);
+        // navigate to previous page
+        navigate(-1);
       }
+    } catch (error) {
+      toast(error?.message || error?.response?.data?.message);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
+  // login handler
   const handleLoginSubmit = async (e) => {
-    e.preventDefault();
+    e?.preventDefault();
 
-    // loader
-    setIsLoading(true);
-
-    if (email === "" || password === "") {
-      toast.error("Fill all detials!");
-      return;
-    } else {
+    if (email && password) {
       try {
+        // loader
+        setIsLoading(true);
+
         const loginResponse = await axios.post(
           loginUser,
           {
@@ -123,24 +103,39 @@ const Register = () => {
         }
       } catch (error) {
         toast.error(error.response.data.message);
+      } finally {
+        setIsLoading(false);
       }
+    } else {
+      toast.error("Fill all the details");
     }
-
-    setIsLoading(false);
   };
 
   // guest login
   const handleGuestLogin = () => {
     setEmail("john@gmail.com");
     setPassword("123456");
-    handleLoginSubmit();
+    setIsGuestLogin(true);
   };
 
+  useEffect(() => {
+    if (isGuestLogin) {
+      handleLoginSubmit();
+    }
+  }, [isGuestLogin]);
+
+  // admin login
   const handleAdminLogin = () => {
     setEmail("admin@gmail.com");
     setPassword("123456");
-    handleLoginSubmit();
+    setIsAdminLogin(true);
   };
+
+  useEffect(() => {
+    if (isAdminLogin) {
+      handleLoginSubmit();
+    }
+  }, [isAdminLogin]);
 
   return (
     // register
