@@ -9,6 +9,7 @@ import {
   updateOrderToDelivered,
   getOrders,
   stripePayment,
+  stripeWebhook,
 } from "../controllers/order.js";
 
 import { protect, admin } from "../middleware/authMiddleware.js";
@@ -30,8 +31,8 @@ router.put(
 
 router.post("/get_order_by_id", protect, getOrderById);
 
-router.post("/create_checkout_session", protect, stripePayment);
-
 router.get("/get_all_orders_admin", protect, admin, getOrders);
+
+router.post("/create_checkout_session", protect, stripePayment);
 
 export default router;
