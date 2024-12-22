@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
@@ -10,11 +10,15 @@ import cartRoutes from "./router/cart.js";
 import orderRoutes from "./router/order.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 import uploadRoutes from "./router/upload.js";
+import { stripeWebhook } from "./controllers/order.js";
 
 // app
 const app = express();
 
-// parsers
+// Webhook route with raw body middleware
+app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhook);
+
+// Then apply the JSON body parser
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));

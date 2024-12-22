@@ -9,48 +9,48 @@ export const addOrderItems = asyncHandler(async (req, res) => {
   const { orderItems, userId, shippingAddress, paymentMethod, totalPrice } =
     req.body;
 
-  try {
-    if (orderItems && orderItems.length == 0) {
-      res.status(400);
-      throw new Error("No order items");
-    } else {
-      const orderItemsWithProducts = await Promise.all(
-        orderItems.map(async (x) => {
-          const product = await Product.findById(x.product).exec();
-
-          if (!product) {
-            console.error(`Product not found for ID: ${x.product}`);
-            return null;
-          }
-
-          return {
-            ...x,
-            product,
-            productId: x.product,
-            _id: undefined,
-          };
-        })
-      );
-
-      const validOrderItemsWithProducts = orderItemsWithProducts.filter(
-        (item) => item !== null
-      );
-
-      const order = new Order({
-        orderItems: validOrderItemsWithProducts,
-        user: userId,
-        shippingAddress,
-        paymentMethod,
-        totalPrice,
-      });
-
-      const createdOrder = await order.save();
-
-      res.status(201).json({ msg: "Order placed", createdOrder });
-    }
-  } catch (error) {
-    console.log(error);
+  if (orderItems && orderItems.length === 0) {
+    res.status(400);
+    throw new Error("No order items");
   }
+
+  const orderItemsWithProducts = await Promise.all(
+    orderItems.map(async (x) => {
+      const product = await Product.findById(x.product).exec();
+
+      if (!product) {
+        console.error(`Product not found for ID: ${x.product}`);
+        return null;
+      }
+
+      return {
+        ...x,
+        product,
+        productId: x.product,
+        _id: undefined,
+      };
+    })
+  );
+
+  const validOrderItemsWithProducts = orderItemsWithProducts.filter(
+    (item) => item !== null
+  );
+
+  const order = new Order({
+    orderItems: validOrderItemsWithProducts,
+    user: userId,
+    shippingAddress,
+    paymentMethod,
+    totalPrice,
+  });
+
+  const createdOrder = await order.save();
+
+  if (createdOrder)
+    return res.status(201).json({ msg: "Order placed", createdOrder });
+
+  res.status(400);
+  throw new Error("Failed to create order");
 });
 
 export const updateOrderToPaid = asyncHandler(async (req, res) => {
@@ -61,11 +61,11 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
     order.paidAt = Date.now();
     const updatedOrder = await order.save();
 
-    res.json(updatedOrder);
-  } else {
-    res.status(404);
-    throw new Error("Order not found");
+    return res.json(updatedOrder);
   }
+
+  res.status(404);
+  throw new Error("Order not found");
 });
 
 // get all orders for user
@@ -108,23 +108,15 @@ export const getOrders = asyncHandler(async (req, res) => {
   res.status(200).json({ orders });
 });
 
-// stripe payment gatweay
-
+// stripe payment gateway
 const stripe = stripePackage(process.env.STRIPE_SECRET_KEY);
 
 export const stripePayment = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.body.id);
 
-  // update order as paid
-  if (order) {
-    order.isPaid = true;
-    order.paidAt = Date.now();
-    await order.save();
-  }
-
   const lineItems = order.orderItems.map((item) => ({
     price_data: {
-      currency: "inr",
+      currency: "usd",
       product_data: {
         name: item.product.name,
       },
@@ -133,18 +125,49 @@ export const stripePayment = asyncHandler(async (req, res) => {
     quantity: item.quantity,
   }));
 
-  try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: lineItems,
-      mode: "payment",
-      success_url: `${process.env.ALLOWED_ORIGIN}/orderdetails/${order._id}`,
-      cancel_url: `${process.env.ALLOWED_ORIGIN}/cancel`,
-    });
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    mode: "payment",
+    success_url: `${process.env.ALLOWED_ORIGIN}/orderdetails/${order._id}`,
+    cancel_url: `${process.env.ALLOWED_ORIGIN}`,
+    metadata: {
+      orderId: order._id.toString(),
+    },
+  });
 
-    res.json({ id: session.id });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error creating Stripe session");
-  }
+  return res.json({ id: session.id });
 });
+
+// webhook to listen payment successful event
+export const stripeWebhook = async (req, res) => {
+  const sig = req.headers["stripe-signature"];
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    console.error("Error verifying webhook signature:", err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object;
+
+    const orderId = session.metadata.orderId;
+
+    const order = await Order.findById(orderId);
+
+    if (order) {
+      order.isPaid = true;
+      order.paidAt = Date.now();
+      await order.save();
+    }
+  }
+
+  return res.json({ received: true });
+};
