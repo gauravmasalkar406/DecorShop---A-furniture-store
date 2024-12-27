@@ -16,12 +16,9 @@ const OrderDetails = () => {
   const [paidDate, setPaidDate] = useState();
   const [deliveredDate, setDeliveredDate] = useState();
   const [order, setOrder] = useState();
-
   const userInfo = useSelector((state) => state.user.userInfo);
-
   // order id from params
   const { id } = useParams();
-
   const navigate = useNavigate();
 
   // get order details by id
@@ -207,32 +204,30 @@ const OrderDetails = () => {
           </div>
 
           {!order.isPaid && !userInfo.isAdmin && (
-            <>
-              <button
-                className={s.summary_buy_btn}
-                onClick={handlePaymentWithStripe}
-              >
-                PAY HERE
-              </button>
-            </>
+            <button
+              className={s.summary_buy_btn}
+              onClick={handlePaymentWithStripe}
+              type="button"
+            >
+              PAY HERE
+            </button>
           )}
 
           {order.isPaid && userInfo.isAdmin && (
-            <>
-              <button
-                className={s.summary_buy_btn}
-                onClick={handleUpdateDelivered}
-              >
-                MARK DELIVERED
-              </button>
-            </>
+            <button
+              className={s.summary_buy_btn}
+              onClick={handleUpdateDelivered}
+              type="button"
+            >
+              MARK DELIVERED
+            </button>
           )}
         </>
       </section>
     </div>
   ) : (
     <div className="loader-container">
-      <span class="loader-green"></span>
+      <span class="loader-green" />
     </div>
   );
 };

@@ -1,56 +1,52 @@
-import { lazy } from "react";
-import { DefaultLayout } from "../components/index.js";
+import { DefaultLayout as Layout } from "../components/index.js";
+import Register from "./Register/Register.jsx";
+import Home from "./Home/Home.jsx";
+import Product from "./Product/Product.jsx";
+import Cart from "./Cart/Cart.jsx";
+import Shop from "./Shop/Shop.jsx";
+import Shipping from "./Shipping/Shipping.jsx";
+import Payment from "./Payment/Payment.jsx";
+import PlaceOrder from "./PlaceOrder/PlaceOrder.jsx";
+import OrderDetails from "./OrderDetails/OrderDetails.jsx";
+import Profile from "./Profile/Profile.jsx";
+import AdminPanel from "./AdminPanel/AdminPanel.jsx";
+import Create from "./CreateProduct/Create.jsx";
+import ComingSoon from "./ComingSoon/ComingSoon.jsx";
 
-// Lazy-loaded components with default wrapper
-const lazyWithDefaultLayout = (importFunction) => {
-  const LazyComponent = lazy(importFunction);
-
+// Higher-Order Component for pages with the default layout
+const withDefaultLayout = (Page) => {
   return (props) => (
-    <DefaultLayout>
-      <LazyComponent {...props} />
-    </DefaultLayout>
+    <Layout>
+      <Page {...props} />
+    </Layout>
   );
 };
 
-// Pages without default layout
-const Register = lazy(() => import("./Register/Register.jsx"));
-
-// Pages with defualt layout
-const Home = lazyWithDefaultLayout(() => import("./Home/Home.jsx"));
-const Product = lazyWithDefaultLayout(() => import("./Product/Product.jsx"));
-const Cart = lazyWithDefaultLayout(() => import("./Cart/Cart.jsx"));
-const Shop = lazyWithDefaultLayout(() => import("./Shop/Shop.jsx"));
-const Shipping = lazyWithDefaultLayout(() => import("./Shipping/Shipping.jsx"));
-const Payment = lazyWithDefaultLayout(() => import("./Payment/Payment.jsx"));
-const PlaceOrder = lazyWithDefaultLayout(() =>
-  import("./PlaceOrder/PlaceOrder.jsx")
-);
-const OrderDetails = lazyWithDefaultLayout(() =>
-  import("./Order details/OrderDetails.jsx")
-);
-const Profile = lazyWithDefaultLayout(() => import("./Profile/Profile.jsx"));
-const AdminPanel = lazyWithDefaultLayout(() =>
-  import("./Admin panel/AdminPanel.jsx")
-);
-const Create = lazyWithDefaultLayout(() =>
-  import("./CreateProduct/Create.jsx")
-);
-const ComingSoon = lazyWithDefaultLayout(() =>
-  import("./Comingsoon/ComingSoon.jsx")
-);
+const HomePage = withDefaultLayout(Home);
+const ProductPage = withDefaultLayout(Product);
+const CartPage = withDefaultLayout(Cart);
+const ShopPage = withDefaultLayout(Shop);
+const ShippingPage = withDefaultLayout(Shipping);
+const PaymentPage = withDefaultLayout(Payment);
+const PlaceOrderPage = withDefaultLayout(PlaceOrder);
+const OrderDetailsPage = withDefaultLayout(OrderDetails);
+const ProfilePage = withDefaultLayout(Profile);
+const AdminPanelPage = withDefaultLayout(AdminPanel);
+const CreatePage = withDefaultLayout(Create);
+const ComingSoonPage = withDefaultLayout(ComingSoon);
 
 export {
-  Home,
-  Product,
+  HomePage as Home,
+  ProductPage as Product,
   Register,
-  Cart,
-  Shop,
-  Shipping,
-  Payment,
-  PlaceOrder,
-  OrderDetails,
-  Profile,
-  AdminPanel,
-  Create,
-  ComingSoon,
+  CartPage as Cart,
+  ShopPage as Shop,
+  ShippingPage as Shipping,
+  PaymentPage as Payment,
+  PlaceOrderPage as PlaceOrder,
+  OrderDetailsPage as OrderDetails,
+  ProfilePage as Profile,
+  AdminPanelPage as AdminPanel,
+  CreatePage as Create,
+  ComingSoonPage as ComingSoon,
 };
