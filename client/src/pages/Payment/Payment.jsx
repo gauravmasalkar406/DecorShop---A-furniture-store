@@ -55,7 +55,11 @@ const Payment = () => {
                 <h3>₹{cartTotal + 99}</h3>
               </div>
 
-              <button className={s.summary_buy_btn} onClick={handlePayment}>
+              <button
+                className={s.summary_buy_btn}
+                onClick={handlePayment}
+                type="button"
+              >
                 PAYMENT
               </button>
             </>

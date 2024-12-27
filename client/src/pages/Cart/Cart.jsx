@@ -12,15 +12,11 @@ import { toast } from "react-toastify";
 const Cart = () => {
   const [isItemDeleted, setIsItemDeleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const cartItems = useSelector((state) => state.cart.cartItems);
-
-  const userInfo = useSelector((state) => state.user.userInfo);
-
-  const cartTotal = useSelector((state) => state.cart.cartTotal);
+  const { cart, user } = useSelector((state) => state);
+  const { cartItems, cartTotal } = cart;
+  const { userInfo } = user;
 
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,7 +59,7 @@ const Cart = () => {
     setIsItemDeleted(!isItemDeleted);
   };
 
-  const checkoutHanlder = () => {
+  const checkoutHandler = () => {
     navigate("/shipping");
   };
 
@@ -76,14 +72,15 @@ const Cart = () => {
 
           {isLoading ? (
             <div className="loader-container">
-              <span className="loader-green"></span>
+              <span className="loader-green" />
             </div>
           ) : (
             cartItems?.map((ele, index) => {
+              const key = index;
               return (
                 <CartProduct
                   cartItem={ele}
-                  key={index}
+                  key={key}
                   onItemDelete={changeDeletedState}
                   index={index}
                   isOrderPage={false}
@@ -99,19 +96,23 @@ const Cart = () => {
             <div className={s.summary_main}>
               <div className={s.summary_total}>
                 <p>Bag total</p>
-                <h4>₹{cartTotal}</h4>
+                <h4>${cartTotal}</h4>
               </div>
               <div className={s.summary_total}>
                 <p>Convenience Fee</p>
-                <h4>₹99</h4>
+                <h4>$99</h4>
               </div>
             </div>
             <div className={s.summary_subtotal_conatainer}>
               <p>Total</p>
-              <h3>₹{cartTotal + 99}</h3>
+              <h3>${cartTotal + 99}</h3>
             </div>
 
-            <button className={s.summary_buy_btn} onClick={checkoutHanlder}>
+            <button
+              className={s.summary_buy_btn}
+              onClick={checkoutHandler}
+              type="button"
+            >
               CHECKOUT
             </button>
           </>

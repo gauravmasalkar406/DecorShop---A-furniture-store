@@ -16,7 +16,6 @@ const Create = () => {
   const [quantity, setQuantity] = useState();
   const [isShipping, setIsShipping] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const userInfo = useSelector((state) => state.user.userInfo);
 
   // image upload handler
@@ -58,11 +57,11 @@ const Create = () => {
 
     if (
       name.length <= 0 ||
-      price == undefined ||
+      price === undefined ||
       description.length <= 0 ||
       brand.length <= 0 ||
       category.length <= 0 ||
-      quantity == undefined ||
+      quantity === undefined ||
       imageArr.length < 4
     ) {
       toast.error("Fill all details");
@@ -89,7 +88,7 @@ const Create = () => {
 
       setIsLoading(false);
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         toast.success(response.data.message);
       }
     } catch (error) {
@@ -110,7 +109,7 @@ const Create = () => {
           type="number"
           placeholder="Price"
           value={price}
-          onChange={(e) => setPrice(parseFloat(e.target.value))}
+          onChange={(e) => setPrice(Number.parseFloat(e.target.value))}
         />
         <input
           type="text"
@@ -134,7 +133,7 @@ const Create = () => {
           type="number"
           placeholder="Quantity available"
           value={quantity}
-          onChange={(e) => setQuantity(parseFloat(e.target.value))}
+          onChange={(e) => setQuantity(Number.parseFloat(e.target.value))}
         />
         <section className={s.check_container}>
           <input
@@ -165,7 +164,7 @@ const Create = () => {
           onChange={uploadHandler}
         />
         <button type="submit">
-          {isLoading ? <span className={s.loader}></span> : "CREATE PRODUCT"}
+          {isLoading ? <span className={s.loader} /> : "CREATE PRODUCT"}
         </button>
       </form>
     </div>
