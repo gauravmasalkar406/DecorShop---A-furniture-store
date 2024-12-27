@@ -13,7 +13,6 @@ import AdminPanel from "./AdminPanel/AdminPanel.jsx";
 import Create from "./CreateProduct/Create.jsx";
 import ComingSoon from "./ComingSoon/ComingSoon.jsx";
 
-// Higher-Order Component for pages with the default layout
 const withDefaultLayout = (Page) => {
   return (props) => (
     <Layout>
