@@ -1,0 +1,13 @@
+.coming_soon_main {
+	width: 80%;
+	height: 30vh;
+	margin: 3rem auto -2rem auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.coming_soon_main h4 {
+	font-size: 2.5rem;
+	font-weight: 300;
+}
