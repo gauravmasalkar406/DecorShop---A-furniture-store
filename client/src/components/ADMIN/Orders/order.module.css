@@ -1,8 +1,5 @@
-@media only screen and (max-width: 820px) {
-}
-
 @media only screen and (max-width: 480px) {
-  .make_display_inactive {
-    display: none;
-  }
+	.make_display_inactive {
+		display: none;
+	}
 }
