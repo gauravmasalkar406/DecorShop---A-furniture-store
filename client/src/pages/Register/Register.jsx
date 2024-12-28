@@ -66,7 +66,7 @@ const Register = () => {
         navigate(-1);
       }
     } catch (error) {
-      toast(error?.message || error?.response?.data?.message);
+      toast.error(error?.response?.data?.message || error?.message);
     } finally {
       setIsLoading(false);
     }
