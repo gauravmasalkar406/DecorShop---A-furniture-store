@@ -5,6 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 import { IoMdCheckmark } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import s from "./order.module.css";
+import { FORMAT_DATE } from "../../../utils/date.js";
 
 const Orders = () => {
   const [orders, setOrders] = useState();
@@ -14,32 +15,37 @@ const Orders = () => {
 
   // fetch orders
   useEffect(() => {
-    setIsLoading(true);
     const fetchOrders = async () => {
-      const response = await axios.get(getAllOrdersRoute, {
-        withCredentials: true,
-      });
+      try {
+        setIsLoading(true);
+        const response = await axios.get(getAllOrdersRoute, {
+          withCredentials: true,
+        });
 
-      if (response.status === 200) {
-        setOrders(response.data.orders);
+        if (response.status === 200) {
+          setOrders(response.data.orders);
+        }
+      } catch (error) {
+        toast.error(
+          error?.response?.data?.message || error.message || "An error occurred"
+        );
+      } finally {
+        setIsLoading(false);
       }
-
-      setIsLoading(false);
     };
-
-    try {
-    } catch (error) {
-      toast.error(error?.data?.message || error?.error);
-    }
 
     fetchOrders();
   }, []);
+
+  const handleNavigateToOrderPage = (order) => {
+    navigate(`/orderdetails/${order._id}`);
+  };
 
   return (
     <div>
       {isLoading ? (
         <div className="loader-container">
-          <span class="loader-green"></span>
+          <span class="loader-green" />
         </div>
       ) : orders && orders.length > 0 ? (
         <table>
@@ -54,15 +60,23 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders?.map((order, index) => (
+            {orders?.map((order) => (
               <tr
-                key={index}
-                onClick={() => navigate(`/orderdetails/${order._id}`)}
+                key={order._id}
+                onClick={() => handleNavigateToOrderPage(order)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    handleNavigateToOrderPage(order);
+                    event.preventDefault();
+                  }
+                }}
+                tabIndex={0}
+                style={{ cursor: "pointer" }}
               >
                 <td className={s.make_display_inactive}>{order._id}</td>
                 <td>{order?.user?.name}</td>
-                <td>{order.createdAt}</td>
-                <td>{order.totalPrice}</td>
+                <td>{FORMAT_DATE(order.createdAt)}</td>
+                <td>{`$${order.totalPrice}`}</td>
                 <td>
                   {order.isPaid ? (
                     <IoMdCheckmark style={{ color: "green" }} />

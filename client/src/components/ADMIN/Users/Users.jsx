@@ -14,20 +14,26 @@ const Users = () => {
 
   // fetch all users
   useEffect(() => {
-    setIsLoading(true);
-
     const fetchAllUsers = async () => {
-      const response = await axios.get(getAllUsersRoute, {
-        withCredentials: true,
-      });
-
-      if (response.status === 200) {
-        setUsers(response.data);
+      try {
+        setIsLoading(true);
+        const response = await axios.get(getAllUsersRoute, {
+          withCredentials: true,
+        });
+        if (response.status === 200) {
+          setUsers(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        toast.error(
+          error?.response?.data?.message ||
+            error.message ||
+            "Failed to fetch users"
+        );
+      } finally {
+        setIsLoading(false);
       }
-
-      setIsLoading(false);
     };
-
     fetchAllUsers();
   }, [usersUpdated]);
 
@@ -53,7 +59,7 @@ const Users = () => {
     <div>
       {isLoading ? (
         <div className="loader-container">
-          <span class="loader-green"></span>
+          <span class="loader-green" />
         </div>
       ) : (
         users && (
@@ -68,8 +74,8 @@ const Users = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
-                <tr key={index}>
+              {users.map((user) => (
+                <tr key={user._id}>
                   <td className={s.make_display_inactive}>{user._id}</td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
@@ -82,12 +88,9 @@ const Users = () => {
                   </td>
                   <td>
                     <button
-                      style={{
-                        border: "0px",
-                        background: "none",
-                        cursor: "pointer",
-                      }}
+                      className={s.delete_btn}
                       onClick={() => handleUserDelete(user._id)}
+                      type="button"
                     >
                       <AiOutlineDelete style={{ color: "red" }} />
                     </button>
