@@ -1,0 +1,41 @@
+.shop_pagination_container {
+	margin-top: 3rem;
+	display: flex;
+	justify-content: center;
+	gap: 0.8rem;
+}
+
+.shop_pagination_container button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 35px;
+	width: 35px;
+	border-radius: 50%;
+	background-color: var(--light-green-bg-color);
+	border: none;
+	cursor: pointer;
+}
+
+.active_page_btn {
+	color: white;
+	background-color: var(--primary-green-color) !important;
+}
+
+.summary_buy_btn {
+	margin-top: 2rem;
+	width: 100%;
+	border: none;
+	background-color: var(--primary-green-color);
+	color: white;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+.delete_btn {
+	border: 0;
+	background: none;
+	cursor: pointer;
+}
