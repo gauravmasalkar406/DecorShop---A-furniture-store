@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import instagram2 from "../../assets/instagram2.webp";
 import instagram1 from "../../assets/instagram1.webp";
 import instagram3 from "../../assets/instagram3.webp";
@@ -14,30 +13,23 @@ import s from "./feature.module.css";
 
 const Featured = () => {
   const [products, setProducts] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
-    fecthProducts();
+    // fetch products
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${getAllProducts}/default/all/all/0/false/1`
+        );
+
+        setProducts(response.data.products);
+      } catch (error) {
+        toast.error(error.response.data.message || error.message);
+      }
+    };
+
+    fetchProducts();
   }, []);
-
-  // fetch products function
-  const fecthProducts = async () => {
-    setIsLoading(true);
-
-    try {
-      const response = await axios.get(
-        `${getAllProducts}/default/all/all/0/false/1`
-      );
-
-      setProducts(response.data.products);
-    } catch (error) {
-      toast.error(error.response.data.message || error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     products && (
@@ -55,15 +47,15 @@ const Featured = () => {
 
         <hr className={`${s.hr_line} ${s.hr_length}`} />
 
-        <section className={s.intagram_banner}>
+        <section className={s.instagram_banner}>
           <img src={instagram2} alt="instagram2" loading="lazy" />
           <img src={instagram1} alt="instagram1" loading="lazy" />
           <img src={instagram3} alt="instagram3" loading="lazy" />
           <img src={instagram4} alt="instagram4" loading="lazy" />
           <img src={instagram5} alt="instagram5" loading="lazy" />
 
-          <div className={s.insta_head_container}>
-            <div className={s.insta_head}>
+          <div className={s.instagram_head_container}>
+            <div className={s.instagram_head}>
               <h4>INSTAGRAM</h4>
             </div>
           </div>

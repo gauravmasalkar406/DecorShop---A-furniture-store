@@ -11,21 +11,21 @@ const F2 = ({ category, heading }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fecthProducts();
-  }, []);
+    // fetch products function
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${getAllProducts}/default/${category}/all/0/false/1`
+        );
 
-  // fetch products function
-  const fecthProducts = async () => {
-    try {
-      const response = await axios.get(
-        `${getAllProducts}/default/${category}/all/0/false/1`
-      );
+        setProducts(response.data.products);
+      } catch (error) {
+        toast.error(error.response.data.message || error.message);
+      }
+    };
 
-      setProducts(response.data.products);
-    } catch (error) {
-      toast.error(error.response.data.message || error.message);
-    }
-  };
+    fetchProducts();
+  }, [category]);
 
   return (
     products && (
@@ -35,15 +35,22 @@ const F2 = ({ category, heading }) => {
           <p className={s.decor_desc}>
             Small be and the rain would phase distance, succeed align.
           </p>
-          <button className={s.decor_btn}>SHOP NOW</button>
+          <button className={s.decor_btn} type="button">
+            SHOP NOW
+          </button>
         </div>
         {products.map(
           (product, index) =>
             index < 3 && (
               <div
                 className={s.p_decoration_card}
-                key={index}
+                key={product._id}
                 onClick={() => navigate(`/product/${product._id}`)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    navigate(`/product/${product?._id}`);
+                  }
+                }}
               >
                 <img
                   src={`${host}/${product.image[0]}`}

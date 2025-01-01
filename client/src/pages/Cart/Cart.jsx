@@ -12,9 +12,9 @@ import { toast } from "react-toastify";
 const Cart = () => {
   const [isItemDeleted, setIsItemDeleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { cart, user } = useSelector((state) => state);
-  const { cartItems, cartTotal } = cart;
-  const { userInfo } = user;
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartTotal = useSelector((state) => state.cart.cartTotal);
+  const userInfo = useSelector((state) => state.user.userInfo);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

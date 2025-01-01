@@ -7,7 +7,7 @@ const StarRating = ({ rating }) => {
 
   const stars = Array.from({ length: 5 }, (_, index) => (
     <FaStar
-      key={index}
+      key={`${index}${rating}`}
       className={index < roundedRating ? s.filled : s.empty}
     />
   ));

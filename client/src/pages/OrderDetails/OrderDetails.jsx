@@ -44,29 +44,25 @@ const OrderDetails = () => {
 
   // stripe payment integration
   const handlePaymentWithStripe = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51OGNBpSGXGx0sWMFwly4NqaNFjEGQey4qleAL3oBxu2DcaSsksP1u8UoafDCXkGwkdi4pGdr8DYH9dxP4VRp5T4T00YOzaY7qG"
-    );
+    const stripe = await loadStripe(import.meta.env.VITE_REACT_APP_STRIPE_KEY);
 
     // order id will be sent to server
     try {
       const response = await axios.post(
         stripePayRoute,
-        { id: id },
+        { id },
         { withCredentials: true }
       );
 
       const session = response.data;
 
-      const result = stripe.redirectToCheckout({
+      stripe.redirectToCheckout({
         sessionId: session.id,
       });
-
-      if (result.error) {
-        console.log(result.error);
-      }
     } catch (error) {
-      console.log(error);
+      toast.error(
+        error.response.data.message || error?.message || "An error occurred"
+      );
     }
   };
 
@@ -101,17 +97,15 @@ const OrderDetails = () => {
         { withCredentials: true }
       );
 
-      if (response?.status == 200) {
+      if (response?.status === 200) {
         setOrder(response.data);
 
-        toast.success("Order delivered", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.success("Order delivered");
       }
     } catch (error) {
-      toast.error(error.response.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        error.response.data.message || error?.message || "An error occurred"
+      );
     }
   };
 
@@ -141,15 +135,20 @@ const OrderDetails = () => {
           <div>
             {order?.orderItems?.map((ele, index) => {
               return (
-                <div className={s.cart_product_main} key={index}>
+                <div className={s.cart_product_main} key={ele.productId}>
                   <section>
-                    {index == 0 && (
+                    {index === 0 && (
                       <h4 className={s.cart_product_head}>PRODUCT DETAILS</h4>
                     )}
-                    <div className={s.cart_prdouct_img_head_container}>
+                    <div className={s.cart_product_img_head_container}>
                       <div
                         className={s.cart_product_img}
                         onClick={() => navigate(`/product/${ele.productId}`)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            navigate(`/product/${ele.productId}`);
+                          }
+                        }}
                       >
                         <img src={`${host}/${ele?.product?.image[0]}`} alt="" />
                       </div>
@@ -159,21 +158,21 @@ const OrderDetails = () => {
                     </div>
                   </section>
                   <section>
-                    {index == 0 && (
+                    {index === 0 && (
                       <h4 className={s.cart_product_head}>QUANTITY</h4>
                     )}
-                    <div className={s.cart_product_quanity_change}>
+                    <div className={s.cart_product_quantity_change}>
                       <div>{ele?.quantity}</div>
                     </div>
                   </section>
                   <section>
-                    {index == 0 && (
+                    {index === 0 && (
                       <h4 className={s.cart_product_head}>PRICE</h4>
                     )}
                     <h5>₹{ele.product?.price}</h5>
                   </section>
                   <section>
-                    {index == 0 && (
+                    {index === 0 && (
                       <h4 className={s.cart_product_head}>TOTAL</h4>
                     )}
                     <h5>{ele.product?.price * ele?.quantity}</h5>
@@ -198,7 +197,7 @@ const OrderDetails = () => {
               <h4>₹99</h4>
             </div>
           </div>
-          <div className={s.summary_subtotal_conatainer}>
+          <div className={s.summary_subtotal_container}>
             <p>Total</p>
             <h3>₹{order.totalPrice}</h3>
           </div>

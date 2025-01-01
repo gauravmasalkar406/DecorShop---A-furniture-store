@@ -1,87 +1,87 @@
 @import "../../index.css";
 
 .cart_product_main {
-  display: grid;
-  grid-template-columns: 40% 20% 20% 20%;
-  margin-bottom: 1rem;
+	display: grid;
+	grid-template-columns: 40% 20% 20% 20%;
+	margin-bottom: 1rem;
 }
 
 .cart_product_head {
-  font-size: 14px;
-  font-weight: 400;
-  color: rgb(107, 114, 128);
-  letter-spacing: 1.4px;
-  margin-bottom: 1rem;
+	font-size: 14px;
+	font-weight: 400;
+	color: rgb(107, 114, 128);
+	letter-spacing: 1.4px;
+	margin-bottom: 1rem;
 }
 
-.cart_prdouct_img_head_container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 0.7rem;
+.cart_product_img_head_container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	column-gap: 0.7rem;
 }
 
-.cart_prdouct_img_head_container .head_delete_btn h5 {
-  margin-bottom: 0.6rem;
-  font-weight: 500;
+.cart_product_img_head_container .head_delete_btn h5 {
+	margin-bottom: 0.6rem;
+	font-weight: 500;
 }
 
 .cart_product_img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 7.5rem;
-  width: 100%;
-  background-color: var(--light-green-bg-color);
-  cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 7.5rem;
+	width: 100%;
+	background-color: var(--light-green-bg-color);
+	cursor: pointer;
 }
 
 .cart_product_img img {
-  height: 90%;
+	height: 90%;
 }
 
-.cart_prdouct_img_head_container .head_delete_btn button {
-  color: white;
-  border: none;
-  background-color: var(--primary-green-color);
-  letter-spacing: 0.8px;
-  padding: 4px 6px;
-  font-size: 0.8rem;
-  cursor: pointer;
+.cart_product_img_head_container .head_delete_btn button {
+	color: white;
+	border: none;
+	background-color: var(--primary-green-color);
+	letter-spacing: 0.8px;
+	padding: 4px 6px;
+	font-size: 0.8rem;
+	cursor: pointer;
 }
 
-.cart_product_quanity_change {
-  display: flex;
+.cart_product_quantity_change {
+	display: flex;
 }
 
-.cart_product_quanity_change div,
-.cart_product_quanity_change button {
-  height: 1.5rem;
-  width: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
+.cart_product_quantity_change div,
+.cart_product_quantity_change button {
+	height: 1.5rem;
+	width: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
 }
 
-.cart_product_quanity_change div {
-  color: white;
-  background-color: black;
+.cart_product_quantity_change div {
+	color: white;
+	background-color: black;
 }
 
-.cart_product_quanity_change button {
-  cursor: pointer;
+.cart_product_quantity_change button {
+	cursor: pointer;
 }
 
 @media only screen and (max-width: 820px) {
 }
 
 @media only screen and (max-width: 480px) {
-  .cart_product_img {
-    height: 4.5rem;
-    width: 100%;
-  }
+	.cart_product_img {
+		height: 4.5rem;
+		width: 100%;
+	}
 
-  .cart_product_head {
-    font-size: 11px;
-  }
+	.cart_product_head {
+		font-size: 11px;
+	}
 }
