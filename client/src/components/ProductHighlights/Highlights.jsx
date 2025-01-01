@@ -17,25 +17,27 @@ const Highlights = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fecthProducts();
+    // fetch products function
+    const fetchProducts = async () => {
+      setIsLoading(true);
+
+      try {
+        const response = await axios.get(
+          `${getAllProducts}/default/${selectedCategory}/all/0/false/1`
+        );
+
+        setProducts(response.data.products);
+      } catch (error) {
+        toast.error(
+          error.response.data.message || error.message || "An error occurred"
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, [selectedCategory]);
-
-  // fetch products function
-  const fecthProducts = async () => {
-    setIsLoading(true);
-
-    try {
-      const response = await axios.get(
-        `${getAllProducts}/default/${selectedCategory}/all/0/false/1`
-      );
-
-      setProducts(response.data.products);
-    } catch (error) {
-      toast.error(error.response.data.message || error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // fetching unique categories
   useEffect(() => {
@@ -45,7 +47,9 @@ const Highlights = () => {
 
         setCategories(["all", ...response.data.unique]);
       } catch (error) {
-        toast.error(error.response.data.message || error.message);
+        toast.error(
+          error.response.data.message || error.message || "An error occurred"
+        );
       }
     };
 
@@ -59,9 +63,10 @@ const Highlights = () => {
           <section className={s.category_btns}>
             {categories.map((category, index) => (
               <button
-                key={index}
+                key={category}
                 className={selectedCategory === category ? s.selected : ""}
                 onClick={() => setSelectedCategory(category)}
+                type="button"
               >
                 {category}
               </button>
@@ -77,12 +82,17 @@ const Highlights = () => {
                     <div
                       className={s.product_card}
                       onClick={() => navigate(`/product/${product._id}`)}
-                      key={index}
+                      key={product._id}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          navigate(`/product/${product?._id}`);
+                        }
+                      }}
                     >
                       <div className={s.product_image_container}>
                         <img
                           src={`${host}/${product.image[0]}`}
-                          key={index}
+                          key={product._id}
                           className={s.product_image}
                           alt={product.name}
                           loading="lazy"
@@ -96,12 +106,17 @@ const Highlights = () => {
                     <div
                       className={s.product_card}
                       onClick={() => navigate(`/product/${product._id}`)}
-                      key={index}
+                      key={product._id}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          navigate(`/product/${product?._id}`);
+                        }
+                      }}
                     >
                       <div className={s.product_image_container}>
                         <img
                           src={`${host}/${product.image[0]}`}
-                          key={index}
+                          key={product._id}
                           className={s.product_image}
                           alt={product.name}
                           loading="lazy"
@@ -115,14 +130,16 @@ const Highlights = () => {
           </section>
         ) : (
           <div className="loader-container">
-            <span className="loader-green"></span>
+            <span className="loader-green" />
           </div>
         )}
 
         <section className={s.go_to_shop_container}>
-          <div></div>
-          <button onClick={() => navigate("/shop")}>GO TO SHOP</button>
-          <div></div>
+          <div />
+          <button onClick={() => navigate("/shop")} type="button">
+            GO TO SHOP
+          </button>
+          <div />
         </section>
 
         <section className={s.stylish_banner_container}>
@@ -135,10 +152,10 @@ const Highlights = () => {
                   MINIMAL CHAIR
                 </span>
               </div>
-              <button>View Now</button>
+              <button type="button">View Now</button>
             </div>
           </div>
-          <img src={basketChair} alt="basketchair" loading="lazy" />
+          <img src={basketChair} alt="basket chair" loading="lazy" />
         </section>
       </div>
     </div>

@@ -80,24 +80,28 @@ const PlaceOrder = () => {
         setIsLoading(false);
 
         // save in store
-        if (response?.data?.msg == "Order placed") {
+        if (response?.data?.msg === "Order placed") {
           navigate(`/orderdetails/${response.data.createdOrder._id}`);
         }
       } catch (error) {
-        toast(error?.message || error?.response?.data?.message);
+        toast.error(
+          error.response.data.message || error?.message || "An error occurred"
+        );
       }
     }
   };
 
   const deleteAllProductFromCart = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         removeCartItemsRoute,
         { user: userInfo._id },
         { withCredentials: true }
       );
     } catch (error) {
-      console.log(error);
+      toast.error(
+        error.response.data.message || error?.message || "An error occurred"
+      );
     }
   };
 
@@ -123,7 +127,7 @@ const PlaceOrder = () => {
                   return (
                     <CartProduct
                       cartItem={ele}
-                      key={index}
+                      key={ele.productId}
                       index={index}
                       isOrderPage={true}
                     />
@@ -131,7 +135,7 @@ const PlaceOrder = () => {
                 })
               ) : (
                 <div className={s.loader_container}>
-                  <span className={s.loader_green}></span>
+                  <span className={s.loader_green} />
                 </div>
               )}
             </div>
@@ -151,13 +155,17 @@ const PlaceOrder = () => {
                 <h4>₹99</h4>
               </div>
             </div>
-            <div className={s.summary_subtotal_conatainer}>
+            <div className={s.summary_subtotal_container}>
               <p>Total</p>
               <h3>₹{cartTotal + 99}</h3>
             </div>
 
-            <button className={s.summary_buy_btn} onClick={handlePlaceOrder}>
-              {isLoading ? <span class={s.loader}></span> : "PLACE ORDER"}
+            <button
+              className={s.summary_buy_btn}
+              onClick={handlePlaceOrder}
+              type="button"
+            >
+              {isLoading ? <span class={s.loader} /> : "PLACE ORDER"}
             </button>
           </>
         </section>

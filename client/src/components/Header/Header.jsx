@@ -19,7 +19,7 @@ const Header = () => {
             <div className={s.header_desc_container}>
               <p>Coming soon in your door with a huge discount</p>
             </div>
-            <button>View Now</button>
+            <button type="button">View Now</button>
           </div>
         </div>
         <img

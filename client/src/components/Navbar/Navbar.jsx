@@ -28,13 +28,9 @@ const Navbar = () => {
   const [isMenuSelected, setIsMenuSelected] = useState(true);
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
-  // login userinfo
   const userInfo = useSelector((state) => state.user.userInfo);
-
-  // cart items
   const cartItems = useSelector((state) => state.cart.cartItems);
 
   // logout user
@@ -43,49 +39,48 @@ const Navbar = () => {
       // remove user from store
       dispatch(removeUser());
 
-      // request for logut
-      const logOutResponse = await axios.get(logoutUser, {
+      await axios.get(logoutUser, {
         withCredentials: true,
       });
 
       dispatch(removeCartItems());
-
       dispatch(updateCartTotal(0));
-
       dispatch(removeLatestOrder());
-
       dispatch(removeShippingAddress());
-
       navigate("/");
 
       // success message
       toast.success("Logged out");
     } catch (error) {
-      toast.error(error.message || error.data.message);
+      toast.error(
+        error?.response?.data?.message || error.message || "An error occurred"
+      );
     }
   };
 
   useEffect(() => {
-    if (userInfo) {
+    const fetchCartItems = async () => {
       try {
-        const fetchCartItems = async () => {
-          const response = await axios.post(
-            getCartItemsRoute,
-            {
-              userId: userInfo._id,
-            },
-            { withCredentials: true }
-          );
+        const response = await axios.post(
+          getCartItemsRoute,
+          {
+            userId: userInfo._id,
+          },
+          { withCredentials: true }
+        );
 
-          dispatch(addCartItems(response?.data?.cartItems));
-        };
-
-        fetchCartItems();
+        dispatch(addCartItems(response?.data?.cartItems));
       } catch (error) {
-        console.log(error);
+        toast.error(
+          error?.response?.data?.message || error.message || "An error occurred"
+        );
       }
+    };
+
+    if (userInfo) {
+      fetchCartItems();
     }
-  }, [userInfo]);
+  }, [userInfo, dispatch]);
 
   return (
     <div className={s.navbar_main}>
@@ -102,6 +97,11 @@ const Navbar = () => {
               ? `${s.nav_menu_active} ${s.nav_links_container}`
               : s.nav_links_container
           }
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              () => setIsMenuSelected(!isMenuSelected);
+            }
+          }}
         >
           <NavLink
             to="/"
@@ -166,6 +166,11 @@ const Navbar = () => {
           <div
             className={s.nav_manu_container}
             onClick={() => setIsMenuSelected(!isMenuSelected)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setIsMenuSelected(!isMenuSelected);
+              }
+            }}
           >
             {isMenuSelected ? <IoMdMenu size={25} /> : <RxCross2 size={25} />}
           </div>

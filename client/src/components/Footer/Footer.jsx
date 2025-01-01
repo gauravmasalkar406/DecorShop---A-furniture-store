@@ -35,7 +35,7 @@ const Footer = () => {
         </p>
       </section>
       <section>
-        <p className={s.column_head}>USERFUL LINKS</p>
+        <p className={s.column_head}>USEFUL LINKS</p>
         <p className={s.brand_desc}>About DecorShop</p>
         <p className={s.brand_desc}>Contact us</p>
         <p className={s.brand_desc}>FAQ</p>

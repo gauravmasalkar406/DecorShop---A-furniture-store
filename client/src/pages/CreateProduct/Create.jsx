@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
 import s from "./create.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const [image, setImage] = useState();
@@ -17,6 +18,7 @@ const Create = () => {
   const [isShipping, setIsShipping] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const userInfo = useSelector((state) => state.user.userInfo);
+  const navigate = useNavigate();
 
   // image upload handler
   const uploadHandler = async (e) => {
@@ -39,8 +41,9 @@ const Create = () => {
         toast.success(response.data.message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(
+        error.response.data.message || error?.message || "An error occurred"
+      );
     }
   };
 
@@ -65,7 +68,7 @@ const Create = () => {
       imageArr.length < 4
     ) {
       toast.error("Fill all details");
-      setIsLoadingLoading(false);
+      setIsLoading(false);
       return;
     }
 
@@ -86,13 +89,15 @@ const Create = () => {
         { withCredentials: true }
       );
 
-      setIsLoading(false);
-
-      if (response.status === 200) {
-        toast.success(response.data.message);
-      }
+      const productId = response?.data?.createdProduct?._id;
+      navigate(`/product/${productId}`);
+      toast.success(response?.data?.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(
+        error?.response?.data?.message || error?.message || "An error occurred"
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -10,7 +10,6 @@ import CartProduct from "./CartProduct/CartProduct";
 import Orders from "./ADMIN/Orders/Orders";
 import Users from "./ADMIN/Users/Users";
 import Products from "./ADMIN/Products/Products";
-import DefaultLayout from "./DefaultLayout/DefaultLayout";
 
 export {
   Navbar,
@@ -24,6 +23,5 @@ export {
   Orders,
   Users,
   Products,
-  DefaultLayout,
   Featured,
 };

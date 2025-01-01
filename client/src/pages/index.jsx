@@ -1,4 +1,4 @@
-import { DefaultLayout as Layout } from "../components/index.js";
+import RootLayout from "../layouts/RootLayout.jsx";
 import Register from "./Register/Register.jsx";
 import Home from "./Home/Home.jsx";
 import Product from "./Product/Product.jsx";
@@ -15,9 +15,9 @@ import ComingSoon from "./ComingSoon/ComingSoon.jsx";
 
 const withDefaultLayout = (Page) => {
   return (props) => (
-    <Layout>
+    <RootLayout>
       <Page {...props} />
-    </Layout>
+    </RootLayout>
   );
 };
 
