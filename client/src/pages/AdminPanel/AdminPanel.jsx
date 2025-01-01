@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Orders, Products, Users } from "../../components/index.js";
 import s from "./adminpanel.module.css";
-import { ORDERS, PRODUCTS, USERS } from "../../constants/misc.js";
+import { ORDERS, PRODUCTS, USERS } from "../../constants/Misc.js";
 
 const AdminPanel = () => {
   const [selectedCategory, setSelectedCategory] = useState(ORDERS);
