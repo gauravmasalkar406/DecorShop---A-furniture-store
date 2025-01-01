@@ -1,0 +1,16 @@
+export const APP_ENDPOINTS = {
+  ROOT: "/",
+  PRODUCT: "/product/:id",
+  CART: "/cart",
+  SHOP: "/shop",
+  SHIPPING: "/shipping",
+  PAYMENT: "/payment",
+  PLACE_ORDER: "/placeorder",
+  ORDER_DETAILS: "/orderdetails/:id",
+  PROFILE: "/profile",
+  SERVICES: "/services",
+  NEWS: "/news",
+  ADMIN_PANEL: "/adminpanel",
+  CREATE: "/create",
+  REGISTER: "/register",
+};
