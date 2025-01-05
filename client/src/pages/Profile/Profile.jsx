@@ -18,16 +18,16 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [myOrders, setMyOrders] = useState();
-  const [isLoading, setIsLoding] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  // fethcing my orders
+  // fetching my orders
   useEffect(() => {
     const getMyOrders = async () => {
-      setIsLoding(true);
+      setIsLoading(true);
 
       try {
         const response = await axios.post(
@@ -38,13 +38,15 @@ const Profile = () => {
           { withCredentials: true }
         );
 
-        if (response.status == 200) {
+        if (response.status === 200) {
           setMyOrders(response.data);
         }
 
-        setIsLoding(false);
+        setIsLoading(false);
       } catch (error) {
-        toast.error(error?.data?.message || error?.error);
+        toast.error(
+          error?.data?.message || error?.error || "An error occurred"
+        );
       }
     };
 
@@ -56,24 +58,25 @@ const Profile = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error("Password do not match");
-    } else if (password.length < 3) {
-      toast.error("Password is not valid");
-    } else {
-      try {
-        const response = await axios.put(
-          updateUserRoute,
-          { _id: userInfo._id, name, email, password },
-          { withCredentials: true }
-        );
+      return toast.error("Password do not match");
+    }
+    if (password.length < 3) {
+      return toast.error("Password is not valid");
+    }
 
-        if (response.status == 200) {
-          dispatch(addUser(response.data));
-          toast.success("Profile updated successfully");
-        }
-      } catch (error) {
-        toast.error(error?.data?.message || error?.error);
+    try {
+      const response = await axios.put(
+        updateUserRoute,
+        { _id: userInfo._id, name, email, password },
+        { withCredentials: true }
+      );
+
+      if (response.status === 200) {
+        dispatch(addUser(response.data));
+        toast.success("Profile updated successfully");
       }
+    } catch (error) {
+      toast.error(error?.data?.message || error?.error);
     }
   };
 
@@ -85,7 +88,7 @@ const Profile = () => {
 
         {isLoading ? (
           <div className="loader-container">
-            <span className="loader-green"></span>
+            <span className="loader-green" />
           </div>
         ) : myOrders && myOrders.length > 0 ? (
           <table>
@@ -100,8 +103,9 @@ const Profile = () => {
             </thead>
             <tbody>
               {myOrders.map((order, index) => (
+                // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
                 <tr
-                  key={index}
+                  key={order._id}
                   onClick={() => navigate(`/orderdetails/${order._id}`)}
                 >
                   <td className={s.make_display_inactive}>{order._id}</td>
@@ -133,7 +137,7 @@ const Profile = () => {
         <h4 className={s.cart_sub_head}>Update user details</h4>
         <hr style={{ marginBottom: "2rem" }} />
 
-        <form className={s.resgiter_form} onSubmit={handleUpdate}>
+        <form className={s.register_form} onSubmit={handleUpdate}>
           <input
             type="text"
             placeholder="Name"
