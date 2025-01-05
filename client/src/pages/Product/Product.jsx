@@ -13,7 +13,6 @@ import { addToCartRoute } from "../../api/cart.js";
 import { toast } from "react-toastify";
 import { addCartItems } from "../../store/slices/cart.js";
 import { host } from "../../api/host.js";
-import "react-toastify/dist/ReactToastify.css";
 import s from "./product.module.css";
 
 const Product = () => {
@@ -32,7 +31,7 @@ const Product = () => {
   // product id from params
   const { id } = useParams();
 
-  // set image src on first render imagesrc will be chnages once user click on different img
+  // set image src on first render imageSrc will be changes once user click on different img
   useEffect(() => {
     setImageSrc(product?.image[0]);
   }, [product]);
@@ -53,25 +52,17 @@ const Product = () => {
     }
   }, [id]);
 
-  // increment quantiy
+  // increment quantity
   const incrementQuant = () => {
     setSelectedQuantity((prev) => {
-      if (prev >= product?.countInStock) {
-        return product?.countInStock;
-      } else {
-        return prev + 1;
-      }
+      return prev >= product?.countInStock ? product?.countInStock : prev + 1;
     });
   };
 
   // decrement quantity
   const decrementQuant = () => {
     setSelectedQuantity((prev) => {
-      if (prev <= 1) {
-        return 1;
-      } else {
-        return prev - 1;
-      }
+      return prev <= 1 ? 1 : prev - 1;
     });
   };
 
@@ -118,18 +109,19 @@ const Product = () => {
         <meta property="og:image" content={product.image[0]} />
       </Helmet>
 
-      <div className={s.prodduct_main}>
+      <div className={s.product_main}>
         <section className={s.product_images_column}>
           <div className={s.product_p_image_container}>
             <img src={`${host}/${imageSrc}`} alt={product?.name} />
           </div>
           <div className={s.images_select}>
             {product?.image?.map((ele, index) => (
+              // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
               <div
                 className={`${s.products_p_p_image_container} ${
                   imageSrc === ele && s.active_p
                 }`}
-                key={index}
+                key={ele}
                 onClick={() => setImageSrc(ele)}
               >
                 <img src={`${host}/${ele}`} alt={product?.name} />
@@ -139,11 +131,17 @@ const Product = () => {
         </section>
         <section>
           {product.countInStock > 0 ? (
-            <button className={`${s.stock_btn} ${s.stock_btn_green}`}>
+            <button
+              className={`${s.stock_btn} ${s.stock_btn_green}`}
+              type="button"
+            >
               In Stock
             </button>
           ) : (
-            <button className={`${s.stock_btn} ${s.stock_btn_red}`}>
+            <button
+              className={`${s.stock_btn} ${s.stock_btn_red}`}
+              type="button"
+            >
               Out of Stock
             </button>
           )}
@@ -156,7 +154,7 @@ const Product = () => {
             </span>
             <span className={s.product_rating}>{product.rating}</span>
             <span className={s.divider}>|</span>
-            <span className={s.numreviews}>{product.numReviews} Reviews</span>
+            <span className={s.num_reviews}>{product.numReviews} Reviews</span>
           </div>
 
           <p className={s.product_p_description}>{product.description}</p>
@@ -170,10 +168,10 @@ const Product = () => {
                 <div className={s.quantity_select_value_btn}>
                   <span>{selectedQuantity}</span>
                   <div>
-                    <button onClick={incrementQuant}>
+                    <button onClick={incrementQuant} type="button">
                       <IoIosArrowUp />
                     </button>
-                    <button onClick={decrementQuant}>
+                    <button onClick={decrementQuant} type="button">
                       <IoIosArrowDown />
                     </button>
                   </div>
@@ -184,9 +182,10 @@ const Product = () => {
               <button
                 className={s.add_to_cart_btn}
                 onClick={handleAddToCartBtn}
+                type="button"
               >
                 {isLoading ? (
-                  <span className={s.loader}></span>
+                  <span className={s.loader} />
                 ) : (
                   <>
                     <AiOutlineShoppingCart size={20} />
@@ -201,7 +200,7 @@ const Product = () => {
     </>
   ) : (
     <div className="loader-container">
-      <span className="loader-green"></span>
+      <span className="loader-green" />
     </div>
   );
 };
