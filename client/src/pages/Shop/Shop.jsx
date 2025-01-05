@@ -43,11 +43,13 @@ const Shop = () => {
   ];
 
   // fetching products
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     fetchProducts();
   }, [selectedCategory, selectedBrand, isShipping, currPage]);
 
   // fetching products
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const debounce = setTimeout(() => fetchProducts(), 1000);
 
@@ -58,7 +60,7 @@ const Shop = () => {
   const fetchProducts = async () => {
     setIsLoading(true);
 
-    // seacrh keyword
+    // search keyword
     const keyword = searchQuery.length <= 0 ? "default" : searchQuery;
 
     try {
