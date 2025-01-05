@@ -25,7 +25,7 @@ const Register = () => {
     setName("");
     setEmail("");
     setPassword("");
-    setIsRegisterPage(!isRegisterPage);
+    setIsRegisterPage((prev) => !prev);
   };
 
   // register handler
@@ -42,10 +42,10 @@ const Register = () => {
       return toast.error("Fill all details");
     }
 
-    try {
-      // loader
-      setIsLoading(true);
+    // loader
+    setIsLoading(true);
 
+    try {
       const registerResponse = await axios.post(
         registerUser,
         {
@@ -118,10 +118,10 @@ const Register = () => {
     setIsGuestLogin(true);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (isGuestLogin) {
-      handleLoginSubmit();
-    }
+    if (!isGuestLogin) return;
+    handleLoginSubmit();
   }, [isGuestLogin]);
 
   // admin login
@@ -131,10 +131,10 @@ const Register = () => {
     setIsAdminLogin(true);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (isAdminLogin) {
-      handleLoginSubmit();
-    }
+    if (!isAdminLogin) return;
+    handleLoginSubmit();
   }, [isAdminLogin]);
 
   return (
@@ -148,7 +148,7 @@ const Register = () => {
             Register to DecorShop E-commerce store
           </p>
 
-          <form className={s.resgiter_form} onSubmit={handleRegisterSubmit}>
+          <form className={s.register_form} onSubmit={handleRegisterSubmit}>
             <input
               type="text"
               placeholder="Name"
@@ -168,15 +168,15 @@ const Register = () => {
               value={password}
             />
             <button type="submit">
-              {isLoading ? <span className="loader"></span> : "REGISTER"}
+              {isLoading ? <span className="loader" /> : "REGISTER"}
             </button>
           </form>
 
           <p>
             Already a user?{" "}
-            <span onClick={changePage} className={s.login_link}>
+            <button onClick={changePage} className={s.login_link} type="button">
               login
-            </span>
+            </button>
           </p>
         </div>
       </div>
@@ -188,7 +188,7 @@ const Register = () => {
           <p className={s.register_head}>Welcome</p>
           <p className={s.register_desc}>Login to DecorShop E-commerce store</p>
 
-          <form className={s.resgiter_form} onSubmit={handleLoginSubmit}>
+          <form className={s.register_form} onSubmit={handleLoginSubmit}>
             <input
               type="text"
               placeholder="Email"
@@ -202,18 +202,22 @@ const Register = () => {
               value={password}
             />
             <button type="submit">
-              {isLoading ? <span className="loader"></span> : "LOGIN"}
+              {isLoading ? <span className="loader" /> : "LOGIN"}
             </button>
 
-            <button onClick={handleGuestLogin}>GUEST LOGIN</button>
-            <button onClick={handleAdminLogin}>ADMIN LOGIN</button>
+            <button onClick={handleGuestLogin} type="button">
+              GUEST LOGIN
+            </button>
+            <button onClick={handleAdminLogin} type="button">
+              ADMIN LOGIN
+            </button>
           </form>
 
           <p>
             New user?{" "}
-            <span onClick={changePage} className={s.login_link}>
+            <button onClick={changePage} className={s.login_link} type="button">
               register
-            </span>
+            </button>
           </p>
         </div>
       </div>

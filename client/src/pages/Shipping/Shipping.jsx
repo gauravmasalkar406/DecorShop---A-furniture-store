@@ -72,12 +72,16 @@ const Shipping = () => {
                 <h4>₹99</h4>
               </div>
             </div>
-            <div className={s.summary_subtotal_conatainer}>
+            <div className={s.summary_subtotal_container}>
               <p>Total</p>
               <h3>₹{cartTotal + 99}</h3>
             </div>
 
-            <button className={s.summary_buy_btn} onClick={handleShipping}>
+            <button
+              className={s.summary_buy_btn}
+              onClick={handleShipping}
+              type="button"
+            >
               SHIPPING
             </button>
           </>
